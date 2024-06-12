@@ -1,6 +1,6 @@
 # by_cycle
 
-A new Flutter project.
+A scientific cycle synching app to help female tackle the sleep issues.
 
 ## Getting Started
 
