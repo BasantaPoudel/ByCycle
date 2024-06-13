@@ -1,5 +1,6 @@
 import 'package:by_cycle/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
   runApp(const MyApp());
@@ -71,25 +72,36 @@ class _MyHomePageState extends State<MyHomePage> {
           },
           currentIndex: _selectedIndex,
           type: BottomNavigationBarType.fixed,
-          items: const [
+          items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.shop),
+              // icon: SvgPicture.asset(
+              //   'assets/icons/shop.svg',
+              // ),
+              icon: Icon(Icons.shopping_bag_outlined),
               label: 'Shop',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.nightlight_round),
+              icon: SvgPicture.asset(
+                'assets/icons/sleep.svg',
+              ),
               label: 'Sleep',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: SvgPicture.asset(
+                'assets/icons/home.svg',
+              ),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.water_drop),
+              icon: SvgPicture.asset(
+                'assets/icons/blood.svg',
+              ),
               label: 'Symtoms',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.apple_rounded),
+              icon: SvgPicture.asset(
+                'assets/icons/food.svg',
+              ),
               label: 'Food',
             ),
           ],
