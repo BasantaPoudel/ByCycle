@@ -44,26 +44,47 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'You have pushed the button this many times:',
-              ),
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ],
+          title: Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  color: Colors.black,
+                  icon: Icon(Icons.more_vert_outlined),
+                  onPressed: () {
+                    // Navigate to the search screen
+                  },
+                ),
+                Text('YESTERDAY'),
+                Text('TODAY'),
+                Text('TOMORROW'),
+              ],
+            ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-            onPressed: _incrementCounter,
-            tooltip: 'Increment',
-            child: const Icon(Icons.add)),
+        body: const Center(
+            child: Column(children: [
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            ElevatedButton(
+                onPressed: null, child: Text("What is your temperature?")),
+            ElevatedButton(onPressed: null, child: Text("+"))
+          ]),
+          Center(
+            child: Text('Recommended sleep time'),
+          ),
+          SizedBox(
+            height: 15.0,
+          ),
+          SizedBox(
+              height: 180.0,
+              width: 180.0,
+              child: CircularProgressIndicator(
+                strokeWidth: 15,
+                value: 0.4,
+                backgroundColor: Color.fromRGBO(222, 212, 197, 1),
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+              )),
+        ])),
         bottomNavigationBar: BottomNavigationBar(
           onTap: (int index) {
             setState(() {
@@ -73,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
           currentIndex: _selectedIndex,
           type: BottomNavigationBarType.fixed,
           items: [
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               // icon: SvgPicture.asset(
               //   'assets/icons/shop.svg',
               // ),
