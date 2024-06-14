@@ -1,3 +1,4 @@
+import 'package:by_cycle/screens/calendar.dart';
 import 'package:by_cycle/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -55,9 +56,27 @@ class _MyHomePageState extends State<MyHomePage> {
                     // Navigate to the search screen
                   },
                 ),
-                Text('YESTERDAY'),
-                Text('TODAY'),
-                Text('TOMORROW'),
+                Text(
+                    style: AppTheme.lightTheme.textTheme.bodyMedium,
+                    'YESTERDAY'),
+                Text(style: AppTheme.lightTheme.textTheme.bodyMedium, 'TODAY'),
+                Text(
+                    style: AppTheme.lightTheme.textTheme.bodyMedium,
+                    'TOMORROW'),
+                IconButton(
+                  color: Colors.black,
+                  icon: Icon(Icons.calendar_today_outlined),
+                  onPressed: () {
+                    // Navigate to the search screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            Calendar(), // Calendar is the name of the class
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),
