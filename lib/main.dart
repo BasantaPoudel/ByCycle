@@ -57,8 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 ),
                 Text(
-                    style: AppTheme.lightTheme.textTheme.bodyMedium,
-                    'YESTERDAY'),
+                    style: Theme.of(context).textTheme.bodyMedium, 'YESTERDAY'),
                 Text(style: AppTheme.lightTheme.textTheme.bodyMedium, 'TODAY'),
                 Text(
                     style: AppTheme.lightTheme.textTheme.bodyMedium,

@@ -79,6 +79,38 @@ class AppTheme {
         borderRadius: BorderRadius.circular(8), // Set the card border radius
       ),
     ),
+    textTheme: const TextTheme(
+      displayLarge: TextStyle(
+        fontSize: 72.0,
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
+      displayMedium: TextStyle(
+        fontSize: 36.0,
+        color: Colors.white,
+        fontStyle: FontStyle.italic,
+      ),
+      displaySmall: TextStyle(
+        fontSize: 14.0,
+        color: Colors.white,
+        fontFamily: 'Hind',
+      ),
+      bodyLarge: TextStyle(
+        fontSize: 14.0,
+        color: Colors.white,
+        fontFamily: 'Hind',
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 12.0,
+        color: Colors.white,
+        fontFamily: 'Hind',
+      ),
+      bodySmall: TextStyle(
+        fontSize: 10.0,
+        color: Colors.white,
+        fontFamily: 'Hind',
+      ),
+    ),
 
     scaffoldBackgroundColor:
         Colors.black, // Set the background color to a dark shade
