@@ -1,30 +1,48 @@
+import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/screens/calendar.dart';
 import 'package:by_cycle/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(BlocProvider(
+      create: (BuildContext context) => ThemeCubit(),
+      child:
+          // Create the ThemeCubit
+          MyApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'ByCycle',
-      theme: AppTheme.lightTheme,
-      home: const MyHomePage(
-        title: 'ByCycle Home Page',
-      ),
+    var themeCubit = BlocProvider.of<ThemeCubit>(context);
+
+    return BlocBuilder(
+      bloc: themeCubit,
+      builder: (context, state) {
+        return MaterialApp(
+          title: 'ByCycle',
+          theme: themeCubit.getThemeData(),
+          darkTheme: themeCubit.getDarkThemeData(),
+          home: MyHomePage(
+            title: 'ByCycle Home Page',
+          ),
+        );
+      },
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -35,6 +53,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   int _selectedIndex = 0;
+
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -43,6 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeCubit = BlocProvider.of<ThemeCubit>(context);
     return Scaffold(
         appBar: AppBar(
           title: Container(
@@ -57,11 +77,17 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 ),
                 Text(
-                    style: Theme.of(context).textTheme.bodyMedium, 'YESTERDAY'),
-                Text(style: AppTheme.lightTheme.textTheme.bodyMedium, 'TODAY'),
+                  'YESTERDAY',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
                 Text(
-                    style: AppTheme.lightTheme.textTheme.bodyMedium,
-                    'TOMORROW'),
+                  'TODAY',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                Text(
+                  'TOMORROW',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
                 IconButton(
                   color: Colors.black,
                   icon: Icon(Icons.calendar_today_outlined),
@@ -70,10 +96,17 @@ class _MyHomePageState extends State<MyHomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            Calendar(), // Calendar is the name of the class
+                        builder: (context) => Calendar(),
                       ),
                     );
+                  },
+                ),
+                IconButton(
+                  color: Colors.black,
+                  icon: Icon(Icons.dark_mode_outlined),
+                  onPressed: () {
+                    themeCubit.toggleTheme();
+                    // Navigate to the search screen
                   },
                 ),
               ],
