@@ -1,7 +1,14 @@
+import 'package:by_cycle/firebase_options.dart';
+import 'package:by_cycle/repository/main_repository.dart';
 import 'package:by_cycle/theme/app_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -60,7 +67,13 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-            onPressed: _incrementCounter,
+            //TODO - CleanUp this example code
+            onPressed: () {
+              MainRepository().addDataToFirestore(<String, dynamic>{
+                'email': "test@gmail.com",
+                'name': "test",
+              });
+            },
             tooltip: 'Increment',
             child: const Icon(Icons.add)),
         bottomNavigationBar: BottomNavigationBar(
