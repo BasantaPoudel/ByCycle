@@ -3,9 +3,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:by_cycle/models/User.dart';
 
 class UserRepository {
-  Future<void> addUserToFirestore(User data) async {
+  //Takes a User object as a mandatory argument and
+  //an optional name for the document in firestore
+  Future<void> addUserToFirestore(User data, {String? documentId}) async {
     try {
-      await FirebaseFirestore.instance.collection('users').add(data.toMap());
+      if (documentId != null) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(documentId)
+            .set(data.toMap());
+      } else {
+        await FirebaseFirestore.instance.collection('users').add(data.toMap());
+      }
     } catch (e) {
       print('Error adding data to Firestore: $e');
     }
@@ -19,12 +28,11 @@ class UserRepository {
         }
       });
     } catch (e) {
-      print('Error adding data to Firestore: $e');
+      print('Error getting all users from Firestore: $e');
     }
   }
 
   Future<User?> getUserFromFirestoreById(String documentId) async {
-    //Returns null until data is successfully fetched
     await FirebaseFirestore.instance
         .collection("users")
         .doc(documentId)
@@ -33,6 +41,7 @@ class UserRepository {
       (DocumentSnapshot doc) {
         final data = doc.data() as Map<String, dynamic>;
         final user = User.fromMap(data);
+        //print(user!.email);
         return user;
       },
       onError: (e) => print("Error getting document: $e"),
