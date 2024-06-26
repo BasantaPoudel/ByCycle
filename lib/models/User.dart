@@ -20,7 +20,7 @@ class User {
     this.password = '',
     this.period_length = 0,
     this.reminder_preference = '',
-    this.time_to_fall_asleep = 0,
+    this.time_to_fall_asleep = 20,
     this.would_like_reminders_about_data_log_in = false,
     this.daily_data_input = const [],
   });
@@ -72,7 +72,7 @@ class DailyDataInput {
   String energy_level;
   int hours_of_sleep;
   List<String> symptoms;
-  int temperature;
+  double temperature;
 
   DailyDataInput({
     this.blood = '',
@@ -106,7 +106,7 @@ class DailyDataInput {
       hours_of_sleep: map['hours_of_sleep'] ??
           0, // Ensure this matches the stored data type
       symptoms: List<String>.from(map['symptoms'] ?? []),
-      temperature: map['temperature'] ?? 0,
+      temperature: map['temperature'].toDouble() ?? 0,
     );
   }
 }
