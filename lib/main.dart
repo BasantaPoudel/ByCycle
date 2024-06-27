@@ -1,35 +1,57 @@
 import 'package:by_cycle/firebase_options.dart';
 import 'package:by_cycle/repository/main_repository.dart';
+import 'package:by_cycle/cubits/theme/theme_cubit.dart';
+import 'package:by_cycle/screens/calendar.dart';
+import 'package:by_cycle/firebase_options.dart';
+import 'package:by_cycle/repository/main_repository.dart';
 import 'package:by_cycle/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(BlocProvider(
+      create: (BuildContext context) => ThemeCubit(),
+      child:
+          // Create the ThemeCubit
+          MyApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'ByCycle',
-      theme: AppTheme.lightTheme,
-      home: const MyHomePage(
-        title: 'ByCycle Home Page',
-      ),
+    var themeCubit = BlocProvider.of<ThemeCubit>(context);
+
+    return BlocBuilder(
+      bloc: themeCubit,
+      builder: (context, state) {
+        return MaterialApp(
+          title: 'ByCycle',
+          theme: themeCubit.getThemeData(),
+          darkTheme: themeCubit.getDarkThemeData(),
+          home: MyHomePage(
+            title: 'ByCycle Home Page',
+          ),
+        );
+      },
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -40,6 +62,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   int _selectedIndex = 0;
+
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -48,24 +71,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeCubit = BlocProvider.of<ThemeCubit>(context);
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'You have pushed the button this many times:',
-              ),
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ],
-          ),
-        ),
         floatingActionButton: FloatingActionButton(
             //TODO - CleanUp this example code
             onPressed: () {
@@ -76,6 +83,78 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             tooltip: 'Increment',
             child: const Icon(Icons.add)),
+        appBar: AppBar(
+          title: Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  color: Colors.black,
+                  icon: Icon(Icons.more_vert_outlined),
+                  onPressed: () {
+                    // Navigate to the search screen
+                  },
+                ),
+                Text(
+                  'YESTERDAY',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                Text(
+                  'TODAY',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                Text(
+                  'TOMORROW',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                IconButton(
+                  color: Colors.black,
+                  icon: Icon(Icons.calendar_today_outlined),
+                  onPressed: () {
+                    // Navigate to the search screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Calendar(),
+                      ),
+                    );
+                  },
+                ),
+                IconButton(
+                  color: Colors.black,
+                  icon: Icon(Icons.dark_mode_outlined),
+                  onPressed: () {
+                    themeCubit.toggleTheme();
+                    // Navigate to the search screen
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+        body: const Center(
+            child: Column(children: [
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            ElevatedButton(
+                onPressed: null, child: Text("What is your temperature?")),
+            ElevatedButton(onPressed: null, child: Text("+"))
+          ]),
+          Center(
+            child: Text('Recommended sleep time'),
+          ),
+          SizedBox(
+            height: 15.0,
+          ),
+          SizedBox(
+              height: 180.0,
+              width: 180.0,
+              child: CircularProgressIndicator(
+                strokeWidth: 15,
+                value: 0.4,
+                backgroundColor: Color.fromRGBO(222, 212, 197, 1),
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+              )),
+        ])),
         bottomNavigationBar: BottomNavigationBar(
           onTap: (int index) {
             setState(() {
@@ -84,25 +163,36 @@ class _MyHomePageState extends State<MyHomePage> {
           },
           currentIndex: _selectedIndex,
           type: BottomNavigationBarType.fixed,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shop),
+          items: [
+            const BottomNavigationBarItem(
+              // icon: SvgPicture.asset(
+              //   'assets/icons/shop.svg',
+              // ),
+              icon: Icon(Icons.shopping_bag_outlined),
               label: 'Shop',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.nightlight_round),
+              icon: SvgPicture.asset(
+                'assets/icons/sleep.svg',
+              ),
               label: 'Sleep',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: SvgPicture.asset(
+                'assets/icons/home.svg',
+              ),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.water_drop),
+              icon: SvgPicture.asset(
+                'assets/icons/blood.svg',
+              ),
               label: 'Symtoms',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.apple_rounded),
+              icon: SvgPicture.asset(
+                'assets/icons/food.svg',
+              ),
               label: 'Food',
             ),
           ],
