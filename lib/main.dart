@@ -1,10 +1,5 @@
-import 'package:by_cycle/firebase_options.dart';
-import 'package:by_cycle/repository/main_repository.dart';
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
-import 'package:by_cycle/screens/calendar.dart';
 import 'package:by_cycle/firebase_options.dart';
-import 'package:by_cycle/repository/main_repository.dart';
-import 'package:by_cycle/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,29 +55,26 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   int _selectedIndex = 0;
 
-  void _incrementCounter() {
+  late TimeOfDay bedTime;
+  late TimeOfDay wakeupTime;
+
+  @override
+  void initState() {
+    super.initState();
     setState(() {
-      _counter++;
+      bedTime = TimeOfDay.now();
+      wakeupTime =
+          TimeOfDay.now().replacing(hour: bedTime.hour, minute: bedTime.minute);
     });
+    // initializeDateFormatting();
   }
 
   @override
   Widget build(BuildContext context) {
     final themeCubit = BlocProvider.of<ThemeCubit>(context);
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-            //TODO - CleanUp this example code
-            onPressed: () {
-              MainRepository().addDataToFirestore(<String, dynamic>{
-                'email': "test@gmail.com",
-                'name': "test",
-              });
-            },
-            tooltip: 'Increment',
-            child: const Icon(Icons.add)),
         appBar: AppBar(
           title: Container(
             child: Row(
@@ -109,19 +101,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 IconButton(
                   color: Colors.black,
-                  icon: Icon(Icons.calendar_today_outlined),
-                  onPressed: () {
-                    // Navigate to the search screen
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Calendar(),
-                      ),
-                    );
-                  },
-                ),
-                IconButton(
-                  color: Colors.black,
                   icon: Icon(Icons.dark_mode_outlined),
                   onPressed: () {
                     themeCubit.toggleTheme();
@@ -132,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ),
-        body: const Center(
+        body: Center(
             child: Column(children: [
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             ElevatedButton(
@@ -145,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
           SizedBox(
             height: 15.0,
           ),
-          SizedBox(
+          const SizedBox(
               height: 180.0,
               width: 180.0,
               child: CircularProgressIndicator(
@@ -154,6 +133,73 @@ class _MyHomePageState extends State<MyHomePage> {
                 backgroundColor: Color.fromRGBO(222, 212, 197, 1),
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
               )),
+          const SizedBox(
+            height: 15.0,
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            Column(
+              children: [
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.blue),
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                    padding: MaterialStateProperty.all<EdgeInsets>(
+                        EdgeInsets.all(16)),
+                    textStyle: MaterialStateProperty.all<TextStyle>(
+                        TextStyle(fontSize: 20)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                    elevation: MaterialStateProperty.all<double>(5.0),
+                  ),
+                  onPressed: () async {
+                    final TimeOfDay? setBedTime = await showTimePicker(
+                        context: context,
+                        initialTime: bedTime,
+                        initialEntryMode: TimePickerEntryMode.dial);
+                    setState(() {
+                      if (setBedTime != null) bedTime = setBedTime;
+                    });
+                    calculateWakeUpTime(bedTime);
+                  },
+                  child: bedTime.minute > 9
+                      ? Text("${bedTime.hour}:${bedTime.minute}")
+                      : Text("${bedTime.hour}:0${bedTime.minute}"),
+                ),
+                const Text('Bed time'),
+              ],
+            ),
+            Column(
+              children: [
+                ElevatedButton(
+                    style: Theme.of(context).elevatedButtonTheme.style,
+                    onPressed: () async {
+                      final TimeOfDay? setWakeupTime = await showTimePicker(
+                          context: context,
+                          initialTime: wakeupTime,
+                          initialEntryMode: TimePickerEntryMode.dial);
+
+                      // if (wakeupTime != null) {
+                      setState(() {
+                        if (setWakeupTime != null) wakeupTime = setWakeupTime!;
+                      });
+                      calculateBedTime(wakeupTime);
+                    },
+                    // },
+                    child: wakeupTime.minute > 9
+                        ? Text("${wakeupTime.hour}:${wakeupTime.minute}")
+                        : Text("${wakeupTime.hour}:0${wakeupTime.minute}")),
+                const Text('WakeUp time'),
+              ],
+            ),
+          ]),
+          const SizedBox(
+            height: 15.0,
+          ),
         ])),
         bottomNavigationBar: BottomNavigationBar(
           onTap: (int index) {
@@ -196,7 +242,48 @@ class _MyHomePageState extends State<MyHomePage> {
               label: 'Food',
             ),
           ],
-        ) // This trailing comma makes auto-formatting nicer for build methods.
-        );
+        )); // This trailing comma makes auto-formatting nicer for build methods.
+  }
+
+  void calculateWakeUpTime(TimeOfDay time) {
+    // Calculate the recommended sleep time
+    var sleepCycle = 90;
+
+    //TODO: Get period phase from the personś input data
+    var numberOfCycles = 5;
+    var sleepTime = numberOfCycles * sleepCycle;
+    var timeInMins = time.hour * 60 + time.minute;
+    var wakeUpTimeInMins = timeInMins + sleepTime;
+
+    if (wakeUpTimeInMins >= 1440) {
+      wakeUpTimeInMins = wakeUpTimeInMins - 1440;
+    }
+
+    TimeOfDay calculatedWakeUpTime = TimeOfDay(
+        hour: (wakeUpTimeInMins ~/ 60), minute: (wakeUpTimeInMins % 60));
+
+    setState(() {
+      wakeupTime = calculatedWakeUpTime;
+    });
+  }
+
+  void calculateBedTime(TimeOfDay time) {
+    var sleepCycle = 90;
+    var numberOfCycles = 5;
+    var sleepTime = numberOfCycles * sleepCycle;
+
+    var timeInMins = time.hour * 60 + time.minute;
+    var bedTimeInMins = timeInMins - sleepTime;
+
+    if (bedTimeInMins < 0) {
+      bedTimeInMins = bedTimeInMins + 1440;
+    }
+
+    TimeOfDay calculatedBedTime =
+        TimeOfDay(hour: (bedTimeInMins ~/ 60), minute: (bedTimeInMins % 60));
+
+    setState(() {
+      bedTime = calculatedBedTime;
+    });
   }
 }
