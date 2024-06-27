@@ -1,11 +1,18 @@
+import 'package:by_cycle/firebase_options.dart';
+import 'package:by_cycle/repository/main_repository.dart';
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/screens/calendar.dart';
 import 'package:by_cycle/theme/app_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(BlocProvider(
       create: (BuildContext context) => ThemeCubit(),
       child:
@@ -64,6 +71,16 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final themeCubit = BlocProvider.of<ThemeCubit>(context);
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+            //TODO - CleanUp this example code
+            onPressed: () {
+              MainRepository().addDataToFirestore(<String, dynamic>{
+                'email': "test@gmail.com",
+                'name': "test",
+              });
+            },
+            tooltip: 'Increment',
+            child: const Icon(Icons.add)),
         appBar: AppBar(
           title: Container(
             child: Row(
