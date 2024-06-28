@@ -1,9 +1,12 @@
+import 'package:android_intent_plus/android_intent.dart';
+import 'package:android_intent_plus/flag.dart';
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -142,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue),
+                        MaterialStateProperty.all<Color>(Color(0xFFDED4C5)),
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
                     padding: MaterialStateProperty.all<EdgeInsets>(
@@ -176,7 +179,22 @@ class _MyHomePageState extends State<MyHomePage> {
             Column(
               children: [
                 ElevatedButton(
-                    style: Theme.of(context).elevatedButtonTheme.style,
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Color(0xFFDED4C5)),
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                      padding: MaterialStateProperty.all<EdgeInsets>(
+                          EdgeInsets.all(16)),
+                      textStyle: MaterialStateProperty.all<TextStyle>(
+                          TextStyle(fontSize: 20)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                      elevation: MaterialStateProperty.all<double>(5.0),
+                    ),
                     onPressed: () async {
                       final TimeOfDay? setWakeupTime = await showTimePicker(
                           context: context,
@@ -199,6 +217,20 @@ class _MyHomePageState extends State<MyHomePage> {
           ]),
           const SizedBox(
             height: 15.0,
+          ),
+          ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(Color(0xFFDED4C5)),
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+              padding: MaterialStateProperty.all<EdgeInsets>(
+                  EdgeInsets.only(left: 25, right: 25)),
+              textStyle: MaterialStateProperty.all<TextStyle>(
+                  TextStyle(fontSize: 20, color: Colors.black)),
+              elevation: MaterialStateProperty.all<double>(5.0),
+            ),
+            onPressed: openAlarmApp,
+            child: const Text('Set Alarm'),
           ),
         ])),
         bottomNavigationBar: BottomNavigationBar(
@@ -285,5 +317,26 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       bedTime = calculatedBedTime;
     });
+  }
+
+  void openAlarmApp() async {
+    if (Theme.of(context).platform == TargetPlatform.android) {
+      AndroidIntent intent = const AndroidIntent(
+        action: 'android.intent.action.SET_ALARM',
+        //TODO - Find what flag serves for
+        flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
+      );
+      await intent.launch();
+    } else if (Theme.of(context).platform == TargetPlatform.iOS) {
+      final Uri iosClockAppUri = Uri(scheme: 'clock');
+
+      if (await canLaunchUrl(iosClockAppUri)) {
+        await launchUrl(iosClockAppUri);
+      } else {
+        throw 'Could not open the Clock app.';
+      }
+    } else {
+      throw 'Platform not supported';
+    }
   }
 }
