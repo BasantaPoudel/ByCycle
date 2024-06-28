@@ -1,43 +1,44 @@
 class User {
-  bool cycle_heavy;
-  int cycle_length;
-  bool cycle_regular;
+  String name;
   String email;
   DateTime last_period;
-  String password;
-  int period_length;
-  String reminder_preference;
+  int menstuation_phase_length;
+  int complete_cycle_length;
   int time_to_fall_asleep;
+  bool cycle_regular;
+  bool cycle_heavy;
   bool would_like_reminders_about_data_log_in;
+  bool would_like_reminders_about_self_care_checklist;
   List<DailyDataInput> daily_data_input;
 
   User({
-    this.cycle_heavy = false,
-    this.cycle_length = 0,
-    this.cycle_regular = false,
+    required this.name,
     required this.email,
     required this.last_period,
-    this.password = '',
-    this.period_length = 0,
-    this.reminder_preference = '',
+    this.menstuation_phase_length = 0,
+    this.complete_cycle_length = 0,
     this.time_to_fall_asleep = 20,
+    this.cycle_regular = false,
+    this.cycle_heavy = false,
     this.would_like_reminders_about_data_log_in = false,
+    this.would_like_reminders_about_self_care_checklist = false,
     this.daily_data_input = const [],
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'cycle_heavy': cycle_heavy,
-      'cycle_length': cycle_length,
-      'cycle_regular': cycle_regular,
+      'name': name,
       'email': email,
       'last_period': last_period,
-      'password': password,
-      'period_length': period_length,
-      'reminder_preference': reminder_preference,
+      'menstuation_phase_length': menstuation_phase_length,
+      'complete_cycle_length': complete_cycle_length,
       'time_to_fall_asleep': time_to_fall_asleep,
+      'cycle_regular': cycle_regular,
+      'cycle_heavy': cycle_heavy,
       'would_like_reminders_about_data_log_in':
           would_like_reminders_about_data_log_in,
+      'would_like_reminders_about_self_care_checklist':
+          would_like_reminders_about_self_care_checklist,
       'daily_data_input':
           daily_data_input.map((input) => input.toMap()).toList(),
     };
@@ -45,17 +46,18 @@ class User {
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      cycle_heavy: map['cycle_heavy'],
-      cycle_length: map['cycle_length'],
-      cycle_regular: map['cycle_regular'],
+      name: map['name'],
       email: map['email'],
       last_period: map['last_period'].toDate(),
-      password: map['password'],
-      period_length: map['period_length'],
-      reminder_preference: map['reminder_preference'],
+      menstuation_phase_length: map['menstuation_phase_length'],
+      complete_cycle_length: map['complete_cycle_length'],
       time_to_fall_asleep: map['time_to_fall_asleep'],
+      cycle_regular: map['cycle_regular'],
+      cycle_heavy: map['cycle_heavy'],
       would_like_reminders_about_data_log_in:
           map['would_like_reminders_about_data_log_in'],
+      would_like_reminders_about_self_care_checklist:
+          map['would_like_reminders_about_self_care_checklist'],
       daily_data_input: List<DailyDataInput>.from(
         map['daily_data_input']
                 ?.map((input) => DailyDataInput.fromMap(input)) ??
