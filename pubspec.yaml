@@ -40,6 +40,8 @@ dependencies:
   flutter_bloc: ^8.1.6
   firebase_core: ^2.27.0
   cloud_firestore: ^4.15.8
+  url_launcher: ^6.3.0
+  android_intent_plus: ^5.0.2
 
 dev_dependencies:
   flutter_test:
