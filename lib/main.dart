@@ -2,6 +2,7 @@ import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/firebase_options.dart';
+import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -232,6 +233,16 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: openAlarmApp,
             child: const Text('Set Alarm'),
           ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => OnboardingPageOne(),
+                  ),
+                );
+              },
+              child: Text('Onboarding')),
         ])),
         bottomNavigationBar: BottomNavigationBar(
           onTap: (int index) {
