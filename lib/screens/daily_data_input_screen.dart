@@ -1,7 +1,9 @@
 import 'package:by_cycle/models/User.dart';
 import 'package:by_cycle/repository/user_repository.dart';
 import 'package:by_cycle/widgets/custom_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 enum Discharge {
   NO_DISCHARGE,
@@ -47,6 +49,9 @@ class DailyDataInputScreen extends StatefulWidget {
 class _DailyDataInputState extends State<DailyDataInputScreen> {
   double _currentSliderValue = 35;
 
+  TextEditingController _hoursController = TextEditingController();
+  TextEditingController _minsController = TextEditingController();
+
 //TODO - Find the better solution to initialize the empty list
 
   DailyDataInput dailyDataInput =
@@ -63,16 +68,19 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              _buildCard1(),
+              _buildTemperatureCard(),
+              _buildDischargeCard(),
+              _buildSleepCard(),
               _buildEnergyLevelCard(),
-              _buildCard2(),
-              _buildCard3(),
-              _buildCard4(),
-              _buildCard2(),
-              _buildCard2(),
+              _buildBloodCard(),
+              _buildSymtomsCard(),
               ElevatedButton(
                   onPressed: () {
                     print("Submit button pressed");
+                    dailyDataInput.temperature = _currentSliderValue;
+                    //TODO - Change the hours and minutes to a single field
+                    dailyDataInput.hours_of_sleep =
+                        int.parse(_hoursController.text);
                     UserRepository().sendDailyData(dailyDataInput);
                   },
                   child: Text('Submit')),
@@ -83,7 +91,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
     );
   }
 
-  _buildCard1() {
+  _buildTemperatureCard() {
     return CustomCard(
       title: 'Temperature',
       color: Color.fromRGBO(222, 212, 197, 1),
@@ -98,9 +106,9 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
             thumbColor: Colors.black,
             activeColor: Colors.black,
             value: _currentSliderValue,
-            min: 34,
-            max: 38.5,
-            divisions: 5,
+            min: 35,
+            max: 42,
+            divisions: 70,
             label: "$_currentSliderValue",
             onChanged: (double value) {
               setState(() {
@@ -112,8 +120,8 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('34°C'),
-              Text('38.5°C'),
+              Text('35°C'),
+              Text('42°C'),
             ],
           ),
         ],
@@ -121,7 +129,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
     );
   }
 
-  _buildCard2() {
+  _buildDischargeCard() {
     return CustomCard(
       title: 'Discharge',
       color: Color.fromRGBO(222, 212, 197, 1),
@@ -137,48 +145,6 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
           spacing: 8.0,
           runSpacing: 8.0,
           children: _buildDischargeList(),
-        ),
-      ),
-    );
-  }
-
-  _buildCard3() {
-    return CustomCard(
-      title: 'Blood',
-      color: Color.fromRGBO(222, 212, 197, 1),
-      onPressed: () {
-        print('Blood info tapped');
-      },
-      borderRadius: 15.0,
-      padding: const EdgeInsets.all(16.0),
-      child: SizedBox(
-        // width: MediaQuery.of(context).size.width * 0.5,
-        // height: MediaQuery.of(context).size.height * 0.2,
-        child: Wrap(
-          spacing: 8.0,
-          runSpacing: 8.0,
-          children: _buildBloodList(),
-        ),
-      ),
-    );
-  }
-
-  _buildCard4() {
-    return CustomCard(
-      title: 'Symptoms',
-      color: Color.fromRGBO(222, 212, 197, 1),
-      onPressed: () {
-        print('Symptoms info tapped');
-      },
-      borderRadius: 15.0,
-      padding: const EdgeInsets.all(16.0),
-      child: SizedBox(
-        // width: MediaQuery.of(context).size.width * 0.5,
-        // height: MediaQuery.of(context).size.height * 0.2,
-        child: Wrap(
-          spacing: 8.0,
-          runSpacing: 8.0,
-          children: _buildSymptomsList(),
         ),
       ),
     );
@@ -205,18 +171,94 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
     );
   }
 
+  _buildBloodCard() {
+    return CustomCard(
+      title: 'Blood',
+      color: Color.fromRGBO(222, 212, 197, 1),
+      onPressed: () {
+        print('Blood info tapped');
+      },
+      borderRadius: 15.0,
+      padding: const EdgeInsets.all(16.0),
+      child: SizedBox(
+        // width: MediaQuery.of(context).size.width * 0.5,
+        // height: MediaQuery.of(context).size.height * 0.2,
+        child: Wrap(
+          spacing: 8.0,
+          runSpacing: 8.0,
+          children: _buildBloodList(),
+        ),
+      ),
+    );
+  }
+
+  _buildSymtomsCard() {
+    return CustomCard(
+      title: 'Symptoms',
+      color: Color.fromRGBO(222, 212, 197, 0.5),
+      onPressed: () {
+        print('Symptoms info tapped');
+      },
+      borderRadius: 15.0,
+      padding: const EdgeInsets.all(16.0),
+      child: SizedBox(
+        // width: MediaQuery.of(context).size.width * 0.5,
+        // height: MediaQuery.of(context).size.height * 0.2,
+        child: Wrap(
+          spacing: 8.0,
+          runSpacing: 8.0,
+          children: _buildSymptomsList(),
+        ),
+      ),
+    );
+  }
+
+  _buildSleepCard() {
+    return CustomCard(
+      title: 'Hours Of Sleep',
+      color: Color.fromRGBO(222, 212, 197, 1),
+      onPressed: () {
+        print('Hours info tapped');
+      },
+      borderRadius: 15.0,
+      padding: const EdgeInsets.all(16.0),
+      child: SizedBox(
+          child: Container(
+        margin: EdgeInsets.all(12.0),
+        padding: EdgeInsets.all(12.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+                child: TextField(
+                    controller: _hoursController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(hintText: "Hours"))),
+            const Text(":"),
+            Expanded(
+                child: TextField(
+                    controller: _minsController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(hintText: "Minutes"))),
+          ],
+        ),
+      )),
+    );
+  }
+
   List<GestureDetector> _buildDischargeList() {
     return Discharge.values.map((itemType) {
+      Color containerColor = Color.fromRGBO(254, 247, 237, 1);
       return GestureDetector(
         onTap: () {
-          print("Gesture Detected");
           print(itemType.toString().split('.').last);
           dailyDataInput.discharge = itemType.toString().split('.').last;
         },
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Color.fromRGBO(254, 247, 237, 1),
+            color: containerColor,
           ),
           padding: EdgeInsets.all(3.0),
           // margin: EdgeInsets.all(8.0),
