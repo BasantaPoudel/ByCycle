@@ -75,6 +75,8 @@ class DailyDataInput {
   int hours_of_sleep;
   List<String> symptoms;
   double temperature;
+  String
+      phase; // Should be equal to "menstrual", "follicular", "ovulatory" or "luteal"
 
   DailyDataInput({
     this.blood = '',
@@ -84,6 +86,7 @@ class DailyDataInput {
     this.hours_of_sleep = 0,
     this.symptoms = const [],
     this.temperature = 0,
+    this.phase = "",
   });
 
   Map<String, dynamic> toMap() {
@@ -95,20 +98,20 @@ class DailyDataInput {
       'hours_of_sleep': hours_of_sleep,
       'symptoms': symptoms,
       'temperature': temperature,
+      'phase': phase,
     };
   }
 
   factory DailyDataInput.fromMap(Map<String, dynamic> map) {
     return DailyDataInput(
       blood: map['blood'] ?? '',
-      date: map['date']
-          .toDate(), // Assuming 'date' is stored as Firestore Timestamp
+      date: map['date'].toDate(),
       discharge: map['discharge'] ?? '',
       energy_level: map['energy_level'] ?? '',
-      hours_of_sleep: map['hours_of_sleep'] ??
-          0, // Ensure this matches the stored data type
+      hours_of_sleep: map['hours_of_sleep'] ?? 0,
       symptoms: List<String>.from(map['symptoms'] ?? []),
-      temperature: map['temperature'].toDouble() ?? 0,
+      temperature: map['temperature']?.toDouble() ?? 0,
+      phase: map['phase'] ?? '', // Assuming 'phase' is stored in the map
     );
   }
 }
