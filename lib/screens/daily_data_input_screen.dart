@@ -49,8 +49,8 @@ class DailyDataInputScreen extends StatefulWidget {
 class _DailyDataInputState extends State<DailyDataInputScreen> {
   double _currentSliderValue = 35;
 
-  TextEditingController _hoursController = TextEditingController();
-  TextEditingController _minsController = TextEditingController();
+  final TextEditingController _hoursController = TextEditingController();
+  final TextEditingController _minsController = TextEditingController();
 
 //TODO - Find the better solution to initialize the empty list
 
@@ -75,6 +75,17 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
               _buildBloodCard(),
               _buildSymtomsCard(),
               ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Color(0xFFDED4C5)),
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                    padding: MaterialStateProperty.all<EdgeInsets>(
+                        EdgeInsets.only(left: 25, right: 25)),
+                    textStyle: MaterialStateProperty.all<TextStyle>(
+                        TextStyle(fontSize: 20, color: Colors.black)),
+                    elevation: MaterialStateProperty.all<double>(5.0),
+                  ),
                   onPressed: () {
                     print("Submit button pressed");
                     dailyDataInput.temperature = _currentSliderValue;
@@ -83,7 +94,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                         int.parse(_hoursController.text);
                     UserRepository().sendDailyData(dailyDataInput);
                   },
-                  child: Text('Submit')),
+                  child: const Text('Submit')),
             ],
           ),
         ),
@@ -94,7 +105,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
   _buildTemperatureCard() {
     return CustomCard(
       title: 'Temperature',
-      color: Color.fromRGBO(222, 212, 197, 1),
+      color: const Color.fromRGBO(222, 212, 197, 1),
       borderRadius: 15.0,
       padding: const EdgeInsets.all(16.0),
       onPressed: () {
@@ -117,7 +128,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
               print("object");
             },
           ),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('35°C'),
@@ -224,8 +235,8 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
       padding: const EdgeInsets.all(16.0),
       child: SizedBox(
           child: Container(
-        margin: EdgeInsets.all(12.0),
-        padding: EdgeInsets.all(12.0),
+        // margin: EdgeInsets.all(12.0),
+        // padding: EdgeInsets.all(12.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           // crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -249,7 +260,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
 
   List<GestureDetector> _buildDischargeList() {
     return Discharge.values.map((itemType) {
-      Color containerColor = Color.fromRGBO(254, 247, 237, 1);
+      Color containerColor = const Color.fromRGBO(254, 247, 237, 1);
       return GestureDetector(
         onTap: () {
           print(itemType.toString().split('.').last);

@@ -51,16 +51,13 @@ class _MyAppState extends State<MyApp> {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
-
   final String title;
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
-
   late TimeOfDay bedTime;
   late TimeOfDay wakeupTime;
 
@@ -96,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 TextButton(
-                  child: Text('TODAY'),
+                  child: const Text('TODAY'),
                   onPressed: () {
                     // Navigate to the search screen
                     Navigator.push(
@@ -112,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 IconButton(
                   color: Colors.black,
-                  icon: Icon(Icons.dark_mode_outlined),
+                  icon: const Icon(Icons.dark_mode_outlined),
                   onPressed: () {
                     themeCubit.toggleTheme();
                     // Navigate to the search screen

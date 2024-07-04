@@ -66,6 +66,7 @@ class UserRepository {
 
   void sendDailyData(DailyDataInput dailyDataInput) {
     //Add the daily data input to the user's daily_data_input list
+    //Add the Error Checking for the daily data input
     FirebaseFirestore.instance.collection("users").add(dailyDataInput.toMap());
     print("Daily data sent");
   }
