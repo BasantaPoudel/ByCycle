@@ -2,6 +2,7 @@ import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/firebase_options.dart';
+import 'package:by_cycle/screens/daily_data_input_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -94,9 +95,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   'YESTERDAY',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
-                Text(
-                  'TODAY',
-                  style: Theme.of(context).textTheme.bodySmall,
+                TextButton(
+                  child: Text('TODAY'),
+                  onPressed: () {
+                    // Navigate to the search screen
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DailyDataInputScreen()));
+                  },
+                  // style: Theme.of(context).buttonTheme.layoutBehavior,
                 ),
                 Text(
                   'TOMORROW',
@@ -116,15 +124,15 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Center(
             child: Column(children: [
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             ElevatedButton(
                 onPressed: null, child: Text("What is your temperature?")),
             ElevatedButton(onPressed: null, child: Text("+"))
           ]),
-          Center(
+          const Center(
             child: Text('Recommended sleep time'),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15.0,
           ),
           const SizedBox(
