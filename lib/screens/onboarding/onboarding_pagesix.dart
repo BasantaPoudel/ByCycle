@@ -1,3 +1,4 @@
+import 'package:by_cycle/main.dart';
 import 'package:by_cycle/models/onboarding_questions.dart';
 import 'package:by_cycle/models/user.dart';
 import 'package:by_cycle/repository/user_repository.dart';
@@ -54,18 +55,17 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                //   formData.last_period = DateTime.parse(controller.text);
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) =>
-                //           OnbocontrollerardingScreenTwo(formData),
-                //     ),
-                //   );
+                UserRepository().saveOnboardingData(widget.formData);
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyHomePage(title: "Bycycle"),
+                  ),
+                );
                 //   // TODO: Implement done button functionality
 
                 //TODO - Fix this function call
-                UserRepository().saveOnboardingData(widget.formData);
               },
               child: Text('Done'),
             ),
