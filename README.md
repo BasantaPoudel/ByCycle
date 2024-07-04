@@ -14,3 +14,7 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+.zshenv  
+export PATH=$/Users/poudelb2/Documents/flutter/bin:$PATH  
+export PATH=$/Users/poudelb2/Documents/brew-4.3.8/bin:$PATH  
