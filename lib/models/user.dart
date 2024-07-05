@@ -10,6 +10,7 @@ class User {
   bool would_like_reminders_about_data_log_in;
   bool would_like_reminders_about_self_care_checklist;
   List<DailyDataInput> daily_data_input;
+  AlgorithmData algorithm_data; // Instance of AlgorithmData added here
 
   User({
     required this.name,
@@ -23,6 +24,7 @@ class User {
     this.would_like_reminders_about_data_log_in = false,
     this.would_like_reminders_about_self_care_checklist = false,
     this.daily_data_input = const [],
+    required this.algorithm_data, // Initialize algorithm_data here
   });
 
   Map<String, dynamic> toMap() {
@@ -41,6 +43,7 @@ class User {
           would_like_reminders_about_self_care_checklist,
       'daily_data_input':
           daily_data_input.map((input) => input.toMap()).toList(),
+      'algorithm_data': algorithm_data.toMap(), // Convert algorithm_data to map
     };
   }
 
@@ -63,6 +66,8 @@ class User {
                 ?.map((input) => DailyDataInput.fromMap(input)) ??
             const [],
       ),
+      algorithm_data: AlgorithmData.fromMap(
+          map['algorithm_data']), // Initialize algorithm_data from map
     );
   }
 }
@@ -116,25 +121,23 @@ class DailyDataInput {
   }
 }
 
-class InsightsCache {
+class AlgorithmData {
   List<Map<String, dynamic>> blood;
   List<Map<String, dynamic>> backpain;
   List<Map<String, dynamic>> menstruation;
   List<Map<String, dynamic>> luteal;
   List<Map<String, dynamic>> temperature;
 
-  InsightsCache({
-    List<Map<String, dynamic>>? blood,
-    List<Map<String, dynamic>>? backpain,
-    List<Map<String, dynamic>>? menstruation,
-    List<Map<String, dynamic>>? luteal,
-    List<Map<String, dynamic>>? temperature,
-  })  : blood = blood ?? [],
-        backpain = backpain ?? [],
-        menstruation = menstruation ?? [],
-        luteal = luteal ?? [],
-        temperature = temperature ?? [];
+  List<DateTime> spottingOccurences; // Changed to List<DateTime>
 
+  AlgorithmData({
+    this.blood = const [],
+    this.backpain = const [],
+    this.menstruation = const [],
+    this.luteal = const [],
+    this.temperature = const [],
+    this.spottingOccurences = const [],
+  });
   // Convert InsightsCache instance to a Map
   Map<String, dynamic> toMap() {
     return {
@@ -143,17 +146,40 @@ class InsightsCache {
       'menstruation': menstruation,
       'luteal': luteal,
       'temperature': temperature,
+      'spottingOccurences': spottingOccurences
+          .map((date) => date.toIso8601String())
+          .toList(), // Convert List of DateTime to List of Strings
     };
   }
 
   // Create an InsightsCache instance from a Map
-  factory InsightsCache.fromMap(Map<String, dynamic> map) {
-    return InsightsCache(
-      blood: List<Map<String, dynamic>>.from(map['blood'] ?? []),
-      backpain: List<Map<String, dynamic>>.from(map['backpain'] ?? []),
-      menstruation: List<Map<String, dynamic>>.from(map['menstruation'] ?? []),
-      luteal: List<Map<String, dynamic>>.from(map['luteal'] ?? []),
-      temperature: List<Map<String, dynamic>>.from(map['temperature'] ?? []),
+  // Create an AlgorithmData instance from a Map
+  factory AlgorithmData.fromMap(Map<String, dynamic> map) {
+    return AlgorithmData(
+      blood: (map['blood'] as List<dynamic>?)
+              ?.map((item) => item as Map<String, dynamic>)
+              .toList() ??
+          [],
+      backpain: (map['backpain'] as List<dynamic>?)
+              ?.map((item) => item as Map<String, dynamic>)
+              .toList() ??
+          [],
+      menstruation: (map['menstruation'] as List<dynamic>?)
+              ?.map((item) => item as Map<String, dynamic>)
+              .toList() ??
+          [],
+      luteal: (map['luteal'] as List<dynamic>?)
+              ?.map((item) => item as Map<String, dynamic>)
+              .toList() ??
+          [],
+      temperature: (map['temperature'] as List<dynamic>?)
+              ?.map((item) => item as Map<String, dynamic>)
+              .toList() ??
+          [],
+      spottingOccurences: (map['spottingOccurences'] as List<dynamic>?)
+              ?.map((date) => DateTime.parse(date))
+              .toList() ??
+          [],
     );
   }
 
