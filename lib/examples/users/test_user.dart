@@ -1,5 +1,18 @@
 import 'package:by_cycle/models/user.dart';
 
+List<DateTime> initialSpottingOccurrences = [
+  DateTime(2024, 6, 10), // Example: Specific date
+];
+
+AlgorithmData testAlgorithmData = AlgorithmData(
+  blood: [], // Initialize with empty list or provide actual data
+  backpain: [], // Initialize with empty list or provide actual data
+  menstruation: [], // Initialize with empty list or provide actual data
+  luteal: [], // Initialize with empty list or provide actual data
+  temperature: [], // Initialize with empty list or provide actual data
+  spottingOccurences: initialSpottingOccurrences,
+);
+
 List<DailyDataInput> dailyDataInputstest_user = [
   DailyDataInput(
     blood: 'no',
@@ -34,12 +47,12 @@ List<DailyDataInput> dailyDataInputstest_user = [
   DailyDataInput(
     blood: 'no',
     date: DateTime(2024, 6, 21),
-    discharge: 'Creamy',
+    discharge: 'spotting',
     energy_level: 'medium',
     hours_of_sleep: 6,
     symptoms: ['no'],
     temperature: 36.6,
-    phase: "menstruation",
+    phase: "ovulatory",
   ),
   /*DailyDataInput(
     blood: 'no',
@@ -64,4 +77,9 @@ User test_user = User(
   would_like_reminders_about_data_log_in: false,
   would_like_reminders_about_self_care_checklist: false,
   daily_data_input: dailyDataInputstest_user,
+  algorithm_data: testAlgorithmData, // Using default values for algorithmData
 );
+
+void main() {
+  print(testAlgorithmData.spottingOccurences);
+}

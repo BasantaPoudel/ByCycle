@@ -60,4 +60,5 @@ User irregular_cycle_pb = User(
   would_like_reminders_about_data_log_in: false,
   would_like_reminders_about_self_care_checklist: false,
   daily_data_input: dailyDataInputs,
+  algorithm_data: AlgorithmData(), // Using default values for algorithmData
 );

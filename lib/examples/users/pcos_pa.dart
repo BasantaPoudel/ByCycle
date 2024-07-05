@@ -60,4 +60,5 @@ User pcos_pa = User(
   would_like_reminders_about_data_log_in: false,
   would_like_reminders_about_self_care_checklist: false,
   daily_data_input: dailyDataInputsPCOS_PA,
+  algorithm_data: AlgorithmData(), // Using default values for algorithmData
 );
