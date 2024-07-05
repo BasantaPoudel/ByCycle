@@ -126,11 +126,86 @@ List<String> mucus(User user) {
     //data repeated < 3 log ins
     //I'm assuming that we want to display it if it
     //happened the same day, hence just checks last day
-  } else if (allowedValues.contains(d2)) {
+  } else if (allowedValues.contains(d0)) {
     out.add("Cervical mucus");
   }
+  //should it check that it's not the ovulatory phase???
   if (d0 == "spotting") {
-    print("spotting");
+    print("Spotting today!");
+    user.algorithm_data.spottingOccurences.add(DateTime.now());
+    print("Spotting occurences: ${user.algorithm_data.spottingOccurences}");
+    final Duration diff = user.algorithm_data.spottingOccurences[0]
+        .difference(user.algorithm_data.spottingOccurences[1]);
+    print("Difference in days: ${diff.inDays.abs()}");
+
+    //Data repeated across =/> 2 menstrual cycles
+    if (diff.inDays.abs() > user.complete_cycle_length) {
+      print("spotting, data repeated =/> 2 menstural cycle");
+      print("DISPLAY General insights insight number 3");
+      out.add("insight_3");
+    } else if (user.daily_data_input[0].phase == "ovulatory") {
+      print("Display datab > General insights > insight number: 4");
+      out.add("insight_4");
+    }
+  }
+  return out;
+}
+
+// C) Energy level
+// not clear: tag energy "increase energy" ?in PAGE determined by COLOR?
+// very unsure what kind of tags should be produced...
+List<String> energyLevel(User user) {
+  List<String> out = [];
+
+  //if energy level is high or moderate, do nothing
+  if (user.daily_data_input[0].energy_level == "high" ||
+      user.daily_data_input[0].energy_level == "moderate") {
+    return out;
+  } else {
+    if (user.daily_data_input[0].hours_of_sleep < 8) {
+      print("DISPLAY database > Sleep insights > insight number: 1");
+      out.add("insight_1");
+    } else {
+      switch (user.daily_data_input[0].phase) {
+        case "luteal":
+          print(
+              'DISPLAY database > cycle:luteal > insight tag"increase energy"');
+          out.add("increase energy");
+          break;
+        case "menstrual":
+          print(
+              'DISPLAY database > cycle:Menstruation > insight tag: "increase energy"');
+          out.add("increase energy");
+          break;
+        case "follicular":
+        case "ovulatory":
+          print(
+              'DISPLAY database > Cycle:Ovulation / Cycle:Follicular > insight tag 1 choice "Increase Energy" "Sleep Quality", "Alcohol" & "Coffee"');
+          out.add("Increase Energy");
+          out.add("Increase Energy");
+      }
+    }
+  }
+  return out;
+}
+
+// D) Hours of sleep tonight
+List<String> hoursOfSleep(User user) {
+  List<String> out = [];
+
+  final h0 = user.daily_data_input[0].hours_of_sleep;
+  final h1 = user.daily_data_input[1].hours_of_sleep;
+  final h2 = user.daily_data_input[2].hours_of_sleep;
+
+  final e0 = user.daily_data_input[0].energy_level;
+  final e1 = user.daily_data_input[1].energy_level;
+  final e2 = user.daily_data_input[2].energy_level;
+
+  //if ()
+  if (user.daily_data_input[0].hours_of_sleep == 0) {
+    print('DISPLAY database > insight tags: "sleep disruption", "insomnia"');
+    out.add("sleep disruption");
+    out.add("insomnia");
   }
   return out;
 }
@@ -140,5 +215,5 @@ void main() {
 
   User minimizedUser = minimizeUser(test_user);
   //print(bodyTemperature(minimizedUser));
-  print(mucus(minimizedUser));
+  print(energyLevel(minimizedUser));
 }
