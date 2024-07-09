@@ -3,6 +3,9 @@ class User {
   String email;
   DateTime last_period;
   int menstuation_phase_length;
+  int follicular_phase_length;
+  int ovulatory_phase_length;
+  int luteal_phase_length;
   int complete_cycle_length;
   int time_to_fall_asleep;
   bool cycle_regular;
@@ -10,13 +13,16 @@ class User {
   bool would_like_reminders_about_data_log_in;
   bool would_like_reminders_about_self_care_checklist;
   List<DailyDataInput> daily_data_input;
-  AlgorithmData algorithm_data; // Instance of AlgorithmData added here
+  AlgorithmData algorithm_data;
 
   User({
     required this.name,
     required this.email,
     required this.last_period,
     this.menstuation_phase_length = 0,
+    this.follicular_phase_length = 0,
+    this.ovulatory_phase_length = 0,
+    this.luteal_phase_length = 0,
     this.complete_cycle_length = 0,
     this.time_to_fall_asleep = 20,
     this.cycle_regular = false,
@@ -24,15 +30,18 @@ class User {
     this.would_like_reminders_about_data_log_in = false,
     this.would_like_reminders_about_self_care_checklist = false,
     this.daily_data_input = const [],
-    required this.algorithm_data, // Initialize algorithm_data here
+    required this.algorithm_data,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'name': name,
       'email': email,
-      'last_period': last_period,
+      'last_period': last_period.toIso8601String(),
       'menstuation_phase_length': menstuation_phase_length,
+      'follicular_phase_length': follicular_phase_length,
+      'ovulatory_phase_length': ovulatory_phase_length,
+      'luteal_phase_length': luteal_phase_length,
       'complete_cycle_length': complete_cycle_length,
       'time_to_fall_asleep': time_to_fall_asleep,
       'cycle_regular': cycle_regular,
@@ -43,7 +52,7 @@ class User {
           would_like_reminders_about_self_care_checklist,
       'daily_data_input':
           daily_data_input.map((input) => input.toMap()).toList(),
-      'algorithm_data': algorithm_data.toMap(), // Convert algorithm_data to map
+      'algorithm_data': algorithm_data.toMap(),
     };
   }
 
@@ -51,8 +60,11 @@ class User {
     return User(
       name: map['name'],
       email: map['email'],
-      last_period: map['last_period'].toDate(),
+      last_period: DateTime.parse(map['last_period']),
       menstuation_phase_length: map['menstuation_phase_length'],
+      follicular_phase_length: map['follicular_phase_length'],
+      ovulatory_phase_length: map['ovulatory_phase_length'],
+      luteal_phase_length: map['luteal_phase_length'],
       complete_cycle_length: map['complete_cycle_length'],
       time_to_fall_asleep: map['time_to_fall_asleep'],
       cycle_regular: map['cycle_regular'],
@@ -66,8 +78,7 @@ class User {
                 ?.map((input) => DailyDataInput.fromMap(input)) ??
             const [],
       ),
-      algorithm_data: AlgorithmData.fromMap(
-          map['algorithm_data']), // Initialize algorithm_data from map
+      algorithm_data: AlgorithmData.fromMap(map['algorithm_data']),
     );
   }
 }
@@ -118,6 +129,10 @@ class DailyDataInput {
       temperature: map['temperature']?.toDouble() ?? 0,
       phase: map['phase'] ?? '', // Assuming 'phase' is stored in the map
     );
+  }
+  @override
+  String toString() {
+    return 'DailyDataInput(blood: $blood, date: $date, discharge: $discharge, energy_level: $energy_level, hours_of_sleep: $hours_of_sleep, symptoms: $symptoms, temperature: $temperature, phase: $phase)';
   }
 }
 
