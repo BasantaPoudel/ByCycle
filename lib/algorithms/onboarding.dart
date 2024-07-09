@@ -1,5 +1,6 @@
 import 'package:by_cycle/examples/users/new_user.dart';
 import 'package:by_cycle/examples/users/user_in_menstrual_phase.dart';
+import 'package:by_cycle/models/customDateTimeRange.dart';
 import 'package:by_cycle/models/user.dart';
 
 onboardCalendar(User user) {
@@ -53,73 +54,43 @@ onboardCalendar(User user) {
   }
 }
 
-int findDailyDataInputIndexByDate(
-    List<DailyDataInput> dailyDataInputs, DateTime targetDate) {
-  for (int i = 0; i < dailyDataInputs.length; i++) {
-    DailyDataInput input = dailyDataInputs[i];
-    if (input.date.year == targetDate.year &&
-        input.date.month == targetDate.month &&
-        input.date.day == targetDate.day) {
-      return i;
-    }
-  }
-  return -1; // Return -1 if no matching date is found
-}
+List<CustomDateTimeRange> generateDateTimeRanges(User user) {
+  List<CustomDateTimeRange> dateTimeRanges = [];
 
-redrawCalendar(User user, String tag) {
-  int indexOfToday =
-      findDailyDataInputIndexByDate(user.daily_data_input, DateTime.now());
+  CustomDateTimeRange? currentRange;
+  String currentPhase = '';
 
-  int shift = 0;
-  if (tag == "follicular_to_ovulatory" &&
-      user.daily_data_input[indexOfToday].phase == "follicular")
-    shift = user.menstuation_phase_length + user.follicular_phase_length;
-  if (tag == "ovulatory_to_luteal" &&
-      user.daily_data_input[indexOfToday].phase == "ovulatory")
-    shift = user.menstuation_phase_length + user.follicular_phase_length;
-  if (tag == "luteal_to_menstrual" &&
-      user.daily_data_input[indexOfToday].phase == "luteal") shift = 0;
-  if (tag == "menstrual_to_follicular" &&
-      user.daily_data_input[indexOfToday].phase == "menstrual") {
-    print("menstrual_to_follicular activated");
-    shift = user.menstuation_phase_length;
-  }
+  for (int i = 0; i < user.daily_data_input.length; i++) {
+    DailyDataInput data = user.daily_data_input[i];
 
-  String determinePhase(DateTime date) {
-    int dayOfCycle = date.difference(DateTime.now()).inDays +
-        shift % user.complete_cycle_length;
+    // Check if phase changes
+    if (data.phase != currentPhase) {
+      // If we were in a phase, finalize the range
+      if (currentRange != null) {
+        dateTimeRanges.add(currentRange);
+      }
 
-    if (dayOfCycle < user.menstuation_phase_length) {
-      return "menstrual";
-    } else if (dayOfCycle <
-        user.menstuation_phase_length + user.follicular_phase_length) {
-      return "follicular";
-    } else if (dayOfCycle <
-        user.menstuation_phase_length +
-            user.follicular_phase_length +
-            user.ovulatory_phase_length) {
-      return "ovulatory";
+      // Start a new range for the new phase
+      currentPhase = data.phase;
+      currentRange = CustomDateTimeRange(
+          start: data.date, end: data.date, phase: currentPhase);
     } else {
-      return "luteal";
+      // Continue extending the current range
+      currentRange = CustomDateTimeRange(
+          start: currentRange!.start, end: data.date, phase: currentPhase);
     }
   }
 
-  for (int i = 0; i <= 31; i++) {
-    DateTime nextDay = DateTime.now().add(Duration(days: i));
-    String phase = determinePhase(nextDay);
-    int index = findDailyDataInputIndexByDate(user.daily_data_input, nextDay);
-    if (index != -1) {
-      user.daily_data_input[index].phase = phase;
-    } else {
-      user.daily_data_input.add(DailyDataInput(date: nextDay, phase: phase));
-    }
+  // Finalize the last range
+  if (currentRange != null) {
+    dateTimeRanges.add(currentRange);
   }
 
-  user.daily_data_input.forEach((data) => print(data));
+  return dateTimeRanges;
 }
 
 void main() {
-  //onboardCalendar(new_user);
-  print("BREAK");
-  redrawCalendar(user_in_menstrual_phase, "menstrual_to_follicular");
+  onboardCalendar(new_user);
+  print(generateDateTimeRanges(new_user));
+  //print("BREAK");
 }
