@@ -1,4 +1,4 @@
-import 'package:by_cycle/models/tag.dart';
+import 'package:by_cycle/models/InsightInfo.dart';
 
 Map<String, List<InsightInfo>> defaultTags = {
   "blood": [
