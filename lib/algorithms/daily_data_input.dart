@@ -1,45 +1,51 @@
+import 'package:by_cycle/examples/users/new_user.dart';
 import 'package:by_cycle/models/user.dart';
 import 'package:by_cycle/examples/users/pa_lucia.dart';
 import 'package:by_cycle/examples/users/pb_ovulation.dart';
 import 'package:by_cycle/examples/users/test_user.dart';
 /*
-This is the daily_data_input algorithm.
+This file contains the daily_data_input algorithm through the function A-F
 It should produce 3 insights when a User class is provided to it.
 
 Parameters: 
 - User class, current day??? Entire user class is pretty big,
 so perhaps data passed to functions should be User with just
-5 last data input instances 
+5 last data input instances or only speific properties of User
 
 returns: 
 - three insights?? three tags?? Mb each A-F function should return a tag,
 and this algorithm as a whole should return the specific insights
-(bc we don't want the insights the repeat)
-- changes phase?
+(bc we don't want the insights to repeat)
+- should the algorithm change phase too? I suppose it can produce tags like
+ovulatory_to_luteal, which can be passed to redrawCalendar and thus adjust 
+the phase.
 
 Take into account:
 - in the beginning and in many cases there'll be missing 
 dailyDataInputs
-- multiple tags can be returned
+- multiple tags can be returned from functions A-F
 - sometimes both a tag is activated and the phase needs to be adjusted. 
-I want to make the functions return tags; so perhaps adjust cycle should
-not stop execution of the algorithm. Also, make a safe way for the cycle not 
-to be changed twice in the same day for -
+I want to make the functions return tags; so perhaps adjusting the phase should
+not stop execution of the algorithm. Also, ensure that the cycle is not changed 
+twice in the same day so that no phase is jumped over.
 */
 
 User minimizeUser(User user) {
-/*Get a user with a maximum of last 5 dailyDataInputs in reverse order,
-so that we don't pass large user instances as arguments and the dailyDataInputs
+/*A temporary solution for testing. Returns a user with a maximum of last 5 dailyDataInputs 
+in reverse order, so that we don't pass large user instances as arguments and the dailyDataInputs
 list can be accesssed intuitively:
 user.daily_data_input[0] <- Today
 user.daily_data_input[1] <- Yesterday
 user.daily_data_input[2] <- 2 days ago etc.
+This class might be outdated soon because possibly users will have dailDataInputs going into the 
+future to display that information in the calendar...
+Also, this function should be pure.
 
 Parameters:
 -an instance of User
 
 Returns:
--a minimized instance of user (no side effects) with
+-a minimized instance of user with
 a maximum of 5 dailyDataInputs 
 
 */
@@ -209,6 +215,30 @@ List<String> hoursOfSleep(User user) {
   }
   return out;
 }
+
+int findDailyDataInputIndexByDate(
+    List<DailyDataInput> dailyDataInputs, DateTime targetDate) {
+  for (int i = 0; i < dailyDataInputs.length; i++) {
+    DailyDataInput input = dailyDataInputs[i];
+    if (input.date.year == targetDate.year &&
+        input.date.month == targetDate.month &&
+        input.date.day == targetDate.day) {
+      return i;
+    }
+  }
+  return -1; // Return -1 if no matching date is found
+}
+/*
+adjustCalendar(String tag, User user) {
+
+  int indexOfToday =
+      findDailyDataInputIndexByDate(user.daily_data_input, targetDate);
+
+  if (tag == "follicular_to_ovulatory" &&
+      user.daily_data_input[indexOfToday] == "follicular") {
+    redrawCalendar(user)
+  }
+}*/
 
 void main() {
   print("Miau");
