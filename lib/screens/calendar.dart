@@ -1,38 +1,112 @@
+import 'package:by_cycle/models/customDateTimeRange.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:by_cycle/models/calendar_utils.dart';
 
-class Event {
-  DateTime startDate;
-  DateTime endDate;
-
-  Event({required this.startDate, required this.endDate});
-}
-
 class Calendar extends StatefulWidget {
+  final List<CustomDateTimeRange>?
+      initialDateTimeRanges; // Optional initial value
+
+  Calendar({Key? key, this.initialDateTimeRanges}) : super(key: key);
+
   @override
   _CalendarState createState() => _CalendarState();
 }
 
 class _CalendarState extends State<Calendar> {
-  Event event = Event(
-    startDate: DateTime.now().subtract(Duration(days: 1)),
-    endDate: DateTime.now().add(Duration(days: 1)),
-  );
-
   RangeSelectionMode rangeSelectionMode = RangeSelectionMode.enforced;
 
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  List<DateTimeRange> dateTimeRanges = [];
-  CalendarStyle style = const CalendarStyle();
+
+  late List<CustomDateTimeRange> dateTimeRanges;
+
+  // Default CustomDateTimeRanges if none provided through constructor
+  List<CustomDateTimeRange> _defaultDateTimeRanges = [
+    CustomDateTimeRange(
+      start: DateTime.now().add(Duration(days: 12)),
+      end: DateTime.now().add(Duration(days: 14)),
+    ),
+    CustomDateTimeRange(
+      start: DateTime.now().add(Duration(days: 3)),
+      end: DateTime.now().add(Duration(days: 5)),
+    ),
+  ];
+  CalendarStyle style = CalendarStyle(
+    rangeHighlightColor: Colors.red,
+    rangeStartDecoration: BoxDecoration(
+      color: Colors.red, // Example: blue background for start of range
+      shape: BoxShape.rectangle,
+    ),
+    rangeEndDecoration: BoxDecoration(
+      color: Colors.red, // Example: blue background for end of range
+      shape: BoxShape.rectangle,
+    ),
+    withinRangeDecoration: BoxDecoration(color: Colors.red),
+    // Add other properties like text styles, margins, etc., as needed
+  );
+  Map<String, CalendarStyle> styles = {
+    "menstrual": CalendarStyle(
+      rangeHighlightColor: Colors.red,
+      rangeStartDecoration: BoxDecoration(
+        color: Colors.red, // Example: blue background for start of range
+        shape: BoxShape.rectangle,
+      ),
+      rangeEndDecoration: BoxDecoration(
+        color: Colors.red, // Example: blue background for end of range
+        shape: BoxShape.rectangle,
+      ),
+      withinRangeDecoration: BoxDecoration(color: Colors.red),
+      // Add other properties like text styles, margins, etc., as needed
+    ),
+    "follicular": CalendarStyle(
+      rangeHighlightColor: Colors.green,
+      rangeStartDecoration: BoxDecoration(
+        color: Colors.green, // Example: blue background for start of range
+        shape: BoxShape.rectangle,
+      ),
+      rangeEndDecoration: BoxDecoration(
+        color: Colors.green, // Example: blue background for end of range
+        shape: BoxShape.rectangle,
+      ),
+      withinRangeDecoration: BoxDecoration(color: Colors.green),
+      // Add other properties like text styles, margins, etc., as needed
+    ),
+    "ovulatory": CalendarStyle(
+      rangeHighlightColor: Colors.yellow,
+      rangeStartDecoration: BoxDecoration(
+        color: Colors.yellow, // Example: blue background for start of range
+        shape: BoxShape.rectangle,
+      ),
+      rangeEndDecoration: BoxDecoration(
+        color: Colors.yellow, // Example: blue background for end of range
+        shape: BoxShape.rectangle,
+      ),
+      withinRangeDecoration: BoxDecoration(color: Colors.yellow),
+      // Add other properties like text styles, margins, etc., as needed
+    ),
+    "luteal": CalendarStyle(
+      rangeHighlightColor: Colors.purple,
+      rangeStartDecoration: BoxDecoration(
+        color: Colors.purple, // Example: blue background for start of range
+        shape: BoxShape.rectangle,
+      ),
+      rangeEndDecoration: BoxDecoration(
+        color: Colors.purple, // Example: blue background for end of range
+        shape: BoxShape.rectangle,
+      ),
+      withinRangeDecoration: BoxDecoration(color: Colors.purple),
+      // Add other properties like text styles, margins, etc., as needed
+    ),
+  };
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
 
   @override
   void initState() {
     super.initState();
+    dateTimeRanges = widget.initialDateTimeRanges ?? _defaultDateTimeRanges;
   }
 
   bool isSameDay(DateTime? a, DateTime? b) {
@@ -42,8 +116,8 @@ class _CalendarState extends State<Calendar> {
     return a.year == b.year && a.month == b.month && a.day == b.day;
   }
 
-  DateTimeRange? dayInRange(DateTime day) {
-    List<DateTimeRange> list = dateTimeRanges
+  CustomDateTimeRange? dayInRange(DateTime day) {
+    List<CustomDateTimeRange> list = dateTimeRanges
         .where((element) =>
             element.start.isBefore(day) && element.end.isAfter(day) ||
             (element.start.year == day.year &&
@@ -88,13 +162,14 @@ class _CalendarState extends State<Calendar> {
           // the time-part of compared DateTime objects.
           return isSameDay(_selectedDay, day);
         },
-        rangeStartDay: event.startDate,
-        rangeEndDay: event.endDate,
+
         rangeSelectionMode: rangeSelectionMode,
+
         // CalendarBuilders with null safety applied
+
         calendarBuilders: CalendarBuilders(
           prioritizedBuilder: (context, day, focusedMonth) {
-            DateTimeRange? dateTimeRange = dayInRange(day);
+            CustomDateTimeRange? dateTimeRange = dayInRange(day);
 
             // If day is in any saved DateTimeRange, show a highlighted cell
             if (dateTimeRange != null) {
@@ -123,8 +198,8 @@ class _CalendarState extends State<Calendar> {
                           end: isRangeEnd ? constraints.maxWidth * 0.5 : 0.0,
                         ),
                         height: (shorterSide - style.cellMargin.vertical) *
-                            style.rangeHighlightScale,
-                        color: style.rangeHighlightColor,
+                            styles[dateTimeRange.phase]!.rangeHighlightScale,
+                        color: styles[dateTimeRange.phase]!.rangeHighlightColor,
                       ),
                     );
                     children.add(rangeHighlight);
@@ -135,28 +210,35 @@ class _CalendarState extends State<Calendar> {
                   if (isRangeStart) {
                     content = AnimatedContainer(
                       duration: Duration(milliseconds: 250),
-                      margin: style.cellMargin,
-                      decoration: style.rangeStartDecoration,
+                      margin: styles[dateTimeRange.phase]!.cellMargin,
+                      decoration:
+                          styles[dateTimeRange.phase]!.rangeStartDecoration,
                       alignment: Alignment.center,
-                      child:
-                          Text('${day.day}', style: style.rangeStartTextStyle),
+                      child: Text('${day.day}',
+                          style:
+                              styles[dateTimeRange.phase]!.rangeStartTextStyle),
                     );
                   } else if (isRangeEnd) {
                     content = AnimatedContainer(
                       duration: Duration(milliseconds: 250),
-                      margin: style.cellMargin,
-                      decoration: style.rangeEndDecoration,
+                      margin: styles[dateTimeRange.phase]!.cellMargin,
+                      decoration:
+                          styles[dateTimeRange.phase]!.rangeEndDecoration,
                       alignment: Alignment.center,
-                      child: Text('${day.day}', style: style.rangeEndTextStyle),
+                      child: Text('${day.day}',
+                          style:
+                              styles[dateTimeRange.phase]!.rangeEndTextStyle),
                     );
                   } else if (isWithinRange) {
                     content = AnimatedContainer(
                       duration: Duration(milliseconds: 250),
-                      margin: style.cellMargin,
-                      decoration: style.withinRangeDecoration,
+                      margin: styles[dateTimeRange.phase]!.cellMargin,
+                      decoration:
+                          styles[dateTimeRange.phase]!.withinRangeDecoration,
                       alignment: Alignment.center,
-                      child:
-                          Text('${day.day}', style: style.withinRangeTextStyle),
+                      child: Text('${day.day}',
+                          style: styles[dateTimeRange.phase]!
+                              .withinRangeTextStyle),
                     );
                   }
 
@@ -181,8 +263,7 @@ class _CalendarState extends State<Calendar> {
             setState(() {
               _selectedDay = selDay;
               _focusedDay = focDay;
-              event.startDate = DateTime.now().subtract(Duration(days: 2));
-              event.endDate = DateTime.now().add(Duration(days: 2));
+
               rangeSelectionMode = RangeSelectionMode.toggledOff;
             });
           }
@@ -191,56 +272,11 @@ class _CalendarState extends State<Calendar> {
           setState(() {
             _selectedDay = null;
             _focusedDay = focDay;
-            event.startDate = start ?? event.startDate;
-            event.endDate = end ?? event.endDate;
 
             bool startDateInRange = false;
             bool endDateInRange = false;
 
-            DateTimeRange? range = dayInRange(event.startDate);
-
-            if (range == null && event.endDate != null) {
-              range = dayInRange(event.endDate);
-              if (range != null) {
-                endDateInRange = true;
-              }
-            } else if (range != null) {
-              startDateInRange = true;
-              if (event.endDate != null && dayInRange(event.endDate) != null) {
-                endDateInRange = true;
-              }
-            }
-
             bool insertNewRange = true;
-
-            if (startDateInRange) {
-              if (isInRange(event.startDate, range!.start, range.end)) {
-                int index = dateTimeRanges.indexOf(range);
-                if (!endDateInRange && event.endDate != null) {
-                  dateTimeRanges[index] =
-                      DateTimeRange(start: event.startDate, end: event.endDate);
-                } else {
-                  dateTimeRanges[index] =
-                      DateTimeRange(start: event.startDate, end: range.end);
-                }
-                insertNewRange = false;
-              }
-            }
-
-            if (endDateInRange) {
-              if (isInRange(event.endDate, range!.start, range.end)) {
-                print("enddate is not null and is in range");
-                int index = dateTimeRanges.indexOf(range);
-                dateTimeRanges[index] =
-                    DateTimeRange(start: event.startDate, end: event.endDate);
-                insertNewRange = false;
-              }
-            }
-
-            if (insertNewRange) {
-              dateTimeRanges.add(
-                  DateTimeRange(start: event.startDate, end: event.endDate));
-            }
           });
         },
 
