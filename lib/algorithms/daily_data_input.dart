@@ -1,33 +1,13 @@
 import 'package:by_cycle/examples/users/new_user.dart';
+import 'package:by_cycle/models/tag.dart';
 import 'package:by_cycle/models/user.dart';
 import 'package:by_cycle/examples/users/pa_lucia.dart';
 import 'package:by_cycle/examples/users/pb_ovulation.dart';
 import 'package:by_cycle/examples/users/test_user.dart';
+import 'package:by_cycle/algorithms/A_to_F/all.dart';
 /*
-This file contains the daily_data_input algorithm through the function A-F
-It should produce 3 insights when a User class is provided to it.
-
-Parameters: 
-- User class, current day??? Entire user class is pretty big,
-so perhaps data passed to functions should be User with just
-5 last data input instances or only speific properties of User
-
-returns: 
-- three insights?? three tags?? Mb each A-F function should return a tag,
-and this algorithm as a whole should return the specific insights
-(bc we don't want the insights to repeat)
-- should the algorithm change phase too? I suppose it can produce tags like
-ovulatory_to_luteal, which can be passed to redrawCalendar and thus adjust 
-the phase.
-
-Take into account:
-- in the beginning and in many cases there'll be missing 
-dailyDataInputs
-- multiple tags can be returned from functions A-F
-- sometimes both a tag is activated and the phase needs to be adjusted. 
-I want to make the functions return tags; so perhaps adjusting the phase should
-not stop execution of the algorithm. Also, ensure that the cycle is not changed 
-twice in the same day so that no phase is jumped over.
+This file contains algorithms necessary for the adjusting the calendar and producing insights.
+When used properly, the algorithm should produce 3 insights when a User class is provided to it.
 */
 
 User minimizeUser(User user) {
@@ -56,166 +36,7 @@ a maximum of 5 dailyDataInputs
   return user;
 }
 
-/*class Actions {
-  final List<String> tags;
-  final Action = 
-}*/
-
-double tempDiff(double temperature1, double temperature2) {
-  double difference = (temperature1 * 10 - temperature2 * 10) / 10;
-  return difference;
-}
-
-// A) Body temperature taken in the morning
-List<String> bodyTemperature(User user) {
-  final List<String> out = [];
-
-  final t0 = user.daily_data_input[0].temperature;
-  final t1 = user.daily_data_input[1].temperature;
-
-  //temperature FALL by 0.3 celsius or more
-  if (tempDiff(user.daily_data_input[0].temperature,
-          user.daily_data_input[1].temperature) <=
-      -0.3) {
-    print("temperature fall greater or equal to 0.3");
-    if (user.daily_data_input[0].phase == "luteal") {
-      print("NOTIFY: Prepare yourself for the upcoming menstruation");
-      out.add("NOTIFY: Prepare...");
-    }
-  }
-
-  //temperature RISE by 0.3 celsius or more for 2 data log ins
-  print(user.daily_data_input[0].temperature);
-  print(tempDiff(user.daily_data_input[1].temperature,
-      user.daily_data_input[2].temperature));
-  print(user.daily_data_input[1].temperature);
-  print(user.daily_data_input[2].temperature);
-  if (tempDiff(user.daily_data_input[0].temperature,
-              user.daily_data_input[1].temperature) >=
-          0.3 &&
-      tempDiff(user.daily_data_input[1].temperature,
-              user.daily_data_input[2].temperature) >=
-          0.3) {
-    print("TAGS: 'temperature', 'identify ovulation'");
-    out.add('temperature');
-    out.add('identify ovulation');
-    if (user.daily_data_input[0].phase == "ovulation") {
-      print("ADJUST: Change from ovulation into luteal phase");
-      out.add('ovulation_to_luteal');
-    }
-  }
-
-  return out;
-}
-
-// B) Mucus (same  as discharge)
-// only one discharge option can be chosen at a time
-List<String> mucus(User user) {
-  final List<String> out = [];
-  final d0 = user.daily_data_input[0].discharge;
-  final d1 = user.daily_data_input[1].discharge;
-  final d2 = user.daily_data_input[2].discharge;
-
-  if (d0 == "no discharge") {
-    return out;
-  }
-
-  Set<String> allowedValues = {"egg white", "watery", "stretchy"};
-
-  //data repeated =/> 3 log ins
-  if (allowedValues.contains(d0) &&
-      allowedValues.contains(d1) &&
-      allowedValues.contains(d2)) {
-    print("ADJUST cycle, change into Ovulatory phase from follicular phase");
-    out.add('follicular_to_ovulatory');
-
-    //data repeated < 3 log ins
-    //I'm assuming that we want to display it if it
-    //happened the same day, hence just checks last day
-  } else if (allowedValues.contains(d0)) {
-    out.add("Cervical mucus");
-  }
-  //should it check that it's not the ovulatory phase???
-  if (d0 == "spotting") {
-    print("Spotting today!");
-    user.algorithm_data.spottingOccurences.add(DateTime.now());
-    print("Spotting occurences: ${user.algorithm_data.spottingOccurences}");
-    final Duration diff = user.algorithm_data.spottingOccurences[0]
-        .difference(user.algorithm_data.spottingOccurences[1]);
-    print("Difference in days: ${diff.inDays.abs()}");
-
-    //Data repeated across =/> 2 menstrual cycles
-    if (diff.inDays.abs() > user.complete_cycle_length) {
-      print("spotting, data repeated =/> 2 menstural cycle");
-      print("DISPLAY General insights insight number 3");
-      out.add("insight_3");
-    } else if (user.daily_data_input[0].phase == "ovulatory") {
-      print("Display datab > General insights > insight number: 4");
-      out.add("insight_4");
-    }
-  }
-  return out;
-}
-
-// C) Energy level
-// not clear: tag energy "increase energy" ?in PAGE determined by COLOR?
-// very unsure what kind of tags should be produced...
-List<String> energyLevel(User user) {
-  List<String> out = [];
-
-  //if energy level is high or moderate, do nothing
-  if (user.daily_data_input[0].energy_level == "high" ||
-      user.daily_data_input[0].energy_level == "moderate") {
-    return out;
-  } else {
-    if (user.daily_data_input[0].hours_of_sleep < 8) {
-      print("DISPLAY database > Sleep insights > insight number: 1");
-      out.add("insight_1");
-    } else {
-      switch (user.daily_data_input[0].phase) {
-        case "luteal":
-          print(
-              'DISPLAY database > cycle:luteal > insight tag"increase energy"');
-          out.add("increase energy");
-          break;
-        case "menstrual":
-          print(
-              'DISPLAY database > cycle:Menstruation > insight tag: "increase energy"');
-          out.add("increase energy");
-          break;
-        case "follicular":
-        case "ovulatory":
-          print(
-              'DISPLAY database > Cycle:Ovulation / Cycle:Follicular > insight tag 1 choice "Increase Energy" "Sleep Quality", "Alcohol" & "Coffee"');
-          out.add("Increase Energy");
-          out.add("Increase Energy");
-      }
-    }
-  }
-  return out;
-}
-
-// D) Hours of sleep tonight
-List<String> hoursOfSleep(User user) {
-  List<String> out = [];
-
-  final h0 = user.daily_data_input[0].hours_of_sleep;
-  final h1 = user.daily_data_input[1].hours_of_sleep;
-  final h2 = user.daily_data_input[2].hours_of_sleep;
-
-  final e0 = user.daily_data_input[0].energy_level;
-  final e1 = user.daily_data_input[1].energy_level;
-  final e2 = user.daily_data_input[2].energy_level;
-
-  //if ()
-  if (user.daily_data_input[0].hours_of_sleep == 0) {
-    print('DISPLAY database > insight tags: "sleep disruption", "insomnia"');
-    out.add("sleep disruption");
-    out.add("insomnia");
-  }
-  return out;
-}
-
+//A handy function for identifying the index of a dailyDataInput on a specific day.
 int findDailyDataInputIndexByDate(
     List<DailyDataInput> dailyDataInputs, DateTime targetDate) {
   for (int i = 0; i < dailyDataInputs.length; i++) {
@@ -228,22 +49,126 @@ int findDailyDataInputIndexByDate(
   }
   return -1; // Return -1 if no matching date is found
 }
-/*
-adjustCalendar(String tag, User user) {
 
+redrawCalendar(User user, String tag) {
   int indexOfToday =
-      findDailyDataInputIndexByDate(user.daily_data_input, targetDate);
+      findDailyDataInputIndexByDate(user.daily_data_input, DateTime.now());
 
+  int shift = 0;
   if (tag == "follicular_to_ovulatory" &&
-      user.daily_data_input[indexOfToday] == "follicular") {
-    redrawCalendar(user)
+      user.daily_data_input[indexOfToday].phase == "follicular")
+    shift = user.menstuation_phase_length + user.follicular_phase_length;
+  if (tag == "ovulatory_to_luteal" &&
+      user.daily_data_input[indexOfToday].phase == "ovulatory")
+    shift = user.menstuation_phase_length + user.follicular_phase_length;
+  if (tag == "luteal_to_menstrual" &&
+      user.daily_data_input[indexOfToday].phase == "luteal") shift = 0;
+  if (tag == "menstrual_to_follicular" &&
+      user.daily_data_input[indexOfToday].phase == "menstrual") {
+    print("menstrual_to_follicular activated");
+    shift = user.menstuation_phase_length;
   }
-}*/
+
+  String determinePhase(DateTime date) {
+    int dayOfCycle = date.difference(DateTime.now()).inDays +
+        shift % user.complete_cycle_length;
+
+    if (dayOfCycle < user.menstuation_phase_length) {
+      return "menstrual";
+    } else if (dayOfCycle <
+        user.menstuation_phase_length + user.follicular_phase_length) {
+      return "follicular";
+    } else if (dayOfCycle <
+        user.menstuation_phase_length +
+            user.follicular_phase_length +
+            user.ovulatory_phase_length) {
+      return "ovulatory";
+    } else {
+      return "luteal";
+    }
+  }
+
+  for (int i = 0; i <= 31; i++) {
+    DateTime nextDay = DateTime.now().add(Duration(days: i));
+    String phase = determinePhase(nextDay);
+    int index = findDailyDataInputIndexByDate(user.daily_data_input, nextDay);
+    if (index != -1) {
+      user.daily_data_input[index].phase = phase;
+    } else {
+      user.daily_data_input.add(DailyDataInput(date: nextDay, phase: phase));
+    }
+  }
+
+  user.daily_data_input.forEach((data) => print(data));
+}
+
+List<InsightInfo> choseInsights(User user, List<String> tags) {
+  /*A function that returns the InsightInfo instances containing ids
+  of insights that should be shown to the user.
+
+  Parameters:
+  -a user instance (the tags property contains information on which
+  insights were shown and how many times)
+  -a list of tags e.g. ["blood", "backpain"...], can be a long list
+
+  Returns:
+  -At most 3 InsightInfo instances. Each InsightInfo instance contains an
+  insightId that can be used to retrieve the right insight.
+
+  Side-effects:
+  -increases the viewCount of those InsightInfos that are shown in the end
+  and all of their copies inside other tags.
+  */
+
+  //primary list collects InsightInfos that weren't shown before
+  List<InsightInfo> primaryList = [];
+  //secondary list collects InsightInfos that were shown before
+  List<InsightInfo> secondaryList = [];
+  for (var tag in tags) {
+    if (user.tags.containsKey(tag)) {
+      print(user.tags[tag]);
+      InsightInfo lowestViewInsight = user.tags[tag]!.reduce((current, next) =>
+          current.viewCounter < next.viewCounter ? current : next);
+
+      if (lowestViewInsight.viewCounter == 0) {
+        primaryList.add(
+            lowestViewInsight); // Add the tag with the lowest viewCounter to out list
+      } else {
+        secondaryList.add(lowestViewInsight);
+      }
+    } else {
+      print("No matching insight for ${tag} in user.tags or tag is empty");
+    }
+  }
+
+  //combine the collected InsightInfos into one list
+  List<InsightInfo> combinedList = primaryList + secondaryList;
+
+  // Shorten down to at most the first three elements
+  combinedList =
+      combinedList.length > 3 ? combinedList.sublist(0, 3) : combinedList;
+
+  //increase the viewCount of the InsightInfo appearing under different tags
+  for (var insightInfo in combinedList) {
+    for (var tag in tags) {
+      if (user.tags.containsKey(tag)) {
+        for (var insight in user.tags[tag]!) {
+          if (insight.insightId == insightInfo.insightId) {
+            insight.viewCounter++;
+          }
+        }
+      }
+    }
+  }
+
+  return combinedList;
+}
 
 void main() {
   print("Miau");
 
-  User minimizedUser = minimizeUser(test_user);
+  //User minimizedUser = minimizeUser(test_user);
   //print(bodyTemperature(minimizedUser));
-  print(energyLevel(minimizedUser));
+  //print(energyLevel(minimizedUser));
+  print(choseInsights(new_user, ["blood", "backpain", "headache"]));
 }
