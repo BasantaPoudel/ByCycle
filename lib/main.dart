@@ -1,24 +1,28 @@
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
+import 'package:by_cycle/algorithms/onboarding.dart';
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
+import 'package:by_cycle/examples/users/new_user.dart';
 import 'package:by_cycle/firebase_options.dart';
+import 'package:by_cycle/screens/calendar.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(BlocProvider(
+  initializeDateFormatting().then((_) => runApp(BlocProvider(
       create: (BuildContext context) => ThemeCubit(),
       child:
           // Create the ThemeCubit
-          MyApp()));
+          MyApp())));
 }
 
 class MyApp extends StatefulWidget {
@@ -73,6 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
           TimeOfDay.now().replacing(hour: bedTime.hour, minute: bedTime.minute);
     });
     // initializeDateFormatting();
+    onboardCalendar(new_user);
   }
 
   @override
@@ -243,6 +248,30 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
               child: Text('Onboarding')),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Calendar(
+                        initialDateTimeRanges: generateDateTimeRanges(new_user)
+                        /*
+                      initialDateTimeRanges: [
+                        DateTimeRange(
+                          start: DateTime.now().add(Duration(days: 7)),
+                          end: DateTime.now().add(Duration(days: 14)),
+                        ),
+                        DateTimeRange(
+                          start: DateTime.now().add(Duration(days: 3)),
+                          end: DateTime.now().add(Duration(days: 5)),
+                        ),
+                      ],
+                      */
+                        ),
+                  ),
+                );
+              },
+              child: Text('Calendar')),
         ])),
         bottomNavigationBar: BottomNavigationBar(
           onTap: (int index) {
