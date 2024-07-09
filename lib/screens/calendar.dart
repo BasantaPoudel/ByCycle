@@ -76,8 +76,8 @@ class _CalendarState extends State<Calendar> {
         title: Text('TableCalendar - Basics'),
       ),
       body: TableCalendar(
-        firstDay: kFirstDay,
-        lastDay: kLastDay,
+        firstDay: DateTime(2020, 1, 1),
+        lastDay: DateTime(2025, 1, 1),
         focusedDay: _focusedDay,
         calendarFormat: _calendarFormat,
         selectedDayPredicate: (day) {
@@ -179,13 +179,69 @@ class _CalendarState extends State<Calendar> {
         onDaySelected: (selDay, focDay) {
           if (!isSameDay(_selectedDay, selDay)) {
             setState(() {
-              _selectedDay = _selectedDay;
+              _selectedDay = selDay;
               _focusedDay = focDay;
               event.startDate = DateTime.now().subtract(Duration(days: 2));
               event.endDate = DateTime.now().add(Duration(days: 2));
               rangeSelectionMode = RangeSelectionMode.toggledOff;
             });
           }
+        },
+        onRangeSelected: (start, end, focDay) {
+          setState(() {
+            _selectedDay = null;
+            _focusedDay = focDay;
+            event.startDate = start ?? event.startDate;
+            event.endDate = end ?? event.endDate;
+
+            bool startDateInRange = false;
+            bool endDateInRange = false;
+
+            DateTimeRange? range = dayInRange(event.startDate);
+
+            if (range == null && event.endDate != null) {
+              range = dayInRange(event.endDate);
+              if (range != null) {
+                endDateInRange = true;
+              }
+            } else if (range != null) {
+              startDateInRange = true;
+              if (event.endDate != null && dayInRange(event.endDate) != null) {
+                endDateInRange = true;
+              }
+            }
+
+            bool insertNewRange = true;
+
+            if (startDateInRange) {
+              if (isInRange(event.startDate, range!.start, range.end)) {
+                int index = dateTimeRanges.indexOf(range);
+                if (!endDateInRange && event.endDate != null) {
+                  dateTimeRanges[index] =
+                      DateTimeRange(start: event.startDate, end: event.endDate);
+                } else {
+                  dateTimeRanges[index] =
+                      DateTimeRange(start: event.startDate, end: range.end);
+                }
+                insertNewRange = false;
+              }
+            }
+
+            if (endDateInRange) {
+              if (isInRange(event.endDate, range!.start, range.end)) {
+                print("enddate is not null and is in range");
+                int index = dateTimeRanges.indexOf(range);
+                dateTimeRanges[index] =
+                    DateTimeRange(start: event.startDate, end: event.endDate);
+                insertNewRange = false;
+              }
+            }
+
+            if (insertNewRange) {
+              dateTimeRanges.add(
+                  DateTimeRange(start: event.startDate, end: event.endDate));
+            }
+          });
         },
 
         onFormatChanged: (format) {
