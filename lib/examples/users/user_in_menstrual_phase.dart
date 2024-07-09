@@ -5,11 +5,6 @@ List<DateTime> initialSpottingOccurrences = [
 ];
 
 AlgorithmData testAlgorithmData = AlgorithmData(
-  blood: [], // Initialize with empty list or provide actual data
-  backpain: [], // Initialize with empty list or provide actual data
-  menstruation: [], // Initialize with empty list or provide actual data
-  luteal: [], // Initialize with empty list or provide actual data
-  temperature: [], // Initialize with empty list or provide actual data
   spottingOccurences: initialSpottingOccurrences,
 );
 
