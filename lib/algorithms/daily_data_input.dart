@@ -1,5 +1,5 @@
 import 'package:by_cycle/examples/users/new_user.dart';
-import 'package:by_cycle/models/tag.dart';
+import 'package:by_cycle/models/InsightInfo.dart';
 import 'package:by_cycle/models/user.dart';
 import 'package:by_cycle/examples/users/pa_lucia.dart';
 import 'package:by_cycle/examples/users/pb_ovulation.dart';
