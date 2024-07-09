@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:by_cycle/models/calendar_utils.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
+
+class Event {
+  DateTime startDate;
+  DateTime endDate;
+
+  Event({required this.startDate, required this.endDate});
+}
 
 class Calendar extends StatefulWidget {
   @override
@@ -10,73 +15,191 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
+  Event event = Event(
+    startDate: DateTime.now().subtract(Duration(days: 1)),
+    endDate: DateTime.now().add(Duration(days: 1)),
+  );
+
+  RangeSelectionMode rangeSelectionMode = RangeSelectionMode.enforced;
+
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
-      .toggledOn; // Can be toggled on/off by longpressing a date
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+  List<DateTimeRange> dateTimeRanges = [];
+  CalendarStyle style = const CalendarStyle();
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  bool isSameDay(DateTime? a, DateTime? b) {
+    if (a == null || b == null) {
+      return false;
+    }
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
+
+  DateTimeRange? dayInRange(DateTime day) {
+    List<DateTimeRange> list = dateTimeRanges
+        .where((element) =>
+            element.start.isBefore(day) && element.end.isAfter(day) ||
+            (element.start.year == day.year &&
+                element.start.month == day.month &&
+                element.start.day == day.day) ||
+            (element.end.year == day.year &&
+                element.end.month == day.month &&
+                element.end.day == day.day))
+        .toList();
+    return list.isNotEmpty ? list[0] : null;
+  }
+
+// Checks if a day is between two days
+  bool isInRange(DateTime day, DateTime start, DateTime end) {
+    if (isSameDay(day, start) || isSameDay(day, end)) {
+      return true;
+    }
+
+    if (day.isAfter(start) && day.isBefore(end)) {
+      return true;
+    }
+
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('TableCalendar - Range'),
+        title: Text('TableCalendar - Basics'),
       ),
       body: TableCalendar(
         firstDay: kFirstDay,
         lastDay: kLastDay,
         focusedDay: _focusedDay,
-        selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-        rangeStartDay: _rangeStart,
-        rangeEndDay: _rangeEnd,
         calendarFormat: _calendarFormat,
-        rangeSelectionMode: _rangeSelectionMode,
-        onDaySelected: (selectedDay, focusedDay) {
-          if (!isSameDay(_selectedDay, selectedDay)) {
+        selectedDayPredicate: (day) {
+          // Use `selectedDayPredicate` to determine which day is currently selected.
+          // If this returns true, then `day` will be marked as selected.
+
+          // Using `isSameDay` is recommended to disregard
+          // the time-part of compared DateTime objects.
+          return isSameDay(_selectedDay, day);
+        },
+        rangeStartDay: event.startDate,
+        rangeEndDay: event.endDate,
+        rangeSelectionMode: rangeSelectionMode,
+        // CalendarBuilders with null safety applied
+        calendarBuilders: CalendarBuilders(
+          prioritizedBuilder: (context, day, focusedMonth) {
+            DateTimeRange? dateTimeRange = dayInRange(day);
+
+            // If day is in any saved DateTimeRange, show a highlighted cell
+            if (dateTimeRange != null) {
+              return LayoutBuilder(
+                builder: (context, constraints) {
+                  final shorterSide =
+                      constraints.maxHeight > constraints.maxWidth
+                          ? constraints.maxWidth
+                          : constraints.maxHeight;
+
+                  final children = <Widget>[];
+
+                  final isWithinRange = dateTimeRange.start != null &&
+                      dateTimeRange.end != null &&
+                      isInRange(day, dateTimeRange.start, dateTimeRange.end);
+
+                  final isRangeStart = isSameDay(day, dateTimeRange.start);
+                  final isRangeEnd = isSameDay(day, dateTimeRange.end);
+
+                  if (isWithinRange) {
+                    Widget rangeHighlight = Center(
+                      child: Container(
+                        margin: EdgeInsetsDirectional.only(
+                          start:
+                              isRangeStart ? constraints.maxWidth * 0.5 : 0.0,
+                          end: isRangeEnd ? constraints.maxWidth * 0.5 : 0.0,
+                        ),
+                        height: (shorterSide - style.cellMargin.vertical) *
+                            style.rangeHighlightScale,
+                        color: style.rangeHighlightColor,
+                      ),
+                    );
+                    children.add(rangeHighlight);
+                  }
+
+                  Widget? content;
+
+                  if (isRangeStart) {
+                    content = AnimatedContainer(
+                      duration: Duration(milliseconds: 250),
+                      margin: style.cellMargin,
+                      decoration: style.rangeStartDecoration,
+                      alignment: Alignment.center,
+                      child:
+                          Text('${day.day}', style: style.rangeStartTextStyle),
+                    );
+                  } else if (isRangeEnd) {
+                    content = AnimatedContainer(
+                      duration: Duration(milliseconds: 250),
+                      margin: style.cellMargin,
+                      decoration: style.rangeEndDecoration,
+                      alignment: Alignment.center,
+                      child: Text('${day.day}', style: style.rangeEndTextStyle),
+                    );
+                  } else if (isWithinRange) {
+                    content = AnimatedContainer(
+                      duration: Duration(milliseconds: 250),
+                      margin: style.cellMargin,
+                      decoration: style.withinRangeDecoration,
+                      alignment: Alignment.center,
+                      child:
+                          Text('${day.day}', style: style.withinRangeTextStyle),
+                    );
+                  }
+
+                  if (content != null) {
+                    children.add(content);
+                  }
+
+                  return Stack(
+                    alignment: style.markersAlignment,
+                    children: children,
+                    clipBehavior:
+                        style.canMarkersOverflow ? Clip.none : Clip.hardEdge,
+                  );
+                },
+              );
+            }
+            return null;
+          },
+        ),
+        onDaySelected: (selDay, focDay) {
+          if (!isSameDay(_selectedDay, selDay)) {
             setState(() {
-              _selectedDay = selectedDay;
-              _focusedDay = focusedDay;
-              _rangeStart = null; // Important to clean those
-              _rangeEnd = null;
-              _rangeSelectionMode = RangeSelectionMode.toggledOff;
+              _selectedDay = _selectedDay;
+              _focusedDay = focDay;
+              event.startDate = DateTime.now().subtract(Duration(days: 2));
+              event.endDate = DateTime.now().add(Duration(days: 2));
+              rangeSelectionMode = RangeSelectionMode.toggledOff;
             });
           }
         },
-        onRangeSelected: (start, end, focusedDay) {
-          setState(() {
-            _selectedDay = null;
-            _focusedDay = focusedDay;
-            _rangeStart = start;
-            _rangeEnd = end;
-            _rangeSelectionMode = RangeSelectionMode.toggledOn;
-          });
-        },
+
         onFormatChanged: (format) {
           if (_calendarFormat != format) {
+            // Call `setState()` when updating calendar format
             setState(() {
               _calendarFormat = format;
             });
           }
         },
         onPageChanged: (focusedDay) {
+          // No need to call `setState()` here
           _focusedDay = focusedDay;
         },
-        calendarBuilders: CalendarBuilders(
-          dowBuilder: (context, day) {
-            if (day.weekday == DateTime.sunday) {
-              final text = DateFormat.E().format(day);
-
-              return Center(
-                child: Text(
-                  text,
-                  style: TextStyle(color: Colors.red),
-                ),
-              );
-            }
-          },
-        ),
       ),
     );
   }
