@@ -42,7 +42,7 @@ List<DailyDataInput> dailyDataInputstest_user = [
     hours_of_sleep: 8,
     symptoms: ['diarrhoea'],
     temperature: 36.3,
-    phase: "menstruation",
+    phase: "menstrual",
   ),
   DailyDataInput(
     blood: 'no',
