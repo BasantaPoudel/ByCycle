@@ -64,10 +64,17 @@ class UserRepository {
     );
   }
 
-  void sendDailyData(DailyDataInput dailyDataInput) {
+  //TODO - Understand Future<void> vs void
+  Future<void> sendDailyData(DailyDataInput dailyDataInput) async {
     //Add the daily data input to the user's daily_data_input list
     //Add the Error Checking for the daily data input
-    FirebaseFirestore.instance.collection("users").add(dailyDataInput.toMap());
-    print("Daily data sent");
+    try {
+      await FirebaseFirestore.instance
+          .collection("users")
+          .add(dailyDataInput.toMap());
+      print("Daily data sent");
+    } catch (e) {
+      print("Error: $e");
+    }
   }
 }
