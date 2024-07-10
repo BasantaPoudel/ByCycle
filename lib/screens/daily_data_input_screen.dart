@@ -48,6 +48,39 @@ class DailyDataInputScreen extends StatefulWidget {
 
 class _DailyDataInputState extends State<DailyDataInputScreen> {
   double _currentSliderValue = 35;
+  List<Color> _energyOptionsColor = [
+    Color.fromRGBO(222, 212, 197, 1),
+    Color.fromRGBO(222, 212, 197, 1),
+    Color.fromRGBO(222, 212, 197, 1),
+  ];
+
+  List<Color> _bloodOptionsColor = [
+    Color.fromRGBO(222, 212, 197, 1),
+    Color.fromRGBO(222, 212, 197, 1),
+    Color.fromRGBO(222, 212, 197, 1),
+    Color.fromRGBO(222, 212, 197, 1),
+    Color.fromRGBO(222, 212, 197, 1),
+    Color.fromRGBO(222, 212, 197, 1),
+    Color.fromRGBO(222, 212, 197, 1),
+  ];
+  List<Color> _dischargeOptionsColor = [
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+  ];
+  List<Color> _symptomsOptionsColor = [
+    Color.fromRGBO(222, 212, 197, 1),
+    Color.fromRGBO(222, 212, 197, 1),
+    Color.fromRGBO(222, 212, 197, 1),
+    Color.fromRGBO(222, 212, 197, 1),
+    Color.fromRGBO(222, 212, 197, 1),
+    Color.fromRGBO(222, 212, 197, 1),
+    Color.fromRGBO(222, 212, 197, 1),
+  ];
 
   final TextEditingController _hoursController = TextEditingController();
   final TextEditingController _minsController = TextEditingController();
@@ -105,7 +138,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
   _buildTemperatureCard() {
     return CustomCard(
       title: 'Temperature',
-      color: const Color.fromRGBO(222, 212, 197, 1),
+      color: Color.fromRGBO(222, 212, 197, 1),
       borderRadius: 15.0,
       padding: const EdgeInsets.all(16.0),
       onPressed: () {
@@ -145,6 +178,9 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
       title: 'Discharge',
       color: Color.fromRGBO(222, 212, 197, 1),
       onPressed: () {
+        // setState(() {
+        //   _dischargeOptionsColor = Color.fromARGB(255, 34, 33, 32);
+        // });
         print('Discharge info tapped');
       },
       borderRadius: 15.0,
@@ -260,16 +296,24 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
 
   List<GestureDetector> _buildDischargeList() {
     return Discharge.values.map((itemType) {
-      Color containerColor = const Color.fromRGBO(254, 247, 237, 1);
+      // Color containerColor = const Color.fromRGBO(254, 247, 237, 1);
       return GestureDetector(
         onTap: () {
+          setState(() {
+            _dischargeOptionsColor[Discharge.values.indexOf(itemType)] ==
+                    Color.fromRGBO(254, 247, 237, 1)
+                ? _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
+                    Color.fromRGBO(82, 82, 76, 1)
+                : _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
+                    Color.fromRGBO(254, 247, 237, 1);
+          });
           print(itemType.toString().split('.').last);
           dailyDataInput.discharge = itemType.toString().split('.').last;
         },
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: containerColor,
+            color: _dischargeOptionsColor[Discharge.values.indexOf(itemType)],
           ),
           padding: EdgeInsets.all(3.0),
           // margin: EdgeInsets.all(8.0),
