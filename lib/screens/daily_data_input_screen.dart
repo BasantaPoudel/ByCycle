@@ -49,19 +49,19 @@ class DailyDataInputScreen extends StatefulWidget {
 class _DailyDataInputState extends State<DailyDataInputScreen> {
   double _currentSliderValue = 35;
   List<Color> _energyOptionsColor = [
-    Color.fromRGBO(222, 212, 197, 1),
-    Color.fromRGBO(222, 212, 197, 1),
-    Color.fromRGBO(222, 212, 197, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
   ];
 
   List<Color> _bloodOptionsColor = [
-    Color.fromRGBO(222, 212, 197, 1),
-    Color.fromRGBO(222, 212, 197, 1),
-    Color.fromRGBO(222, 212, 197, 1),
-    Color.fromRGBO(222, 212, 197, 1),
-    Color.fromRGBO(222, 212, 197, 1),
-    Color.fromRGBO(222, 212, 197, 1),
-    Color.fromRGBO(222, 212, 197, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
   ];
   List<Color> _dischargeOptionsColor = [
     Color.fromRGBO(254, 247, 237, 1),
@@ -73,13 +73,17 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
     Color.fromRGBO(254, 247, 237, 1),
   ];
   List<Color> _symptomsOptionsColor = [
-    Color.fromRGBO(222, 212, 197, 1),
-    Color.fromRGBO(222, 212, 197, 1),
-    Color.fromRGBO(222, 212, 197, 1),
-    Color.fromRGBO(222, 212, 197, 1),
-    Color.fromRGBO(222, 212, 197, 1),
-    Color.fromRGBO(222, 212, 197, 1),
-    Color.fromRGBO(222, 212, 197, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
+    Color.fromRGBO(254, 247, 237, 1),
   ];
 
   final TextEditingController _hoursController = TextEditingController();
@@ -333,11 +337,20 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
           print("Gesture Detected");
           dailyDataInput.blood = itemType.toString().split('.').last;
           print(itemType.toString().split('.').last);
+
+          setState(() {
+            _bloodOptionsColor[Blood.values.indexOf(itemType)] ==
+                    Color.fromRGBO(254, 247, 237, 1)
+                ? _bloodOptionsColor[Blood.values.indexOf(itemType)] =
+                    Color.fromRGBO(82, 82, 76, 1)
+                : _bloodOptionsColor[Blood.values.indexOf(itemType)] =
+                    Color.fromRGBO(254, 247, 237, 1);
+          });
         },
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Color.fromRGBO(254, 247, 237, 1),
+            color: _bloodOptionsColor[Blood.values.indexOf(itemType)],
           ),
           padding: EdgeInsets.all(3.0),
           // margin: EdgeInsets.all(8.0),
@@ -355,13 +368,25 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
       return GestureDetector(
         onTap: () {
           print(itemType.toString().split('.').last);
-          dailyDataInput.symptoms.add(itemType.toString().split('.').last);
+          dailyDataInput.symptoms.contains(itemType.toString().split('.').last)
+              ? dailyDataInput.symptoms
+                  .remove(itemType.toString().split('.').last)
+              : dailyDataInput.symptoms
+                  .add(itemType.toString().split('.').last);
+
+          setState(() {
+            _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] ==
+                    Color.fromRGBO(254, 247, 237, 1)
+                ? _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] =
+                    Color.fromRGBO(82, 82, 76, 1)
+                : _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] =
+                    Color.fromRGBO(254, 247, 237, 1);
+          });
         },
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Color.fromRGBO(254, 247, 237, 1),
-          ),
+              borderRadius: BorderRadius.circular(10),
+              color: _symptomsOptionsColor[Symptoms.values.indexOf(itemType)]),
           padding: EdgeInsets.all(3.0),
           // margin: EdgeInsets.all(8.0),
           child: Text(
@@ -380,11 +405,19 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
           print("Gesture Detected");
           dailyDataInput.energy_level = itemType.toString().split('.').last;
           print(itemType.toString().split('.').last);
+          setState(() {
+            _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] ==
+                    Color.fromRGBO(254, 247, 237, 1)
+                ? _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
+                    Color.fromRGBO(82, 82, 76, 1)
+                : _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
+                    Color.fromRGBO(254, 247, 237, 1);
+          });
         },
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Color.fromRGBO(254, 247, 237, 1),
+            color: _energyOptionsColor[EnergyLevel.values.indexOf(itemType)],
           ),
           padding: EdgeInsets.all(3.0),
           // margin: EdgeInsets.all(8.0),
