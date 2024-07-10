@@ -96,10 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: const Text('TODAY'),
                   onPressed: () {
                     // Navigate to the search screen
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DailyDataInputScreen()));
+                    null;
                   },
                   // style: Theme.of(context).buttonTheme.layoutBehavior,
                 ),
@@ -121,10 +118,20 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Center(
             child: Column(children: [
-          const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             ElevatedButton(
-                onPressed: null, child: Text("What is your temperature?")),
-            ElevatedButton(onPressed: null, child: Text("+"))
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DailyDataInputScreen()));
+                },
+                child: Text("What is your temperature?")),
+            ElevatedButton(
+                onPressed: () {
+                  null;
+                },
+                child: Text("+"))
           ]),
           const Center(
             child: Text('Recommended sleep time'),
