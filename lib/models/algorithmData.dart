@@ -1,3 +1,6 @@
+/*
+OUTDATED
+*/
 class InsightsCache {
   List<Map<String, dynamic>> blood;
   List<Map<String, dynamic>> backpain;
