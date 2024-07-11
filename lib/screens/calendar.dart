@@ -259,6 +259,7 @@ class _CalendarState extends State<Calendar> {
           },
         ),
         onDaySelected: (selDay, focDay) {
+          //print("onDaySelected ${focDay}");
           if (!isSameDay(_selectedDay, selDay)) {
             setState(() {
               _selectedDay = selDay;
@@ -270,13 +271,81 @@ class _CalendarState extends State<Calendar> {
         },
         onRangeSelected: (start, end, focDay) {
           setState(() {
-            _selectedDay = null;
+            _selectedDay = focDay;
             _focusedDay = focDay;
 
             bool startDateInRange = false;
             bool endDateInRange = false;
 
+            print("start: ${start}");
+            print("end: ${end}");
+            print("focDay: ${focDay}");
+
+            CustomDateTimeRange? range = dayInRange(start!);
+            print("range: ${range}");
+
+            DateTime endDate = range?.end ?? start;
+            DateTime startDate = range?.start ?? start;
+            print("startDate: ${startDate}");
+            print("endDate: ${endDate}");
+
+            if (range == null && endDate != null) {
+              range = dayInRange(endDate);
+              if (range != null) {
+                endDateInRange = true;
+              }
+            } else if (range != null) {
+              startDateInRange = true;
+              if (endDate != null && dayInRange(endDate) != null) {
+                endDateInRange = true;
+              }
+            }
+
             bool insertNewRange = true;
+
+            if (startDateInRange) {
+              if (isInRange(startDate, startDate, endDate)) {
+                int index = dateTimeRanges.indexOf(range!);
+                print("index: ${index}");
+
+                if (!endDateInRange && endDate != null) {
+                  dateTimeRanges[index] = CustomDateTimeRange(
+                      start: startDate,
+                      end: endDate,
+                      phase: dateTimeRanges[index].phase);
+                } else {
+                  dateTimeRanges[index] = CustomDateTimeRange(
+                      start: startDate,
+                      end: endDate,
+                      phase: dateTimeRanges[index].phase);
+                }
+                insertNewRange = false;
+              }
+            }
+
+            if (endDateInRange) {
+              if (isInRange(endDate, startDate, endDate)) {
+                print("enddate is not null and is in range");
+                int index = dateTimeRanges.indexOf(range!);
+                print("second index: ${index}");
+                dateTimeRanges[index] = CustomDateTimeRange(
+                    start: startDate,
+                    end: endDate,
+                    phase: dateTimeRanges[index].phase);
+                insertNewRange = false;
+              }
+            }
+
+            if (insertNewRange) {
+              dateTimeRanges
+                  .add(CustomDateTimeRange(start: startDate, end: endDate));
+              dateTimeRanges.add(CustomDateTimeRange(
+                  start: startDate.subtract(Duration(days: 6)),
+                  end: endDate.subtract(Duration(days: 6))));
+              dateTimeRanges.add(CustomDateTimeRange(
+                  start: startDate.add(Duration(days: 6)),
+                  end: endDate.add(Duration(days: 6))));
+            }
           });
         },
 
