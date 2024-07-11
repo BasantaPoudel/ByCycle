@@ -1,3 +1,4 @@
+import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/models/User.dart';
 import 'package:by_cycle/repository/user_repository.dart';
 import 'package:by_cycle/widgets/custom_card.dart';
@@ -93,6 +94,10 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
 
   DailyDataInput dailyDataInput =
       DailyDataInput(date: DateTime.now(), symptoms: [""]);
+
+//TODO - Find if there's another alternative
+  ThemeData darkThemedata = ThemeCubit().getDarkThemeData();
+  ThemeData lightThemeData = ThemeCubit().getThemeData();
 
   @override
   Widget build(BuildContext context) {
@@ -316,14 +321,17 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
         },
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
             color: _dischargeOptionsColor[Discharge.values.indexOf(itemType)],
           ),
           padding: EdgeInsets.all(3.0),
           // margin: EdgeInsets.all(8.0),
           child: Text(
             itemType.toString().split('.').last,
-            style: TextStyle(color: Colors.black, fontSize: 11.0),
+            style: _dischargeOptionsColor[Discharge.values.indexOf(itemType)] ==
+                    Color.fromRGBO(254, 247, 237, 1)
+                ? Theme.of(context).textTheme.bodySmall
+                : darkThemedata.textTheme.bodySmall,
           ),
         ),
       );
@@ -349,14 +357,17 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
         },
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
             color: _bloodOptionsColor[Blood.values.indexOf(itemType)],
           ),
           padding: EdgeInsets.all(3.0),
           // margin: EdgeInsets.all(8.0),
           child: Text(
             itemType.toString().split('.').last,
-            style: TextStyle(color: Colors.black, fontSize: 11.0),
+            style: _bloodOptionsColor[Blood.values.indexOf(itemType)] ==
+                    Color.fromRGBO(254, 247, 237, 1)
+                ? Theme.of(context).textTheme.bodySmall
+                : darkThemedata.textTheme.bodySmall,
           ),
         ),
       );
@@ -391,7 +402,10 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
           // margin: EdgeInsets.all(8.0),
           child: Text(
             itemType.toString().split('.').last,
-            style: TextStyle(color: Colors.black, fontSize: 11.0),
+            style: _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] ==
+                    Color.fromRGBO(254, 247, 237, 1)
+                ? Theme.of(context).textTheme.bodySmall
+                : darkThemedata.textTheme.bodySmall,
           ),
         ),
       );
@@ -416,14 +430,17 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
         },
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
             color: _energyOptionsColor[EnergyLevel.values.indexOf(itemType)],
           ),
           padding: EdgeInsets.all(3.0),
           // margin: EdgeInsets.all(8.0),
           child: Text(
             itemType.toString().split('.').last,
-            style: TextStyle(color: Colors.black, fontSize: 11.0),
+            style: _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] ==
+                    Color.fromRGBO(254, 247, 237, 1)
+                ? Theme.of(context).textTheme.bodySmall
+                : darkThemedata.textTheme.bodySmall,
           ),
         ),
       );
