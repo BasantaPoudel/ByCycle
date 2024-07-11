@@ -221,7 +221,7 @@ class _CalendarState extends State<Calendar> {
         },
         onRangeSelected: (start, end, focDay) {
           setState(() {
-            _selectedDay = null;
+            _selectedDay = focDay;
             _focusedDay = focDay;
             event.startDate = start ?? event.startDate;
             event.endDate = end ?? event.endDate;
