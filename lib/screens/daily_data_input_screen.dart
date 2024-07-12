@@ -147,7 +147,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
   _buildTemperatureCard() {
     return CustomCard(
       title: 'Temperature',
-      color: Color.fromRGBO(222, 212, 197, 1),
+      color: Theme.of(context).cardTheme.color,
       borderRadius: 15.0,
       padding: const EdgeInsets.all(16.0),
       onPressed: () {
@@ -185,7 +185,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
   _buildDischargeCard() {
     return CustomCard(
       title: 'Discharge',
-      color: Color.fromRGBO(222, 212, 197, 1),
+      color: Theme.of(context).cardTheme.color,
       onPressed: () {
         // setState(() {
         //   _dischargeOptionsColor = Color.fromARGB(255, 34, 33, 32);
@@ -209,7 +209,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
   _buildEnergyLevelCard() {
     return CustomCard(
       title: 'EnergyLevel',
-      color: Color.fromRGBO(222, 212, 197, 1),
+      color: Theme.of(context).cardTheme.color,
       onPressed: () {
         print('Energy info tapped');
       },
@@ -230,7 +230,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
   _buildBloodCard() {
     return CustomCard(
       title: 'Blood',
-      color: Color.fromRGBO(222, 212, 197, 1),
+      color: Theme.of(context).cardTheme.color,
       onPressed: () {
         print('Blood info tapped');
       },
@@ -251,7 +251,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
   _buildSymtomsCard() {
     return CustomCard(
       title: 'Symptoms',
-      color: Color.fromRGBO(222, 212, 197, 0.5),
+      color: Theme.of(context).cardTheme.color,
       onPressed: () {
         print('Symptoms info tapped');
       },
@@ -272,7 +272,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
   _buildSleepCard() {
     return CustomCard(
       title: 'Hours Of Sleep',
-      color: Color.fromRGBO(222, 212, 197, 1),
+      color: Theme.of(context).cardTheme.color,
       onPressed: () {
         print('Hours info tapped');
       },
@@ -308,16 +308,32 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
       // Color containerColor = const Color.fromRGBO(254, 247, 237, 1);
       return GestureDetector(
         onTap: () {
-          setState(() {
-            _dischargeOptionsColor[Discharge.values.indexOf(itemType)] ==
-                    Color.fromRGBO(254, 247, 237, 1)
-                ? _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
-                    Color.fromRGBO(82, 82, 76, 1)
-                : _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
-                    Color.fromRGBO(254, 247, 237, 1);
-          });
-          print(itemType.toString().split('.').last);
-          dailyDataInput.discharge = itemType.toString().split('.').last;
+          if (dailyDataInput.discharge.isEmpty) {
+            setState(() {
+              _dischargeOptionsColor[Discharge.values.indexOf(itemType)] ==
+                      Color.fromRGBO(254, 247, 237, 1)
+                  ? _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
+                      Color.fromRGBO(82, 82, 76, 1)
+                  : _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
+                      Color.fromRGBO(254, 247, 237, 1);
+            });
+            print(itemType.toString().split('.').last);
+            dailyDataInput.discharge = itemType.toString().split('.').last;
+          } else if (dailyDataInput.discharge ==
+              itemType.toString().split('.').last) {
+            setState(() {
+              _dischargeOptionsColor[Discharge.values.indexOf(itemType)] ==
+                      Color.fromRGBO(254, 247, 237, 1)
+                  ? _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
+                      Color.fromRGBO(82, 82, 76, 1)
+                  : _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
+                      Color.fromRGBO(254, 247, 237, 1);
+            });
+            print(itemType.toString().split('.').last);
+            dailyDataInput.discharge = "";
+          } else {
+            print("Only one discharge can be selected");
+          }
         },
         child: Container(
           decoration: BoxDecoration(
@@ -342,18 +358,32 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
     return Blood.values.map((itemType) {
       return GestureDetector(
         onTap: () {
-          print("Gesture Detected");
-          dailyDataInput.blood = itemType.toString().split('.').last;
-          print(itemType.toString().split('.').last);
-
-          setState(() {
-            _bloodOptionsColor[Blood.values.indexOf(itemType)] ==
-                    Color.fromRGBO(254, 247, 237, 1)
-                ? _bloodOptionsColor[Blood.values.indexOf(itemType)] =
-                    Color.fromRGBO(82, 82, 76, 1)
-                : _bloodOptionsColor[Blood.values.indexOf(itemType)] =
-                    Color.fromRGBO(254, 247, 237, 1);
-          });
+          if (dailyDataInput.blood.isEmpty) {
+            setState(() {
+              _bloodOptionsColor[Blood.values.indexOf(itemType)] ==
+                      Color.fromRGBO(254, 247, 237, 1)
+                  ? _bloodOptionsColor[Blood.values.indexOf(itemType)] =
+                      Color.fromRGBO(82, 82, 76, 1)
+                  : _bloodOptionsColor[Blood.values.indexOf(itemType)] =
+                      Color.fromRGBO(254, 247, 237, 1);
+            });
+            print(itemType.toString().split('.').last);
+            dailyDataInput.blood = itemType.toString().split('.').last;
+          } else if (dailyDataInput.blood ==
+              itemType.toString().split('.').last) {
+            setState(() {
+              _bloodOptionsColor[Blood.values.indexOf(itemType)] ==
+                      Color.fromRGBO(254, 247, 237, 1)
+                  ? _bloodOptionsColor[Blood.values.indexOf(itemType)] =
+                      Color.fromRGBO(82, 82, 76, 1)
+                  : _bloodOptionsColor[Blood.values.indexOf(itemType)] =
+                      Color.fromRGBO(254, 247, 237, 1);
+            });
+            print(itemType.toString().split('.').last);
+            dailyDataInput.blood = "";
+          } else {
+            print("Only one blood type can be selected");
+          }
         },
         child: Container(
           decoration: BoxDecoration(
@@ -365,6 +395,56 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
           child: Text(
             itemType.toString().split('.').last,
             style: _bloodOptionsColor[Blood.values.indexOf(itemType)] ==
+                    Color.fromRGBO(254, 247, 237, 1)
+                ? Theme.of(context).textTheme.bodySmall
+                : darkThemedata.textTheme.bodySmall,
+          ),
+        ),
+      );
+    }).toList();
+  }
+
+  List<GestureDetector> _buildEnergyLevelList() {
+    return EnergyLevel.values.map((itemType) {
+      return GestureDetector(
+        onTap: () {
+          if (dailyDataInput.energy_level.isEmpty) {
+            setState(() {
+              _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] ==
+                      Color.fromRGBO(254, 247, 237, 1)
+                  ? _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
+                      Color.fromRGBO(82, 82, 76, 1)
+                  : _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
+                      Color.fromRGBO(254, 247, 237, 1);
+            });
+            print(itemType.toString().split('.').last);
+            dailyDataInput.energy_level = itemType.toString().split('.').last;
+          } else if (dailyDataInput.energy_level ==
+              itemType.toString().split('.').last) {
+            setState(() {
+              _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] ==
+                      Color.fromRGBO(254, 247, 237, 1)
+                  ? _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
+                      Color.fromRGBO(82, 82, 76, 1)
+                  : _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
+                      Color.fromRGBO(254, 247, 237, 1);
+            });
+            print(itemType.toString().split('.').last);
+            dailyDataInput.energy_level = "";
+          } else {
+            print("Only one energy level can be selected");
+          }
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: _energyOptionsColor[EnergyLevel.values.indexOf(itemType)],
+          ),
+          padding: EdgeInsets.all(3.0),
+          // margin: EdgeInsets.all(8.0),
+          child: Text(
+            itemType.toString().split('.').last,
+            style: _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] ==
                     Color.fromRGBO(254, 247, 237, 1)
                 ? Theme.of(context).textTheme.bodySmall
                 : darkThemedata.textTheme.bodySmall,
@@ -403,41 +483,6 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
           child: Text(
             itemType.toString().split('.').last,
             style: _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] ==
-                    Color.fromRGBO(254, 247, 237, 1)
-                ? Theme.of(context).textTheme.bodySmall
-                : darkThemedata.textTheme.bodySmall,
-          ),
-        ),
-      );
-    }).toList();
-  }
-
-  List<GestureDetector> _buildEnergyLevelList() {
-    return EnergyLevel.values.map((itemType) {
-      return GestureDetector(
-        onTap: () {
-          print("Gesture Detected");
-          dailyDataInput.energy_level = itemType.toString().split('.').last;
-          print(itemType.toString().split('.').last);
-          setState(() {
-            _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] ==
-                    Color.fromRGBO(254, 247, 237, 1)
-                ? _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
-                    Color.fromRGBO(82, 82, 76, 1)
-                : _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
-                    Color.fromRGBO(254, 247, 237, 1);
-          });
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            color: _energyOptionsColor[EnergyLevel.values.indexOf(itemType)],
-          ),
-          padding: EdgeInsets.all(3.0),
-          // margin: EdgeInsets.all(8.0),
-          child: Text(
-            itemType.toString().split('.').last,
-            style: _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] ==
                     Color.fromRGBO(254, 247, 237, 1)
                 ? Theme.of(context).textTheme.bodySmall
                 : darkThemedata.textTheme.bodySmall,
