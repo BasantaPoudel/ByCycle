@@ -97,7 +97,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
 
 //TODO - Find if there's another alternative
   ThemeData darkThemedata = ThemeCubit().getDarkThemeData();
-  ThemeData lightThemeData = ThemeCubit().getThemeData();
+  ThemeData lightThemeData = ThemeCubit().getLightThemeData();
 
   @override
   Widget build(BuildContext context) {
@@ -128,13 +128,24 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                         TextStyle(fontSize: 20, color: Colors.black)),
                     elevation: MaterialStateProperty.all<double>(5.0),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     print("Submit button pressed");
                     dailyDataInput.temperature = _currentSliderValue;
                     //TODO - Change the hours and minutes to a single field
                     dailyDataInput.hours_of_sleep =
                         int.parse(_hoursController.text);
-                    UserRepository().sendDailyData(dailyDataInput);
+
+                    try {
+                      await UserRepository().sendDailyData(dailyDataInput);
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("Data Submitted Successfully"),
+                        duration: Duration(seconds: 2),
+                      ));
+                      Navigator.pop(context);
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Data Submission Failed")));
+                    }
                   },
                   child: const Text('Submit')),
             ],
@@ -346,7 +357,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
             itemType.toString().split('.').last,
             style: _dischargeOptionsColor[Discharge.values.indexOf(itemType)] ==
                     Color.fromRGBO(254, 247, 237, 1)
-                ? Theme.of(context).textTheme.bodySmall
+                ? lightThemeData.textTheme.bodySmall
                 : darkThemedata.textTheme.bodySmall,
           ),
         ),
@@ -396,7 +407,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
             itemType.toString().split('.').last,
             style: _bloodOptionsColor[Blood.values.indexOf(itemType)] ==
                     Color.fromRGBO(254, 247, 237, 1)
-                ? Theme.of(context).textTheme.bodySmall
+                ? lightThemeData.textTheme.bodySmall
                 : darkThemedata.textTheme.bodySmall,
           ),
         ),
@@ -438,7 +449,10 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
-            color: _energyOptionsColor[EnergyLevel.values.indexOf(itemType)],
+            color: _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] ==
+                    Color.fromRGBO(254, 247, 237, 1)
+                ? _energyOptionsColor[EnergyLevel.values.indexOf(itemType)]
+                : Color.fromRGBO(82, 82, 76, 1),
           ),
           padding: EdgeInsets.all(3.0),
           // margin: EdgeInsets.all(8.0),
@@ -446,7 +460,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
             itemType.toString().split('.').last,
             style: _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] ==
                     Color.fromRGBO(254, 247, 237, 1)
-                ? Theme.of(context).textTheme.bodySmall
+                ? lightThemeData.textTheme.bodySmall
                 : darkThemedata.textTheme.bodySmall,
           ),
         ),
@@ -484,7 +498,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
             itemType.toString().split('.').last,
             style: _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] ==
                     Color.fromRGBO(254, 247, 237, 1)
-                ? Theme.of(context).textTheme.bodySmall
+                ? lightThemeData.textTheme.bodySmall
                 : darkThemedata.textTheme.bodySmall,
           ),
         ),
