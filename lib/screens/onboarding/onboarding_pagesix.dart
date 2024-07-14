@@ -3,6 +3,7 @@ import 'package:by_cycle/models/onboarding_questions.dart';
 import 'package:by_cycle/models/user.dart';
 import 'package:by_cycle/repository/user_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingPageSix extends StatefulWidget {
   final OnBoardingQuestions formData;
@@ -55,7 +56,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 UserRepository().saveOnboardingData(widget.formData);
 
                 Navigator.push(
@@ -67,6 +68,8 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
                 //   // TODO: Implement done button functionality
 
                 //TODO - Fix this function call
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.setBool('onboardingComplete', true);
               },
               child: Text('Done'),
             ),
