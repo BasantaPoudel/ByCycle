@@ -36,6 +36,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFive> {
             Container(
               width: 200,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
                       onPressed: () {

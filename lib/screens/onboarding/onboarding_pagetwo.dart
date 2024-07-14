@@ -37,6 +37,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageTwo> {
               width: 200,
               child: TextField(
                 controller: controller,
+                keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: '# Days',

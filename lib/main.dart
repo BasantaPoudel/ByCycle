@@ -234,21 +234,6 @@ class _MyHomePageState extends State<MyHomePage> {
             child: const Text('Set Alarm'),
           ),
           ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(Color(0xFFDED4C5)),
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                padding:
-                    MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(16)),
-                textStyle: MaterialStateProperty.all<TextStyle>(
-                    TextStyle(fontSize: 20)),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                ),
-                elevation: MaterialStateProperty.all<double>(5.0),
-              ),
               onPressed: () {
                 Navigator.push(
                   context,

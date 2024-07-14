@@ -35,6 +35,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
             ),
             const SizedBox(height: 10),
             Column(
+              // mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
                   onPressed: () => _selectTime(context),
