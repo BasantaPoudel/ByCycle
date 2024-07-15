@@ -3,6 +3,8 @@ import 'package:by_cycle/screens/onboarding/onboarding_pagetwo.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingPageOne extends StatefulWidget {
+  const OnboardingPageOne({super.key});
+
   // const OnboardingPageOne({
   //   required this.formData,
   // });
@@ -30,7 +32,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageOne> {
               style: TextStyle(fontSize: 20),
             ),
             const SizedBox(height: 10),
-            Container(
+            SizedBox(
               width: 200,
               child: TextField(
                 controller: controller,

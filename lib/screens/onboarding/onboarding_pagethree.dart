@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class OnboardingPageThree extends StatefulWidget {
   OnBoardingQuestions formData;
 
-  OnboardingPageThree({
+  OnboardingPageThree({super.key, 
     required this.formData,
   });
 
@@ -32,7 +32,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageThree> {
               style: TextStyle(fontSize: 20),
             ),
             const SizedBox(height: 10),
-            Container(
+            SizedBox(
               width: 200,
               child: TextField(
                 controller: controller,
@@ -43,7 +43,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageThree> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 widget.formData.complete_cycle_length =
@@ -57,7 +57,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageThree> {
                 );
                 //   // TODO: Implement done button functionality
               },
-              child: Text('Next'),
+              child: const Text('Next'),
             ),
           ],
         ),

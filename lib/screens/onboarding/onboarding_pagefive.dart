@@ -33,7 +33,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFive> {
               style: TextStyle(fontSize: 20),
             ),
             const SizedBox(height: 10),
-            Container(
+            SizedBox(
               width: 200,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -42,16 +42,16 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFive> {
                       onPressed: () {
                         widget.formData.cycle_regular = true;
                       },
-                      child: Text('Yes')),
+                      child: const Text('Yes')),
                   ElevatedButton(
                       onPressed: () {
                         widget.formData.cycle_regular = true;
                       },
-                      child: Text('No'))
+                      child: const Text('No'))
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -63,7 +63,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFive> {
                 );
                 //   // TODO: Implement done button functionality
               },
-              child: Text('Next'),
+              child: const Text('Next'),
             ),
           ],
         ),

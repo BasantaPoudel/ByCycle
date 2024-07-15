@@ -3,9 +3,10 @@ import 'package:by_cycle/screens/onboarding/onboarding_pagefive.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingPageFour extends StatefulWidget {
-  OnBoardingQuestions formData;
+  final OnBoardingQuestions formData;
 
-  OnboardingPageFour({
+  const OnboardingPageFour({
+    super.key,
     required this.formData,
   });
 
@@ -32,7 +33,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFour> {
               style: TextStyle(fontSize: 20),
             ),
             const SizedBox(height: 10),
-            Container(
+            SizedBox(
               width: 200,
               child: TextField(
                 controller: controller,
@@ -43,7 +44,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFour> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 widget.formData.time_to_fall_asleep =
@@ -57,7 +58,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFour> {
                 );
                 //   // TODO: Implement done button functionality
               },
-              child: Text('Next'),
+              child: const Text('Next'),
             ),
           ],
         ),

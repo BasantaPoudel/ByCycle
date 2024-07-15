@@ -25,16 +25,16 @@ void main() async {
           ?
           // Create the ThemeCubit
           //TODO - Fix the way to access themeData
-          MyApp()
+          const MyApp()
           : MaterialApp(
-              home: OnboardingPageOne(),
+              home: const OnboardingPageOne(),
               theme: ThemeCubit().getThemeData(),
               darkTheme: ThemeCubit().getDarkThemeData(),
             )));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
           title: 'ByCycle',
           theme: themeCubit.getThemeData(),
           darkTheme: themeCubit.getDarkThemeData(),
-          home: MyHomePage(
+          home: const MyHomePage(
             title: 'ByCycle Home Page',
           ),
         );
@@ -62,7 +62,7 @@ class _MyAppState extends State<MyApp> {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({super.key, required this.title});
 
   final String title;
 
@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 IconButton(
                   color: Colors.black,
-                  icon: Icon(Icons.more_vert_outlined),
+                  icon: const Icon(Icons.more_vert_outlined),
                   onPressed: () {
                     // Navigate to the search screen
                   },
@@ -117,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 IconButton(
                   color: Colors.black,
-                  icon: Icon(Icons.dark_mode_outlined),
+                  icon: const Icon(Icons.dark_mode_outlined),
                   onPressed: () {
                     themeCubit.toggleTheme();
                     // Navigate to the search screen
@@ -129,15 +129,15 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Center(
             child: Column(children: [
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             ElevatedButton(
                 onPressed: null, child: Text("What is your temperature?")),
             ElevatedButton(onPressed: null, child: Text("+"))
           ]),
-          Center(
+          const Center(
             child: Text('Recommended sleep time'),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15.0,
           ),
           const SizedBox(
@@ -158,13 +158,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Color(0xFFDED4C5)),
+                        MaterialStateProperty.all<Color>(const Color(0xFFDED4C5)),
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
                     padding: MaterialStateProperty.all<EdgeInsets>(
-                        EdgeInsets.all(16)),
+                        const EdgeInsets.all(16)),
                     textStyle: MaterialStateProperty.all<TextStyle>(
-                        TextStyle(fontSize: 20)),
+                        const TextStyle(fontSize: 20)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
@@ -194,13 +194,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(Color(0xFFDED4C5)),
+                          MaterialStateProperty.all<Color>(const Color(0xFFDED4C5)),
                       foregroundColor:
                           MaterialStateProperty.all<Color>(Colors.white),
                       padding: MaterialStateProperty.all<EdgeInsets>(
-                          EdgeInsets.all(16)),
+                          const EdgeInsets.all(16)),
                       textStyle: MaterialStateProperty.all<TextStyle>(
-                          TextStyle(fontSize: 20)),
+                          const TextStyle(fontSize: 20)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0),
@@ -216,7 +216,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                       // if (wakeupTime != null) {
                       setState(() {
-                        if (setWakeupTime != null) wakeupTime = setWakeupTime!;
+                        if (setWakeupTime != null) wakeupTime = setWakeupTime;
                       });
                       calculateBedTime(wakeupTime);
                     },
@@ -234,12 +234,12 @@ class _MyHomePageState extends State<MyHomePage> {
           ElevatedButton(
             style: ButtonStyle(
               backgroundColor:
-                  MaterialStateProperty.all<Color>(Color(0xFFDED4C5)),
+                  MaterialStateProperty.all<Color>(const Color(0xFFDED4C5)),
               foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
               padding: MaterialStateProperty.all<EdgeInsets>(
-                  EdgeInsets.only(left: 25, right: 25)),
+                  const EdgeInsets.only(left: 25, right: 25)),
               textStyle: MaterialStateProperty.all<TextStyle>(
-                  TextStyle(fontSize: 20, color: Colors.black)),
+                  const TextStyle(fontSize: 20, color: Colors.black)),
               elevation: MaterialStateProperty.all<double>(5.0),
             ),
             onPressed: openAlarmApp,
@@ -250,11 +250,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => OnboardingPageOne(),
+                    builder: (context) => const OnboardingPageOne(),
                   ),
                 );
               },
-              child: Text('Onboarding')),
+              child: const Text('Onboarding')),
         ])),
         bottomNavigationBar: BottomNavigationBar(
           onTap: (int index) {

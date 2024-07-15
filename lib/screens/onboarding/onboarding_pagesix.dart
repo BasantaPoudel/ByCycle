@@ -1,6 +1,5 @@
 import 'package:by_cycle/main.dart';
 import 'package:by_cycle/models/onboarding_questions.dart';
-import 'package:by_cycle/models/user.dart';
 import 'package:by_cycle/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,6 +19,7 @@ class OnboardingPageSix extends StatefulWidget {
 class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
   int currentIndex = 0;
   DateTime selectedDate = DateTime.now();
+  //TODO - Before commit
   static var logInDataController = TextEditingController();
   static var insightsController = TextEditingController();
 
@@ -40,21 +40,21 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
               children: [
                 ElevatedButton(
                   onPressed: () => _selectTime(context),
-                  child: Text('Data Log In'),
+                  child: const Text('Data Log In'),
                 ),
                 ElevatedButton(
                   onPressed: () => _selectTimeReminder(context),
-                  child: Text('Insights'),
+                  child: const Text('Insights'),
                 ),
                 TextButton(
                   onPressed: () {
                     widget.formData.would_like_reminders = false;
                   },
-                  child: Text('I do not want reminders'),
+                  child: const Text('I do not want reminders'),
                 )
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
                 UserRepository().saveOnboardingData(widget.formData);
@@ -62,7 +62,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MyHomePage(title: "Bycycle"),
+                    builder: (context) => const MyHomePage(title: "Bycycle"),
                   ),
                 );
                 //   // TODO: Implement done button functionality
@@ -71,7 +71,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
                 final prefs = await SharedPreferences.getInstance();
                 await prefs.setBool('onboardingComplete', true);
               },
-              child: Text('Done'),
+              child: const Text('Done'),
             ),
           ],
         ),

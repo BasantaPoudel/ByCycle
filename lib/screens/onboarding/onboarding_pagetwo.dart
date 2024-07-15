@@ -33,7 +33,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageTwo> {
               style: TextStyle(fontSize: 20),
             ),
             const SizedBox(height: 10),
-            Container(
+            SizedBox(
               width: 200,
               child: TextField(
                 controller: controller,
@@ -44,7 +44,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageTwo> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 widget.formData.menstruation_phase_length =
@@ -58,7 +58,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageTwo> {
                 );
                 //   // TODO: Implement done button functionality
               },
-              child: Text('Next'),
+              child: const Text('Next'),
             ),
           ],
         ),

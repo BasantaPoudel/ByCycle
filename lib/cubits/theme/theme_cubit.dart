@@ -20,9 +20,9 @@ class ThemeCubit extends Cubit<ThemeMode> {
         brightness: Brightness.light,
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFDED4C5)),
+          backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFDED4C5)),
           foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(16)),
+          padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(16)),
           // textStyle:
           //     MaterialStateProperty.all<TextStyle>(TextStyle(fontSize: 20)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -96,9 +96,9 @@ class ThemeCubit extends Cubit<ThemeMode> {
         brightness: Brightness.dark,
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFDED4C5)),
+          backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFDED4C5)),
           foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(16)),
+          padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(16)),
           // textStyle:
           //     MaterialStateProperty.all<TextStyle>(TextStyle(fontSize: 20)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
