@@ -47,8 +47,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFour> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                widget.formData.time_to_fall_asleep =
-                    int.parse(controller.text);
+                widget.formData.timeToFallAsleep = int.parse(controller.text);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -56,7 +55,6 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFour> {
                         OnboardingPageFive(formData: widget.formData),
                   ),
                 );
-                //   // TODO: Implement done button functionality
               },
               child: const Text('Next'),
             ),
@@ -64,19 +62,5 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFour> {
         ),
       ),
     );
-  }
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null && picked != DateTime.now()) {
-      setState(() {
-        controller.text = "${picked.toLocal()}".split(' ')[0];
-      });
-    }
   }
 }

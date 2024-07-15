@@ -17,7 +17,6 @@ class OnboardingPageFive extends StatefulWidget {
 class _OnboardingScreenHomeState extends State<OnboardingPageFive> {
   int currentIndex = 0;
   DateTime selectedDate = DateTime.now();
-  static var controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +39,12 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFive> {
                 children: [
                   ElevatedButton(
                       onPressed: () {
-                        widget.formData.cycle_regular = true;
+                        widget.formData.cycleRegular = true;
                       },
                       child: const Text('Yes')),
                   ElevatedButton(
                       onPressed: () {
-                        widget.formData.cycle_regular = true;
+                        widget.formData.cycleRegular = true;
 
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
@@ -69,7 +68,6 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFive> {
                         OnboardingPageSix(formData: widget.formData),
                   ),
                 );
-                //   // TODO: Implement done button functionality
               },
               child: const Text('Next'),
             ),
@@ -77,19 +75,5 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFive> {
         ),
       ),
     );
-  }
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null && picked != DateTime.now()) {
-      setState(() {
-        controller.text = "${picked.toLocal()}".split(' ')[0];
-      });
-    }
   }
 }

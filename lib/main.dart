@@ -24,7 +24,7 @@ void main() async {
       child: onboardingComplete
           ?
           // Create the ThemeCubit
-          //TODO - Fix the way to access themeData
+          //TODO - Fix the way to access themeData if this is not correct
           const MyApp()
           : MaterialApp(
               home: const OnboardingPageOne(),
@@ -157,8 +157,8 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(const Color(0xFFDED4C5)),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color(0xFFDED4C5)),
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
                     padding: MaterialStateProperty.all<EdgeInsets>(
@@ -193,8 +193,8 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(const Color(0xFFDED4C5)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color(0xFFDED4C5)),
                       foregroundColor:
                           MaterialStateProperty.all<Color>(Colors.white),
                       padding: MaterialStateProperty.all<EdgeInsets>(

@@ -1,46 +1,45 @@
 class User {
   String name;
   String email;
-  DateTime last_period;
-  int menstuation_phase_length;
-  int complete_cycle_length;
-  int time_to_fall_asleep;
-  bool cycle_regular;
-  bool cycle_heavy;
+  DateTime lastPeriod;
+  int menstruationPhaseLength;
+  int completeCycleLength;
+  int timeToFallAsleep;
+  bool cycleRegular;
+  bool cycleHeavy;
   bool would_like_reminders_about_data_log_in;
   bool would_like_reminders_about_self_care_checklist;
-  List<DailyDataInput> daily_data_input;
+  List<DailyDataInput> dailyDataInput;
 
   User({
     required this.name,
     required this.email,
-    required this.last_period,
-    this.menstuation_phase_length = 0,
-    this.complete_cycle_length = 0,
-    this.time_to_fall_asleep = 20,
-    this.cycle_regular = false,
-    this.cycle_heavy = false,
+    required this.lastPeriod,
+    this.menstruationPhaseLength = 0,
+    this.completeCycleLength = 0,
+    this.timeToFallAsleep = 20,
+    this.cycleRegular = false,
+    this.cycleHeavy = false,
     this.would_like_reminders_about_data_log_in = false,
     this.would_like_reminders_about_self_care_checklist = false,
-    this.daily_data_input = const [],
+    this.dailyDataInput = const [],
   });
 
   Map<String, dynamic> toMap() {
     return {
       'name': name,
       'email': email,
-      'last_period': last_period,
-      'menstuation_phase_length': menstuation_phase_length,
-      'complete_cycle_length': complete_cycle_length,
-      'time_to_fall_asleep': time_to_fall_asleep,
-      'cycle_regular': cycle_regular,
-      'cycle_heavy': cycle_heavy,
+      'last_period': lastPeriod,
+      'menstuation_phase_length': menstruationPhaseLength,
+      'complete_cycle_length': completeCycleLength,
+      'time_to_fall_asleep': timeToFallAsleep,
+      'cycle_regular': cycleRegular,
+      'cycle_heavy': cycleHeavy,
       'would_like_reminders_about_data_log_in':
           would_like_reminders_about_data_log_in,
       'would_like_reminders_about_self_care_checklist':
           would_like_reminders_about_self_care_checklist,
-      'daily_data_input':
-          daily_data_input.map((input) => input.toMap()).toList(),
+      'daily_data_input': dailyDataInput.map((input) => input.toMap()).toList(),
     };
   }
 
@@ -48,17 +47,17 @@ class User {
     return User(
       name: map['name'],
       email: map['email'],
-      last_period: map['last_period'].toDate(),
-      menstuation_phase_length: map['menstuation_phase_length'],
-      complete_cycle_length: map['complete_cycle_length'],
-      time_to_fall_asleep: map['time_to_fall_asleep'],
-      cycle_regular: map['cycle_regular'],
-      cycle_heavy: map['cycle_heavy'],
+      lastPeriod: map['last_period'].toDate(),
+      menstruationPhaseLength: map['menstuation_phase_length'],
+      completeCycleLength: map['complete_cycle_length'],
+      timeToFallAsleep: map['time_to_fall_asleep'],
+      cycleRegular: map['cycle_regular'],
+      cycleHeavy: map['cycle_heavy'],
       would_like_reminders_about_data_log_in:
           map['would_like_reminders_about_data_log_in'],
       would_like_reminders_about_self_care_checklist:
           map['would_like_reminders_about_self_care_checklist'],
-      daily_data_input: List<DailyDataInput>.from(
+      dailyDataInput: List<DailyDataInput>.from(
         map['daily_data_input']
                 ?.map((input) => DailyDataInput.fromMap(input)) ??
             const [],
@@ -71,8 +70,8 @@ class DailyDataInput {
   String blood;
   DateTime date;
   String discharge;
-  String energy_level;
-  int hours_of_sleep;
+  String energyLevel;
+  int hoursOfSleep;
   List<String> symptoms;
   double temperature;
 
@@ -80,8 +79,8 @@ class DailyDataInput {
     this.blood = '',
     required this.date,
     this.discharge = '',
-    this.energy_level = '',
-    this.hours_of_sleep = 0,
+    this.energyLevel = '',
+    this.hoursOfSleep = 0,
     this.symptoms = const [],
     this.temperature = 0,
   });
@@ -91,8 +90,8 @@ class DailyDataInput {
       'blood': blood,
       'date': date,
       'discharge': discharge,
-      'energy_level': energy_level,
-      'hours_of_sleep': hours_of_sleep,
+      'energy_level': energyLevel,
+      'hours_of_sleep': hoursOfSleep,
       'symptoms': symptoms,
       'temperature': temperature,
     };
@@ -104,8 +103,8 @@ class DailyDataInput {
       date: map['date']
           .toDate(), // Assuming 'date' is stored as Firestore Timestamp
       discharge: map['discharge'] ?? '',
-      energy_level: map['energy_level'] ?? '',
-      hours_of_sleep: map['hours_of_sleep'] ??
+      energyLevel: map['energy_level'] ?? '',
+      hoursOfSleep: map['hours_of_sleep'] ??
           0, // Ensure this matches the stored data type
       symptoms: List<String>.from(map['symptoms'] ?? []),
       temperature: map['temperature'].toDouble() ?? 0,

@@ -3,9 +3,10 @@ import 'package:by_cycle/screens/onboarding/onboarding_pagefour.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingPageThree extends StatefulWidget {
-  OnBoardingQuestions formData;
+  final OnBoardingQuestions formData;
 
-  OnboardingPageThree({super.key, 
+  const OnboardingPageThree({
+    super.key,
     required this.formData,
   });
 
@@ -39,14 +40,14 @@ class _OnboardingScreenHomeState extends State<OnboardingPageThree> {
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: '# Days',
+                  hintText: '29 Days',
                 ),
               ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                widget.formData.complete_cycle_length =
+                widget.formData.completeCycleLength =
                     int.parse(controller.text);
                 Navigator.push(
                   context,
@@ -55,7 +56,6 @@ class _OnboardingScreenHomeState extends State<OnboardingPageThree> {
                         OnboardingPageFour(formData: widget.formData),
                   ),
                 );
-                //   // TODO: Implement done button functionality
               },
               child: const Text('Next'),
             ),
@@ -63,19 +63,5 @@ class _OnboardingScreenHomeState extends State<OnboardingPageThree> {
         ),
       ),
     );
-  }
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null && picked != DateTime.now()) {
-      setState(() {
-        controller.text = "${picked.toLocal()}".split(' ')[0];
-      });
-    }
   }
 }

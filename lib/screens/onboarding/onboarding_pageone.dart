@@ -46,14 +46,13 @@ class _OnboardingScreenHomeState extends State<OnboardingPageOne> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                formData.last_period = DateTime.parse(controller.text);
+                formData.lastPeriod = DateTime.parse(controller.text);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
                           OnboardingPageTwo(formData: formData),
                     ));
-                // TODO: Implement done button functionality
               },
               child: const Text('Next'),
             ),

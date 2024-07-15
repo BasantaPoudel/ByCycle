@@ -47,7 +47,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageTwo> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                widget.formData.menstruation_phase_length =
+                widget.formData.menstruationPhaseLength =
                     int.parse(controller.text);
                 Navigator.push(
                   context,
@@ -56,7 +56,6 @@ class _OnboardingScreenHomeState extends State<OnboardingPageTwo> {
                         OnboardingPageThree(formData: widget.formData),
                   ),
                 );
-                //   // TODO: Implement done button functionality
               },
               child: const Text('Next'),
             ),

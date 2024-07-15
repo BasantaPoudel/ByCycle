@@ -19,7 +19,6 @@ class OnboardingPageSix extends StatefulWidget {
 class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
   int currentIndex = 0;
   DateTime selectedDate = DateTime.now();
-  //TODO - Before commit
   static var logInDataController = TextEditingController();
   static var insightsController = TextEditingController();
 
@@ -46,8 +45,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-              //TODO - Fix displaying the data from controller properly
-              Text("${logInDataController.text}"),
+              Text(logInDataController.text),
               ElevatedButton(
                 onPressed: () => _selectTime(context),
                 child: const Text('Data Log In'),
@@ -62,9 +60,9 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
             ]),
             TextButton(
               onPressed: () {
-                widget.formData.would_like_reminders = false;
-                widget.formData.reminders_about_data_log_in = null;
-                widget.formData.reminders_about_self_care_checklist = null;
+                widget.formData.wouldLikeReminders = false;
+                widget.formData.remindersAboutDataLogIn = null;
+                widget.formData.remindersAboutSelfCareChecklist = null;
               },
               child: const Text('I do not want reminders'),
             )
@@ -81,9 +79,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
                 builder: (context) => const MyHomePage(title: "Bycycle"),
               ),
             );
-            //   // TODO: Implement done button functionality
 
-            //TODO - Fix this function call
             final prefs = await SharedPreferences.getInstance();
             await prefs.setBool('onboardingComplete', true);
           },
@@ -100,8 +96,8 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
     );
     if (picked != null) {
       setState(() {
-        widget.formData.reminders_about_data_log_in = picked;
-        widget.formData.would_like_reminders = true;
+        widget.formData.remindersAboutDataLogIn = picked;
+        widget.formData.wouldLikeReminders = true;
         logInDataController.text = picked.format(context);
       });
     }
@@ -114,8 +110,8 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
     );
     if (picked != null) {
       setState(() {
-        widget.formData.reminders_about_self_care_checklist = picked;
-        widget.formData.would_like_reminders = true;
+        widget.formData.remindersAboutSelfCareChecklist = picked;
+        widget.formData.wouldLikeReminders = true;
         insightsController.text = picked.format(context);
       });
     }
