@@ -1,4 +1,22 @@
-/*J: I kept the calendar_backup file because using it
+/*
+Link to where I got this from:
+https://github.com/aleksanderwozniak/table_calendar/issues/153#issuecomment-885280910
+I also copied it to my gists:
+https://gist.github.com/jakubgrad/5f04e2e91025fad1ca4cfa5691138115
+The original author posted code that had missing dependencies etc.
+I edited the original code and tried to keep all functionality within it.
+I did a few commits in the process so that I know what has been lost:
+https://github.com/BasantaPoudel/ByCycle/commit/34f9172d012687f12e1913fa83885e131946b444
+https://github.com/BasantaPoudel/ByCycle/commit/5dcdbe522e3aec9bde05f1ebb8294a3bc7a98510
+https://github.com/BasantaPoudel/ByCycle/commit/4b0b3a337ccaf646aca47943c76f71b4e5f47e57
+Probably the last one is actually the useful one.
+The original backup looked like this:
+https://github.com/BasantaPoudel/ByCycle/commit/1c079196c56f92aa153241126db88c945b865bf5
+Saved as a gist:
+https://gist.github.com/jakubgrad/f6a00f7f209ad6a3617550bbdc788eef
+
+
+J: I kept the calendar_backup file because using it
 it's possible to select new ranges while other ranges 
 are being displayed. I also kept in this file other functions
 of the calendar that might become useful. However, it might
