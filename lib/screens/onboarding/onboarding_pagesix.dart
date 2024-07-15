@@ -45,14 +45,18 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-              Text(logInDataController.text),
+              Text(logInDataController.text == ''
+                  ? '08:00 AM'
+                  : logInDataController.text),
               ElevatedButton(
                 onPressed: () => _selectTime(context),
                 child: const Text('Data Log In'),
               ),
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-              Text(insightsController.text),
+              Text(insightsController.text == ''
+                  ? '08:00 AM'
+                  : insightsController.text),
               ElevatedButton(
                 onPressed: () => _selectTimeReminder(context),
                 child: const Text('Insights'),
