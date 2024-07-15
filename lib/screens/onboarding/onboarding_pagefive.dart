@@ -46,6 +46,14 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFive> {
                   ElevatedButton(
                       onPressed: () {
                         widget.formData.cycle_regular = true;
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                                'Since your cycle is not regular, we recommend you not to rely only on predictions. It’s very important to input your temperature and cervical mucus everyday!'),
+                            duration: Duration(seconds: 5),
+                          ),
+                        );
                       },
                       child: const Text('No'))
                 ],
