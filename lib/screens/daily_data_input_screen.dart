@@ -1,5 +1,5 @@
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
-import 'package:by_cycle/models/User.dart';
+import 'package:by_cycle/models/user.dart';
 import 'package:by_cycle/repository/user_repository.dart';
 import 'package:by_cycle/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
@@ -118,8 +118,8 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
               _buildSymtomsCard(),
               ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(const Color(0xFFDED4C5)),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color(0xFFDED4C5)),
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
                     padding: MaterialStateProperty.all<EdgeInsets>(
@@ -143,8 +143,8 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                       ));
                       Navigator.pop(context);
                     } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Data Submission Failed")));
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text("Data Submission Failed")));
                     }
                   },
                   child: const Text('Submit')),

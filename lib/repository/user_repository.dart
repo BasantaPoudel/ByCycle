@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:by_cycle/models/User.dart';
+import 'package:by_cycle/models/user.dart';
 
 class UserRepository {
   //Takes a User object as a mandatory argument and
@@ -63,10 +63,8 @@ class UserRepository {
     );
   }
 
-  //TODO - Understand Future<void> vs void
   Future<void> sendDailyData(DailyDataInput dailyDataInput) async {
     //Add the daily data input to the user's daily_data_input list
-    //Add the Error Checking for the daily data input
     try {
       await FirebaseFirestore.instance
           .collection("users")
