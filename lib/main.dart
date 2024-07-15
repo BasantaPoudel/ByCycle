@@ -5,6 +5,7 @@ import 'package:by_cycle/firebase_options.dart';
 import 'package:by_cycle/screens/daily_data_input_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -32,7 +33,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     var themeCubit = BlocProvider.of<ThemeCubit>(context);
-
+    // var systemThemeMode =
+    //     (MediaQuery.of(context).platformBrightness == Brightness.dark)
+    //         ? ThemeMode.dark
+    //         : ThemeMode.light;
     return BlocBuilder(
       bloc: themeCubit,
       builder: (context, state) {
@@ -40,7 +44,7 @@ class _MyAppState extends State<MyApp> {
           title: 'ByCycle',
           theme: themeCubit.getLightThemeData(),
           darkTheme: themeCubit.getDarkThemeData(),
-          themeMode: ThemeMode.system, // Set the theme mode
+          themeMode: themeCubit.state, // Set the theme mode
           home: const MyHomePage(
             title: 'ByCycle Home Page',
           ),
