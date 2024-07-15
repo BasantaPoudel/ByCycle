@@ -1,6 +1,6 @@
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
-import 'package:by_cycle/cubits/theme/theme_cubit.dart';
+import 'package:by_cycle/cubits/theme/theme_cubit.dart' hide ThemeMode;
 import 'package:by_cycle/firebase_options.dart';
 import 'package:by_cycle/screens/daily_data_input_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -38,8 +38,9 @@ class _MyAppState extends State<MyApp> {
       builder: (context, state) {
         return MaterialApp(
           title: 'ByCycle',
-          theme: themeCubit.getThemeData(),
+          theme: themeCubit.getLightThemeData(),
           darkTheme: themeCubit.getDarkThemeData(),
+          themeMode: ThemeMode.system, // Set the theme mode
           home: const MyHomePage(
             title: 'ByCycle Home Page',
           ),
@@ -156,8 +157,8 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(const Color(0xFFDED4C5)),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color(0xFFDED4C5)),
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
                     padding: MaterialStateProperty.all<EdgeInsets>(
@@ -192,8 +193,8 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(const Color(0xFFDED4C5)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color(0xFFDED4C5)),
                       foregroundColor:
                           MaterialStateProperty.all<Color>(Colors.white),
                       padding: MaterialStateProperty.all<EdgeInsets>(
