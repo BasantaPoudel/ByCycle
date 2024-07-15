@@ -9,14 +9,14 @@ class CustomCard extends StatelessWidget {
   final VoidCallback? onPressed;
 
   const CustomCard({
-    Key? key,
+    super.key,
     this.child,
     this.color,
     this.borderRadius,
     this.padding,
     required this.title,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class CustomCard extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: onPressed,
-                      icon: Icon(Icons.info_outline),
+                      icon: const Icon(Icons.info_outline),
                     ),
                   ],
                 ),

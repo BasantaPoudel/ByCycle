@@ -7,27 +7,27 @@ class CustomContainer extends StatelessWidget {
   final EdgeInsets? padding;
 
   const CustomContainer({
-    Key? key,
+    super.key,
     this.child,
     this.color,
     this.borderRadius,
     this.padding,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     // title and information button
     // body
     return Container(
-      child: Column(
-        children: [
-          child!,
-        ],
-      ),
       color: color,
       padding: padding,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(borderRadius!),
+      ),
+      child: Column(
+        children: [
+          child!,
+        ],
       ),
     );
   }

@@ -61,7 +61,7 @@ class ThemeCubit extends Cubit<ThemeMode> {
             ),
 
         cardTheme: CardTheme(
-          color: Color.fromRGBO(222, 212, 197, 1), // Set the card color
+          color: const Color.fromRGBO(222, 212, 197, 1), // Set the card color
           elevation: 2, // Set the card elevation
           shape: RoundedRectangleBorder(
             borderRadius:
@@ -238,7 +238,7 @@ class ThemeCubit extends Cubit<ThemeMode> {
           ),
 
       cardTheme: CardTheme(
-        color: Color.fromRGBO(222, 212, 197, 1), // Set the card color
+        color: const Color.fromRGBO(222, 212, 197, 1), // Set the card color
         elevation: 2, // Set the card elevation
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8), // Set the card border radius

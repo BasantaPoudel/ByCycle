@@ -2,9 +2,7 @@ import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/models/User.dart';
 import 'package:by_cycle/repository/user_repository.dart';
 import 'package:by_cycle/widgets/custom_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 enum Discharge {
   NO_DISCHARGE,
@@ -43,48 +41,50 @@ enum Symptoms {
 }
 
 class DailyDataInputScreen extends StatefulWidget {
+  const DailyDataInputScreen({super.key});
+
   @override
   _DailyDataInputState createState() => _DailyDataInputState();
 }
 
 class _DailyDataInputState extends State<DailyDataInputScreen> {
   double _currentSliderValue = 35;
-  List<Color> _energyOptionsColor = [
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
+  final List<Color> _energyOptionsColor = [
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
   ];
 
-  List<Color> _bloodOptionsColor = [
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
+  final List<Color> _bloodOptionsColor = [
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
   ];
-  List<Color> _dischargeOptionsColor = [
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
+  final List<Color> _dischargeOptionsColor = [
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
   ];
-  List<Color> _symptomsOptionsColor = [
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
-    Color.fromRGBO(254, 247, 237, 1),
+  final List<Color> _symptomsOptionsColor = [
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
+    const Color.fromRGBO(254, 247, 237, 1),
   ];
 
   final TextEditingController _hoursController = TextEditingController();
@@ -119,13 +119,13 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
               ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Color(0xFFDED4C5)),
+                        MaterialStateProperty.all<Color>(const Color(0xFFDED4C5)),
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
                     padding: MaterialStateProperty.all<EdgeInsets>(
-                        EdgeInsets.only(left: 25, right: 25)),
+                        const EdgeInsets.only(left: 25, right: 25)),
                     textStyle: MaterialStateProperty.all<TextStyle>(
-                        TextStyle(fontSize: 20, color: Colors.black)),
+                        const TextStyle(fontSize: 20, color: Colors.black)),
                     elevation: MaterialStateProperty.all<double>(5.0),
                   ),
                   onPressed: () async {
@@ -144,7 +144,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                       Navigator.pop(context);
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Data Submission Failed")));
+                          const SnackBar(content: Text("Data Submission Failed")));
                     }
                   },
                   child: const Text('Submit')),
@@ -301,13 +301,13 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                 child: TextField(
                     controller: _hoursController,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(hintText: "Hours"))),
+                    decoration: const InputDecoration(hintText: "Hours"))),
             const Text(":"),
             Expanded(
                 child: TextField(
                     controller: _minsController,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(hintText: "Minutes"))),
+                    decoration: const InputDecoration(hintText: "Minutes"))),
           ],
         ),
       )),
@@ -322,11 +322,11 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
           if (dailyDataInput.discharge.isEmpty) {
             setState(() {
               _dischargeOptionsColor[Discharge.values.indexOf(itemType)] ==
-                      Color.fromRGBO(254, 247, 237, 1)
+                      const Color.fromRGBO(254, 247, 237, 1)
                   ? _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
-                      Color.fromRGBO(82, 82, 76, 1)
+                      const Color.fromRGBO(82, 82, 76, 1)
                   : _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
-                      Color.fromRGBO(254, 247, 237, 1);
+                      const Color.fromRGBO(254, 247, 237, 1);
             });
             print(itemType.toString().split('.').last);
             dailyDataInput.discharge = itemType.toString().split('.').last;
@@ -334,11 +334,11 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
               itemType.toString().split('.').last) {
             setState(() {
               _dischargeOptionsColor[Discharge.values.indexOf(itemType)] ==
-                      Color.fromRGBO(254, 247, 237, 1)
+                      const Color.fromRGBO(254, 247, 237, 1)
                   ? _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
-                      Color.fromRGBO(82, 82, 76, 1)
+                      const Color.fromRGBO(82, 82, 76, 1)
                   : _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
-                      Color.fromRGBO(254, 247, 237, 1);
+                      const Color.fromRGBO(254, 247, 237, 1);
             });
             print(itemType.toString().split('.').last);
             dailyDataInput.discharge = "";
@@ -351,12 +351,12 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
             borderRadius: BorderRadius.circular(5),
             color: _dischargeOptionsColor[Discharge.values.indexOf(itemType)],
           ),
-          padding: EdgeInsets.all(3.0),
+          padding: const EdgeInsets.all(3.0),
           // margin: EdgeInsets.all(8.0),
           child: Text(
             itemType.toString().split('.').last,
             style: _dischargeOptionsColor[Discharge.values.indexOf(itemType)] ==
-                    Color.fromRGBO(254, 247, 237, 1)
+                    const Color.fromRGBO(254, 247, 237, 1)
                 ? lightThemeData.textTheme.bodySmall
                 : darkThemedata.textTheme.bodySmall,
           ),
@@ -372,11 +372,11 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
           if (dailyDataInput.blood.isEmpty) {
             setState(() {
               _bloodOptionsColor[Blood.values.indexOf(itemType)] ==
-                      Color.fromRGBO(254, 247, 237, 1)
+                      const Color.fromRGBO(254, 247, 237, 1)
                   ? _bloodOptionsColor[Blood.values.indexOf(itemType)] =
-                      Color.fromRGBO(82, 82, 76, 1)
+                      const Color.fromRGBO(82, 82, 76, 1)
                   : _bloodOptionsColor[Blood.values.indexOf(itemType)] =
-                      Color.fromRGBO(254, 247, 237, 1);
+                      const Color.fromRGBO(254, 247, 237, 1);
             });
             print(itemType.toString().split('.').last);
             dailyDataInput.blood = itemType.toString().split('.').last;
@@ -384,11 +384,11 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
               itemType.toString().split('.').last) {
             setState(() {
               _bloodOptionsColor[Blood.values.indexOf(itemType)] ==
-                      Color.fromRGBO(254, 247, 237, 1)
+                      const Color.fromRGBO(254, 247, 237, 1)
                   ? _bloodOptionsColor[Blood.values.indexOf(itemType)] =
-                      Color.fromRGBO(82, 82, 76, 1)
+                      const Color.fromRGBO(82, 82, 76, 1)
                   : _bloodOptionsColor[Blood.values.indexOf(itemType)] =
-                      Color.fromRGBO(254, 247, 237, 1);
+                      const Color.fromRGBO(254, 247, 237, 1);
             });
             print(itemType.toString().split('.').last);
             dailyDataInput.blood = "";
@@ -401,12 +401,12 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
             borderRadius: BorderRadius.circular(5),
             color: _bloodOptionsColor[Blood.values.indexOf(itemType)],
           ),
-          padding: EdgeInsets.all(3.0),
+          padding: const EdgeInsets.all(3.0),
           // margin: EdgeInsets.all(8.0),
           child: Text(
             itemType.toString().split('.').last,
             style: _bloodOptionsColor[Blood.values.indexOf(itemType)] ==
-                    Color.fromRGBO(254, 247, 237, 1)
+                    const Color.fromRGBO(254, 247, 237, 1)
                 ? lightThemeData.textTheme.bodySmall
                 : darkThemedata.textTheme.bodySmall,
           ),
@@ -422,11 +422,11 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
           if (dailyDataInput.energy_level.isEmpty) {
             setState(() {
               _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] ==
-                      Color.fromRGBO(254, 247, 237, 1)
+                      const Color.fromRGBO(254, 247, 237, 1)
                   ? _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
-                      Color.fromRGBO(82, 82, 76, 1)
+                      const Color.fromRGBO(82, 82, 76, 1)
                   : _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
-                      Color.fromRGBO(254, 247, 237, 1);
+                      const Color.fromRGBO(254, 247, 237, 1);
             });
             print(itemType.toString().split('.').last);
             dailyDataInput.energy_level = itemType.toString().split('.').last;
@@ -434,11 +434,11 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
               itemType.toString().split('.').last) {
             setState(() {
               _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] ==
-                      Color.fromRGBO(254, 247, 237, 1)
+                      const Color.fromRGBO(254, 247, 237, 1)
                   ? _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
-                      Color.fromRGBO(82, 82, 76, 1)
+                      const Color.fromRGBO(82, 82, 76, 1)
                   : _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
-                      Color.fromRGBO(254, 247, 237, 1);
+                      const Color.fromRGBO(254, 247, 237, 1);
             });
             print(itemType.toString().split('.').last);
             dailyDataInput.energy_level = "";
@@ -450,16 +450,16 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             color: _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] ==
-                    Color.fromRGBO(254, 247, 237, 1)
+                    const Color.fromRGBO(254, 247, 237, 1)
                 ? _energyOptionsColor[EnergyLevel.values.indexOf(itemType)]
-                : Color.fromRGBO(82, 82, 76, 1),
+                : const Color.fromRGBO(82, 82, 76, 1),
           ),
-          padding: EdgeInsets.all(3.0),
+          padding: const EdgeInsets.all(3.0),
           // margin: EdgeInsets.all(8.0),
           child: Text(
             itemType.toString().split('.').last,
             style: _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] ==
-                    Color.fromRGBO(254, 247, 237, 1)
+                    const Color.fromRGBO(254, 247, 237, 1)
                 ? lightThemeData.textTheme.bodySmall
                 : darkThemedata.textTheme.bodySmall,
           ),
@@ -481,23 +481,23 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
 
           setState(() {
             _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] ==
-                    Color.fromRGBO(254, 247, 237, 1)
+                    const Color.fromRGBO(254, 247, 237, 1)
                 ? _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] =
-                    Color.fromRGBO(82, 82, 76, 1)
+                    const Color.fromRGBO(82, 82, 76, 1)
                 : _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] =
-                    Color.fromRGBO(254, 247, 237, 1);
+                    const Color.fromRGBO(254, 247, 237, 1);
           });
         },
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: _symptomsOptionsColor[Symptoms.values.indexOf(itemType)]),
-          padding: EdgeInsets.all(3.0),
+          padding: const EdgeInsets.all(3.0),
           // margin: EdgeInsets.all(8.0),
           child: Text(
             itemType.toString().split('.').last,
             style: _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] ==
-                    Color.fromRGBO(254, 247, 237, 1)
+                    const Color.fromRGBO(254, 247, 237, 1)
                 ? lightThemeData.textTheme.bodySmall
                 : darkThemedata.textTheme.bodySmall,
           ),
