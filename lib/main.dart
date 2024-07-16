@@ -1,12 +1,10 @@
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
-import 'package:by_cycle/cubits/theme/theme_cubit.dart' hide ThemeMode;
+import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/firebase_options.dart';
-import 'package:by_cycle/screens/daily_data_input_screen.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -26,7 +24,6 @@ void main() async {
       child: onboardingComplete
           ?
           // Create the ThemeCubit
-
           //TODO - Fix the way to access themeData if this is not correct
           const MyApp()
           : MaterialApp(
@@ -47,18 +44,14 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     var themeCubit = BlocProvider.of<ThemeCubit>(context);
-    // var systemThemeMode =
-    //     (MediaQuery.of(context).platformBrightness == Brightness.dark)
-    //         ? ThemeMode.dark
-    //         : ThemeMode.light;
+
     return BlocBuilder(
       bloc: themeCubit,
       builder: (context, state) {
         return MaterialApp(
           title: 'ByCycle',
-          theme: themeCubit.getLightThemeData(),
+          theme: themeCubit.getThemeData(),
           darkTheme: themeCubit.getDarkThemeData(),
-          themeMode: themeCubit.state, // Set the theme mode
           home: const MyHomePage(
             title: 'ByCycle Home Page',
           ),
@@ -70,13 +63,16 @@ class _MyAppState extends State<MyApp> {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
+
   final String title;
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
+
   late TimeOfDay bedTime;
   late TimeOfDay wakeupTime;
 
@@ -111,13 +107,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   'YESTERDAY',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
-                TextButton(
-                  child: const Text('TODAY'),
-                  onPressed: () {
-                    // Navigate to the search screen
-                    null;
-                  },
-                  // style: Theme.of(context).buttonTheme.layoutBehavior,
+                Text(
+                  'TODAY',
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 Text(
                   'TOMORROW',
@@ -139,18 +131,8 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(children: [
           const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DailyDataInputScreen()));
-                },
-                child: const Text("What is your temperature?")),
-            ElevatedButton(
-                onPressed: () {
-                  null;
-                },
-                child: const Text("+"))
+                onPressed: null, child: Text("What is your temperature?")),
+            ElevatedButton(onPressed: null, child: Text("+"))
           ]),
           const Center(
             child: Text('Recommended sleep time'),

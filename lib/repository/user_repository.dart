@@ -64,17 +64,6 @@ class UserRepository {
     );
   }
 
-
-  Future<void> sendDailyData(DailyDataInput dailyDataInput) async {
-    //Add the daily data input to the user's daily_data_input list
-    try {
-      await FirebaseFirestore.instance
-          .collection("users")
-          .add(dailyDataInput.toMap());
-      print("Daily data sent");
-    } catch (e) {
-      print("Error: $e");
-
   Future<void> saveOnboardingData(OnBoardingQuestions formData) async {
     try {
       await FirebaseFirestore.instance
@@ -82,7 +71,6 @@ class UserRepository {
           .add(formData.toMap());
     } catch (e) {
       print('Error adding data to Firestore: $e');
-
     }
   }
 }
