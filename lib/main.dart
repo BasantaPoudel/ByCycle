@@ -3,23 +3,37 @@ import 'package:android_intent_plus/flag.dart';
 import 'package:by_cycle/cubits/theme/theme_cubit.dart' hide ThemeMode;
 import 'package:by_cycle/firebase_options.dart';
 import 'package:by_cycle/screens/daily_data_input_screen.dart';
+import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final bool onboardingComplete = prefs.getBool('onboardingComplete') ?? false;
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(BlocProvider(
       create: (BuildContext context) => ThemeCubit(),
-      child:
+      child: onboardingComplete
+          ?
           // Create the ThemeCubit
-          const MyApp()));
+
+          //TODO - Fix the way to access themeData if this is not correct
+          const MyApp()
+          : MaterialApp(
+              home: const OnboardingPageOne(),
+              theme: ThemeCubit().getThemeData(),
+              darkTheme: ThemeCubit().getDarkThemeData(),
+            )));
 }
 
 class MyApp extends StatefulWidget {
@@ -123,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Center(
             child: Column(children: [
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -249,6 +263,16 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: openAlarmApp,
             child: const Text('Set Alarm'),
           ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const OnboardingPageOne(),
+                  ),
+                );
+              },
+              child: const Text('Onboarding')),
         ])),
         bottomNavigationBar: BottomNavigationBar(
           onTap: (int index) {

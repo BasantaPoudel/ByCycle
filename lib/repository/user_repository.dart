@@ -1,3 +1,4 @@
+import 'package:by_cycle/models/onboarding_questions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:by_cycle/models/user.dart';
 
@@ -63,6 +64,7 @@ class UserRepository {
     );
   }
 
+
   Future<void> sendDailyData(DailyDataInput dailyDataInput) async {
     //Add the daily data input to the user's daily_data_input list
     try {
@@ -72,6 +74,15 @@ class UserRepository {
       print("Daily data sent");
     } catch (e) {
       print("Error: $e");
+
+  Future<void> saveOnboardingData(OnBoardingQuestions formData) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('onboarding')
+          .add(formData.toMap());
+    } catch (e) {
+      print('Error adding data to Firestore: $e');
+
     }
   }
 }
