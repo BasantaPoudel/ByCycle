@@ -2,26 +2,39 @@ import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/firebase_options.dart';
+import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final bool onboardingComplete = prefs.getBool('onboardingComplete') ?? false;
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(BlocProvider(
       create: (BuildContext context) => ThemeCubit(),
-      child:
+      child: onboardingComplete
+          ?
           // Create the ThemeCubit
-          MyApp()));
+          //TODO - Fix the way to access themeData if this is not correct
+          const MyApp()
+          : MaterialApp(
+              home: const OnboardingPageOne(),
+              theme: ThemeCubit().getThemeData(),
+              darkTheme: ThemeCubit().getDarkThemeData(),
+            )));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -39,7 +52,7 @@ class _MyAppState extends State<MyApp> {
           title: 'ByCycle',
           theme: themeCubit.getThemeData(),
           darkTheme: themeCubit.getDarkThemeData(),
-          home: MyHomePage(
+          home: const MyHomePage(
             title: 'ByCycle Home Page',
           ),
         );
@@ -49,7 +62,7 @@ class _MyAppState extends State<MyApp> {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({super.key, required this.title});
 
   final String title;
 
@@ -85,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 IconButton(
                   color: Colors.black,
-                  icon: Icon(Icons.more_vert_outlined),
+                  icon: const Icon(Icons.more_vert_outlined),
                   onPressed: () {
                     // Navigate to the search screen
                   },
@@ -104,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 IconButton(
                   color: Colors.black,
-                  icon: Icon(Icons.dark_mode_outlined),
+                  icon: const Icon(Icons.dark_mode_outlined),
                   onPressed: () {
                     themeCubit.toggleTheme();
                     // Navigate to the search screen
@@ -116,15 +129,15 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Center(
             child: Column(children: [
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             ElevatedButton(
                 onPressed: null, child: Text("What is your temperature?")),
             ElevatedButton(onPressed: null, child: Text("+"))
           ]),
-          Center(
+          const Center(
             child: Text('Recommended sleep time'),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15.0,
           ),
           const SizedBox(
@@ -144,14 +157,14 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Color(0xFFDED4C5)),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color(0xFFDED4C5)),
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
                     padding: MaterialStateProperty.all<EdgeInsets>(
-                        EdgeInsets.all(16)),
+                        const EdgeInsets.all(16)),
                     textStyle: MaterialStateProperty.all<TextStyle>(
-                        TextStyle(fontSize: 20)),
+                        const TextStyle(fontSize: 20)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
@@ -180,14 +193,14 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Color(0xFFDED4C5)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color(0xFFDED4C5)),
                       foregroundColor:
                           MaterialStateProperty.all<Color>(Colors.white),
                       padding: MaterialStateProperty.all<EdgeInsets>(
-                          EdgeInsets.all(16)),
+                          const EdgeInsets.all(16)),
                       textStyle: MaterialStateProperty.all<TextStyle>(
-                          TextStyle(fontSize: 20)),
+                          const TextStyle(fontSize: 20)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0),
@@ -203,7 +216,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                       // if (wakeupTime != null) {
                       setState(() {
-                        if (setWakeupTime != null) wakeupTime = setWakeupTime!;
+                        if (setWakeupTime != null) wakeupTime = setWakeupTime;
                       });
                       calculateBedTime(wakeupTime);
                     },
@@ -221,17 +234,27 @@ class _MyHomePageState extends State<MyHomePage> {
           ElevatedButton(
             style: ButtonStyle(
               backgroundColor:
-                  MaterialStateProperty.all<Color>(Color(0xFFDED4C5)),
+                  MaterialStateProperty.all<Color>(const Color(0xFFDED4C5)),
               foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
               padding: MaterialStateProperty.all<EdgeInsets>(
-                  EdgeInsets.only(left: 25, right: 25)),
+                  const EdgeInsets.only(left: 25, right: 25)),
               textStyle: MaterialStateProperty.all<TextStyle>(
-                  TextStyle(fontSize: 20, color: Colors.black)),
+                  const TextStyle(fontSize: 20, color: Colors.black)),
               elevation: MaterialStateProperty.all<double>(5.0),
             ),
             onPressed: openAlarmApp,
             child: const Text('Set Alarm'),
           ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const OnboardingPageOne(),
+                  ),
+                );
+              },
+              child: const Text('Onboarding')),
         ])),
         bottomNavigationBar: BottomNavigationBar(
           onTap: (int index) {
