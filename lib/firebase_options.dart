@@ -4,6 +4,16 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
+/// Default [FirebaseOptions] for use with your Firebase apps.
+///
+/// Example:
+/// ```dart
+/// import 'firebase_options.dart';
+/// // ...
+/// await Firebase.initializeApp(
+///   options: DefaultFirebaseOptions.currentPlatform,
+/// );
+/// ```
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
@@ -31,49 +41,48 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCN3jSdYqs4Y_iqo4JkVbld0rdZO1Xh0z8',
-    appId: '1:198712519729:web:3d2dcb6b2b394e2eeeb910',
-    messagingSenderId: '198712519729',
-    projectId: 'bycycle-1e6ed',
-    authDomain: 'bycycle-1e6ed.firebaseapp.com',
-    storageBucket: 'bycycle-1e6ed.appspot.com',
-    measurementId: 'G-Y2T00MQKEY',
+    apiKey: 'AIzaSyDWbgOWPs9ca6AtKF_dLrWiw6acJKBvj2c',
+    appId: '1:303584259226:web:7e32fda6dabd653ef08323',
+    messagingSenderId: '303584259226',
+    projectId: 'bycycle-7da95',
+    authDomain: 'bycycle-7da95.firebaseapp.com',
+    storageBucket: 'bycycle-7da95.appspot.com',
+    measurementId: 'G-7DHXG0C25Z',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCooK1ZiVQY_LoEwHbAc2gFAEYj3aavZsg',
-    appId: '1:198712519729:android:254cba76f3e5d2dbeeb910',
-    messagingSenderId: '198712519729',
-    projectId: 'bycycle-1e6ed',
-    storageBucket: 'bycycle-1e6ed.appspot.com',
+    apiKey: 'AIzaSyCA0SgkJT2zvzMgazAA2h1P4QDqll4Nyik',
+    appId: '1:303584259226:android:c6076d29d96b929cf08323',
+    messagingSenderId: '303584259226',
+    projectId: 'bycycle-7da95',
+    storageBucket: 'bycycle-7da95.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCjX05m1CfwWEPII4wRSqmcjOaOoyilxlI',
-    appId: '1:198712519729:ios:1a78c626f80c43aeeeb910',
-    messagingSenderId: '198712519729',
-    projectId: 'bycycle-1e6ed',
-    storageBucket: 'bycycle-1e6ed.appspot.com',
-    iosBundleId: 'com.example.byCycle',
+    apiKey: 'AIzaSyDK0aFyXWMmK0LJptlxQX6t7UfcgaBSQso',
+    appId: '1:303584259226:ios:91f5265d5faca8c0f08323',
+    messagingSenderId: '303584259226',
+    projectId: 'bycycle-7da95',
+    storageBucket: 'bycycle-7da95.appspot.com',
+    iosBundleId: 'com.ignite.bycycle',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCjX05m1CfwWEPII4wRSqmcjOaOoyilxlI',
-    appId: '1:198712519729:ios:1a78c626f80c43aeeeb910',
-    messagingSenderId: '198712519729',
-    projectId: 'bycycle-1e6ed',
-    storageBucket: 'bycycle-1e6ed.appspot.com',
-    iosBundleId: 'com.example.byCycle',
+    apiKey: 'AIzaSyDK0aFyXWMmK0LJptlxQX6t7UfcgaBSQso',
+    appId: '1:303584259226:ios:91f5265d5faca8c0f08323',
+    messagingSenderId: '303584259226',
+    projectId: 'bycycle-7da95',
+    storageBucket: 'bycycle-7da95.appspot.com',
+    iosBundleId: 'com.ignite.bycycle',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCN3jSdYqs4Y_iqo4JkVbld0rdZO1Xh0z8',
-    appId: '1:198712519729:web:17ed0c36f3434c9beeb910',
-    messagingSenderId: '198712519729',
-    projectId: 'bycycle-1e6ed',
-    authDomain: 'bycycle-1e6ed.firebaseapp.com',
-    storageBucket: 'bycycle-1e6ed.appspot.com',
-    measurementId: 'G-V647PMMR8N',
+    apiKey: 'AIzaSyDWbgOWPs9ca6AtKF_dLrWiw6acJKBvj2c',
+    appId: '1:303584259226:web:5095da268cb25551f08323',
+    messagingSenderId: '303584259226',
+    projectId: 'bycycle-7da95',
+    authDomain: 'bycycle-7da95.firebaseapp.com',
+    storageBucket: 'bycycle-7da95.appspot.com',
+    measurementId: 'G-HK44V77TWR',
   );
-
 }
