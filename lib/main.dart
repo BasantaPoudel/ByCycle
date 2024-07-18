@@ -254,43 +254,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ElevatedButton(
             style: ButtonStyle(
               backgroundColor:
-                  MaterialStateProperty.all<Color>(const Color(0xFFDED4C5)),
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              padding: MaterialStateProperty.all<EdgeInsets>(
-                  const EdgeInsets.only(left: 25, right: 25)),
-              textStyle: MaterialStateProperty.all<TextStyle>(
-                  const TextStyle(fontSize: 20, color: Colors.black)),
-              elevation: MaterialStateProperty.all<double>(5.0),
-            ),
-            onPressed: () {
-              print(exampleInitialDateTimeRanges);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Calendar(
-                    //initialDateTimeRanges: timeRanges
-                    initialDateTimeRanges: exampleInitialDateTimeRanges,
-                    /*
-                      initialDateTimeRanges: [
-                        DateTimeRange(
-                          start: DateTime.now().add(Duration(days: 7)),
-                          end: DateTime.now().add(Duration(days: 14)),
-                        ),
-                        DateTimeRange(
-                          start: DateTime.now().add(Duration(days: 3)),
-                          end: DateTime.now().add(Duration(days: 5)),
-                        ),
-                      ],
-                      */
-                  ),
-                ),
-              );
-            },
-            child: const Text('Calendar'),
-          ),
-          ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor:
                   MaterialStateProperty.all<Color>(Color(0xFFDED4C5)),
               foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
               padding: MaterialStateProperty.all<EdgeInsets>(
