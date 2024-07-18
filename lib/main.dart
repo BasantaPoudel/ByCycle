@@ -347,8 +347,9 @@ class _MyHomePageState extends State<MyHomePage> {
     } else if (Theme.of(context).platform == TargetPlatform.iOS) {
       final Uri iosClockAppUri = Uri(scheme: 'clock');
 
-      if (await canLaunchUrl(iosClockAppUri)) {
-        await launchUrl(iosClockAppUri);
+      //Test launching external link
+      if (await canLaunchUrl(Uri.parse("photos-redirect://"))) {
+        await launchUrl(Uri.parse("photos-redirect://"));
       } else {
         throw 'Could not open the Clock app.';
       }
