@@ -83,6 +83,7 @@ class DailyDataInput {
     this.hoursOfSleep = 0,
     this.symptoms = const [],
     this.temperature = 0,
+    required this.symptoms,
   });
 
   Map<String, dynamic> toMap() {
