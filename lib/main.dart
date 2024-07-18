@@ -1,9 +1,11 @@
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
 import 'package:by_cycle/cubits/theme/theme_cubit.dart' hide ThemeMode;
+import 'package:by_cycle/examples/customDateTimeRanges/exampleInitialDateTimeRanges.dart';
 import 'package:by_cycle/firebase_options.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:by_cycle/screens/daily_data_input_screen.dart';
+import 'package:by_cycle/screens/calendar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -260,6 +262,43 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             onPressed: openAlarmApp,
             child: const Text('Set Alarm'),
+          ),
+          ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(Color(0xFFDED4C5)),
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+              padding: MaterialStateProperty.all<EdgeInsets>(
+                  EdgeInsets.only(left: 25, right: 25)),
+              textStyle: MaterialStateProperty.all<TextStyle>(
+                  TextStyle(fontSize: 20, color: Colors.black)),
+              elevation: MaterialStateProperty.all<double>(5.0),
+            ),
+            onPressed: () {
+              print(exampleInitialDateTimeRanges);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Calendar(
+                    //initialDateTimeRanges: timeRanges
+                    initialDateTimeRanges: exampleInitialDateTimeRanges,
+                    /*
+                      initialDateTimeRanges: [
+                        DateTimeRange(
+                          start: DateTime.now().add(Duration(days: 7)),
+                          end: DateTime.now().add(Duration(days: 14)),
+                        ),
+                        DateTimeRange(
+                          start: DateTime.now().add(Duration(days: 3)),
+                          end: DateTime.now().add(Duration(days: 5)),
+                        ),
+                      ],
+                      */
+                  ),
+                ),
+              );
+            },
+            child: const Text('Calendar'),
           ),
           ElevatedButton(
               onPressed: () {
