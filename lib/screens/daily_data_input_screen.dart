@@ -132,7 +132,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                     print("Submit button pressed");
                     dailyDataInput.temperature = _currentSliderValue;
                     //TODO - Change the hours and minutes to a single field
-                    dailyDataInput.hours_of_sleep =
+                    dailyDataInput.hoursOfSleep =
                         int.parse(_hoursController.text);
 
                     try {
@@ -419,7 +419,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
     return EnergyLevel.values.map((itemType) {
       return GestureDetector(
         onTap: () {
-          if (dailyDataInput.energy_level.isEmpty) {
+          if (dailyDataInput.energyLevel.isEmpty) {
             setState(() {
               _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] ==
                       const Color.fromRGBO(254, 247, 237, 1)
@@ -429,8 +429,8 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                       const Color.fromRGBO(254, 247, 237, 1);
             });
             print(itemType.toString().split('.').last);
-            dailyDataInput.energy_level = itemType.toString().split('.').last;
-          } else if (dailyDataInput.energy_level ==
+            dailyDataInput.energyLevel = itemType.toString().split('.').last;
+          } else if (dailyDataInput.energyLevel ==
               itemType.toString().split('.').last) {
             setState(() {
               _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] ==
@@ -441,7 +441,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                       const Color.fromRGBO(254, 247, 237, 1);
             });
             print(itemType.toString().split('.').last);
-            dailyDataInput.energy_level = "";
+            dailyDataInput.energyLevel = "";
           } else {
             print("Only one energy level can be selected");
           }

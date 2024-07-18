@@ -18,6 +18,20 @@ class ThemeCubit extends Cubit<ThemeMode> {
     if (state == ThemeMode.light) {
       return ThemeData(
         brightness: Brightness.light,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFDED4C5)),
+          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(16)),
+          // textStyle:
+          //     MaterialStateProperty.all<TextStyle>(TextStyle(fontSize: 20)),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+          ),
+          elevation: MaterialStateProperty.all<double>(5.0),
+        )),
         buttonTheme: const ButtonThemeData(
           buttonColor: Color(0xFFDED4C5), // Set the button color
           textTheme: ButtonTextTheme.primary, // Set the button text theme
@@ -80,6 +94,21 @@ class ThemeCubit extends Cubit<ThemeMode> {
     } else {
       return ThemeData(
         brightness: Brightness.dark,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFDED4C5)),
+          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(16)),
+          // textStyle:
+          //     MaterialStateProperty.all<TextStyle>(TextStyle(fontSize: 20)),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+          ),
+          elevation: MaterialStateProperty.all<double>(5.0),
+        )),
+
         buttonTheme: const ButtonThemeData(
           buttonColor: Colors.blue, // Set the button color
           textTheme: ButtonTextTheme.primary, // Set the button text theme
