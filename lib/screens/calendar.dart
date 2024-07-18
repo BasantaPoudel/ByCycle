@@ -35,69 +35,71 @@ class _CalendarState extends State<Calendar> {
     ),
   ];
   CalendarStyle style = CalendarStyle(
-    rangeHighlightColor: Colors.red,
+    rangeHighlightColor: Color.fromRGBO(237, 195, 191, 1),
     rangeStartDecoration: BoxDecoration(
-      color: Colors.red, // Example: blue background for start of range
+      color: Color.fromRGBO(237, 195, 191, 1),
       shape: BoxShape.rectangle,
     ),
     rangeEndDecoration: BoxDecoration(
-      color: Colors.red, // Example: blue background for end of range
+      color: Color.fromRGBO(237, 195, 191, 1),
       shape: BoxShape.rectangle,
     ),
-    withinRangeDecoration: BoxDecoration(color: Colors.red),
-    // Add other properties like text styles, margins, etc., as needed
+    withinRangeDecoration:
+        BoxDecoration(color: Color.fromRGBO(237, 195, 191, 1)),
   );
   Map<String, CalendarStyle> styles = {
     "menstrual": CalendarStyle(
-      rangeHighlightColor: Colors.red,
+      rangeHighlightColor: Color.fromRGBO(237, 195, 191, 1),
       rangeStartDecoration: BoxDecoration(
-        color: Colors.red, // Example: blue background for start of range
+        color: Color.fromRGBO(237, 195, 191, 1),
         shape: BoxShape.rectangle,
       ),
       rangeEndDecoration: BoxDecoration(
-        color: Colors.red, // Example: blue background for end of range
+        color: Color.fromRGBO(237, 195, 191, 1),
         shape: BoxShape.rectangle,
       ),
-      withinRangeDecoration: BoxDecoration(color: Colors.red),
-      // Add other properties like text styles, margins, etc., as needed
+      withinRangeDecoration:
+          BoxDecoration(color: Color.fromRGBO(237, 195, 191, 1)),
     ),
     "follicular": CalendarStyle(
-      rangeHighlightColor: Colors.green,
+      rangeHighlightColor: Color.fromRGBO(213, 206, 229, 1),
       rangeStartDecoration: BoxDecoration(
-        color: Colors.green, // Example: blue background for start of range
+        color: Color.fromRGBO(213, 206, 229, 1),
         shape: BoxShape.rectangle,
       ),
       rangeEndDecoration: BoxDecoration(
-        color: Colors.green, // Example: blue background for end of range
+        color: Color.fromRGBO(213, 206, 229, 1),
         shape: BoxShape.rectangle,
       ),
-      withinRangeDecoration: BoxDecoration(color: Colors.green),
-      // Add other properties like text styles, margins, etc., as needed
+      withinRangeDecoration:
+          BoxDecoration(color: Color.fromRGBO(213, 206, 229, 1)),
     ),
     "ovulatory": CalendarStyle(
-      rangeHighlightColor: Colors.yellow,
+      rangeHighlightColor: Color.fromRGBO(204, 218, 214, 1),
       rangeStartDecoration: BoxDecoration(
-        color: Colors.yellow, // Example: blue background for start of range
+        color: Color.fromRGBO(204, 218, 214, 1),
         shape: BoxShape.rectangle,
       ),
       rangeEndDecoration: BoxDecoration(
-        color: Colors.yellow, // Example: blue background for end of range
+        color: Color.fromRGBO(204, 218, 214, 1),
         shape: BoxShape.rectangle,
       ),
-      withinRangeDecoration: BoxDecoration(color: Colors.yellow),
-      // Add other properties like text styles, margins, etc., as needed
+      withinRangeDecoration:
+          BoxDecoration(color: Color.fromRGBO(204, 218, 214, 1)),
     ),
     "luteal": CalendarStyle(
-      rangeHighlightColor: Colors.purple,
+      rangeHighlightColor: Color.fromRGBO(241, 222, 204, 1),
       rangeStartDecoration: BoxDecoration(
-        color: Colors.purple, // Example: blue background for start of range
+        color: Color.fromRGBO(241, 222, 204, 1),
         shape: BoxShape.rectangle,
       ),
       rangeEndDecoration: BoxDecoration(
-        color: Colors.purple, // Example: blue background for end of range
+        color: Color.fromRGBO(
+            241, 222, 204, 1), // Example: blue background for end of range
         shape: BoxShape.rectangle,
       ),
-      withinRangeDecoration: BoxDecoration(color: Colors.purple),
+      withinRangeDecoration:
+          BoxDecoration(color: Color.fromRGBO(241, 222, 204, 1)),
       // Add other properties like text styles, margins, etc., as needed
     ),
   };
