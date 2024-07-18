@@ -94,13 +94,11 @@ class _CalendarState extends State<Calendar> {
         shape: BoxShape.rectangle,
       ),
       rangeEndDecoration: BoxDecoration(
-        color: Color.fromRGBO(
-            241, 222, 204, 1), // Example: blue background for end of range
+        color: Color.fromRGBO(241, 222, 204, 1),
         shape: BoxShape.rectangle,
       ),
       withinRangeDecoration:
           BoxDecoration(color: Color.fromRGBO(241, 222, 204, 1)),
-      // Add other properties like text styles, margins, etc., as needed
     ),
   };
   DateTime? _rangeStart;
