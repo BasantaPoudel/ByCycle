@@ -80,7 +80,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const MyHomePage(title: "Bycycle"),
+                builder: (context) => const MyApp(),
               ),
             );
 

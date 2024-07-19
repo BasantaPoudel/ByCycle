@@ -1,4 +1,4 @@
-import 'package:by_cycle/models/customDateTimeRange.dart';
+import 'package:by_cycle/models/custom_date_time_range.dart';
 
 final List<CustomDateTimeRange> exampleInitialDateTimeRanges = [
   CustomDateTimeRange(
