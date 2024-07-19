@@ -36,4 +36,22 @@ class CustomDateTimeRange {
 
   @override
   String toString() => '$start - $end ($phase)';
+
+  Map<String, dynamic> toMap() {
+    return {
+      'start': start.toIso8601String(), // Convert DateTime to ISO 8601 string
+      'end': end.toIso8601String(), // Convert DateTime to ISO 8601 string
+      'phase': phase, // Phase as a string
+    };
+  }
+
+  factory CustomDateTimeRange.fromMap(Map<String, dynamic> map) {
+    return CustomDateTimeRange(
+      start: DateTime.parse(
+          map['start'] as String), // Parse ISO 8601 string to DateTime
+      end: DateTime.parse(
+          map['end'] as String), // Parse ISO 8601 string to DateTime
+      phase: map['phase'] as String, // Extract phase as a string
+    );
+  }
 }
