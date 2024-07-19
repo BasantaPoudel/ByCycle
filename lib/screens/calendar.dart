@@ -1,4 +1,4 @@
-import 'package:by_cycle/models/customDateTimeRange.dart';
+import 'package:by_cycle/models/custom_date_time_range.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 //a package from table calendar repository that turned out to be unneded
@@ -178,7 +178,8 @@ class _CalendarState extends State<Calendar> {
 
                 final children = <Widget>[];
 
-                final isWithinRange = isInRange(day, dateTimeRange.start, dateTimeRange.end);
+                final isWithinRange =
+                    isInRange(day, dateTimeRange.start, dateTimeRange.end);
 
                 final isRangeStart = isSameDay(day, dateTimeRange.start);
                 final isRangeEnd = isSameDay(day, dateTimeRange.end);
@@ -291,7 +292,6 @@ class _CalendarState extends State<Calendar> {
           if (dayInRange(endDate) != null) {
             endDateInRange = true;
           }
-        
 
           bool insertNewRange = true;
 

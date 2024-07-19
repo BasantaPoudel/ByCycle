@@ -1,6 +1,8 @@
+import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/models/onboarding_questions.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pagetwo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OnboardingPageOne extends StatefulWidget {
   const OnboardingPageOne({super.key});
@@ -20,46 +22,50 @@ class _OnboardingScreenHomeState extends State<OnboardingPageOne> {
 
   @override
   Widget build(BuildContext context) {
+    var themeCubit = BlocProvider.of<ThemeCubit>(context);
     final OnBoardingQuestions formData = OnBoardingQuestions();
-
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'What is the Date of your last period?',
-              style: TextStyle(fontSize: 20),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              width: 200,
-              child: TextField(
-                controller: controller,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'YYYY-MM-DD',
-                ),
-                onTap: () => _selectDate(context),
+    return BlocBuilder(
+        bloc: themeCubit,
+        builder: (context, state) {
+          return Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'What is the Date of your last period?',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    width: 200,
+                    child: TextField(
+                      controller: controller,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'YYYY-MM-DD',
+                      ),
+                      onTap: () => _selectDate(context),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      formData.lastPeriod = DateTime.parse(controller.text);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                OnboardingPageTwo(formData: formData),
+                          ));
+                    },
+                    child: const Text('Next'),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                formData.lastPeriod = DateTime.parse(controller.text);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          OnboardingPageTwo(formData: formData),
-                    ));
-              },
-              child: const Text('Next'),
-            ),
-          ],
-        ),
-      ),
-    );
+          );
+        });
   }
 
   Future<void> _selectDate(BuildContext context) async {

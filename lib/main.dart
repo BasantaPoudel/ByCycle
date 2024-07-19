@@ -1,5 +1,5 @@
-import 'package:by_cycle/cubits/theme/theme_cubit.dart' hide ThemeMode;
-import 'package:by_cycle/examples/customDateTimeRanges/exampleInitialDateTimeRanges.dart';
+import 'package:by_cycle/cubits/theme/theme_cubit.dart';
+import 'package:by_cycle/examples/customDateTimeRanges/example_initial_date_time_ranges.dart';
 import 'package:by_cycle/firebase_options.dart';
 import 'package:by_cycle/screens/home_screen.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
@@ -29,8 +29,9 @@ void main() async {
           const MyApp()
           : MaterialApp(
               home: const OnboardingPageOne(),
-              theme: ThemeCubit().getThemeData(),
+              theme: ThemeCubit().getLightThemeData(),
               darkTheme: ThemeCubit().getDarkThemeData(),
+              themeMode: ThemeCubit().state,
             )));
 }
 
@@ -44,10 +45,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     var themeCubit = BlocProvider.of<ThemeCubit>(context);
-    // var systemThemeMode =
-    //     (MediaQuery.of(context).platformBrightness == Brightness.dark)
-    //         ? ThemeMode.dark
-    //         : ThemeMode.light;
     return BlocBuilder(
       bloc: themeCubit,
       builder: (context, state) {
