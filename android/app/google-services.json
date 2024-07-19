@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "198712519729",
-    "project_id": "bycycle-1e6ed",
-    "storage_bucket": "bycycle-1e6ed.appspot.com"
+    "project_number": "303584259226",
+    "project_id": "bycycle-7da95",
+    "storage_bucket": "bycycle-7da95.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:198712519729:android:254cba76f3e5d2dbeeb910",
+        "mobilesdk_app_id": "1:303584259226:android:c6076d29d96b929cf08323",
         "android_client_info": {
-          "package_name": "com.example.by_cycle"
+          "package_name": "com.ignite.bycycle"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCooK1ZiVQY_LoEwHbAc2gFAEYj3aavZsg"
+          "current_key": "AIzaSyCA0SgkJT2zvzMgazAA2h1P4QDqll4Nyik"
         }
       ],
       "services": {
