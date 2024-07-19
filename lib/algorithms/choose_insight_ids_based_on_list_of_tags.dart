@@ -6,7 +6,7 @@ List<String> chooseInsightIdsBasedOnListOfTags(User user, List<String> tags) {
   based on the provided list of tags.
   Tags are produced by functions A-F in a different file, and this function
   selects which ones are suitable for the user based on how many times they
-  were seen etc.
+  were seen.
 
   Parameters:
   -a user instance. A user instance itself has the property "tags" that contains
