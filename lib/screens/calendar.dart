@@ -146,223 +146,214 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('TableCalendar - Basics'),
-      ),
-      body: TableCalendar(
-        firstDay: DateTime(2020, 1, 1),
-        lastDay: DateTime(2025, 1, 1),
-        focusedDay: _focusedDay,
-        calendarFormat: _calendarFormat,
-        selectedDayPredicate: (day) {
-          // Use `selectedDayPredicate` to determine which day is currently selected.
-          // If this returns true, then `day` will be marked as selected.
+    return TableCalendar(
+      firstDay: DateTime(2020, 1, 1),
+      lastDay: DateTime(2025, 1, 1),
+      focusedDay: _focusedDay,
+      calendarFormat: _calendarFormat,
+      selectedDayPredicate: (day) {
+        // Use `selectedDayPredicate` to determine which day is currently selected.
+        // If this returns true, then `day` will be marked as selected.
 
-          // Using `isSameDay` is recommended to disregard
-          // the time-part of compared DateTime objects.
-          return isSameDay(_selectedDay, day);
-        },
+        // Using `isSameDay` is recommended to disregard
+        // the time-part of compared DateTime objects.
+        return isSameDay(_selectedDay, day);
+      },
 
-        rangeSelectionMode: rangeSelectionMode,
+      rangeSelectionMode: rangeSelectionMode,
 
-        // CalendarBuilders with null safety applied
+      // CalendarBuilders with null safety applied
 
-        calendarBuilders: CalendarBuilders(
-          prioritizedBuilder: (context, day, focusedMonth) {
-            CustomDateTimeRange? dateTimeRange = dayInRange(day);
+      calendarBuilders: CalendarBuilders(
+        prioritizedBuilder: (context, day, focusedMonth) {
+          CustomDateTimeRange? dateTimeRange = dayInRange(day);
 
-            // If day is in any saved DateTimeRange, show a highlighted cell
-            if (dateTimeRange != null) {
-              return LayoutBuilder(
-                builder: (context, constraints) {
-                  final shorterSide =
-                      constraints.maxHeight > constraints.maxWidth
-                          ? constraints.maxWidth
-                          : constraints.maxHeight;
+          // If day is in any saved DateTimeRange, show a highlighted cell
+          if (dateTimeRange != null) {
+            return LayoutBuilder(
+              builder: (context, constraints) {
+                final shorterSide = constraints.maxHeight > constraints.maxWidth
+                    ? constraints.maxWidth
+                    : constraints.maxHeight;
 
-                  final children = <Widget>[];
+                final children = <Widget>[];
 
-                  final isWithinRange = dateTimeRange.start != null &&
-                      dateTimeRange.end != null &&
-                      isInRange(day, dateTimeRange.start, dateTimeRange.end);
+                final isWithinRange = dateTimeRange.start != null &&
+                    dateTimeRange.end != null &&
+                    isInRange(day, dateTimeRange.start, dateTimeRange.end);
 
-                  final isRangeStart = isSameDay(day, dateTimeRange.start);
-                  final isRangeEnd = isSameDay(day, dateTimeRange.end);
+                final isRangeStart = isSameDay(day, dateTimeRange.start);
+                final isRangeEnd = isSameDay(day, dateTimeRange.end);
 
-                  if (isWithinRange) {
-                    Widget rangeHighlight = Center(
-                      child: Container(
-                        margin: EdgeInsetsDirectional.only(
-                          start:
-                              isRangeStart ? constraints.maxWidth * 0.5 : 0.0,
-                          end: isRangeEnd ? constraints.maxWidth * 0.5 : 0.0,
-                        ),
-                        height: (shorterSide - style.cellMargin.vertical) *
-                            styles[dateTimeRange.phase]!.rangeHighlightScale,
-                        color: styles[dateTimeRange.phase]!.rangeHighlightColor,
+                if (isWithinRange) {
+                  Widget rangeHighlight = Center(
+                    child: Container(
+                      margin: EdgeInsetsDirectional.only(
+                        start: isRangeStart ? constraints.maxWidth * 0.5 : 0.0,
+                        end: isRangeEnd ? constraints.maxWidth * 0.5 : 0.0,
                       ),
-                    );
-                    children.add(rangeHighlight);
-                  }
-
-                  Widget? content;
-
-                  if (isRangeStart) {
-                    content = AnimatedContainer(
-                      duration: Duration(milliseconds: 250),
-                      margin: styles[dateTimeRange.phase]!.cellMargin,
-                      decoration:
-                          styles[dateTimeRange.phase]!.rangeStartDecoration,
-                      alignment: Alignment.center,
-                      child: Text('${day.day}',
-                          style:
-                              styles[dateTimeRange.phase]!.rangeStartTextStyle),
-                    );
-                  } else if (isRangeEnd) {
-                    content = AnimatedContainer(
-                      duration: Duration(milliseconds: 250),
-                      margin: styles[dateTimeRange.phase]!.cellMargin,
-                      decoration:
-                          styles[dateTimeRange.phase]!.rangeEndDecoration,
-                      alignment: Alignment.center,
-                      child: Text('${day.day}',
-                          style:
-                              styles[dateTimeRange.phase]!.rangeEndTextStyle),
-                    );
-                  } else if (isWithinRange) {
-                    content = AnimatedContainer(
-                      duration: Duration(milliseconds: 250),
-                      margin: styles[dateTimeRange.phase]!.cellMargin,
-                      decoration:
-                          styles[dateTimeRange.phase]!.withinRangeDecoration,
-                      alignment: Alignment.center,
-                      child: Text('${day.day}',
-                          style: styles[dateTimeRange.phase]!
-                              .withinRangeTextStyle),
-                    );
-                  }
-
-                  if (content != null) {
-                    children.add(content);
-                  }
-
-                  return Stack(
-                    alignment: style.markersAlignment,
-                    children: children,
-                    clipBehavior:
-                        style.canMarkersOverflow ? Clip.none : Clip.hardEdge,
+                      height: (shorterSide - style.cellMargin.vertical) *
+                          styles[dateTimeRange.phase]!.rangeHighlightScale,
+                      color: styles[dateTimeRange.phase]!.rangeHighlightColor,
+                    ),
                   );
-                },
-              );
-            }
-            return null;
-          },
-        ),
-        onDaySelected: (selDay, focDay) {
-          //print("onDaySelected ${focDay}");
-          if (!isSameDay(_selectedDay, selDay)) {
-            setState(() {
-              _selectedDay = selDay;
-              _focusedDay = focDay;
+                  children.add(rangeHighlight);
+                }
 
-              rangeSelectionMode = RangeSelectionMode.toggledOff;
-            });
+                Widget? content;
+
+                if (isRangeStart) {
+                  content = AnimatedContainer(
+                    duration: Duration(milliseconds: 250),
+                    margin: styles[dateTimeRange.phase]!.cellMargin,
+                    decoration:
+                        styles[dateTimeRange.phase]!.rangeStartDecoration,
+                    alignment: Alignment.center,
+                    child: Text('${day.day}',
+                        style:
+                            styles[dateTimeRange.phase]!.rangeStartTextStyle),
+                  );
+                } else if (isRangeEnd) {
+                  content = AnimatedContainer(
+                    duration: Duration(milliseconds: 250),
+                    margin: styles[dateTimeRange.phase]!.cellMargin,
+                    decoration: styles[dateTimeRange.phase]!.rangeEndDecoration,
+                    alignment: Alignment.center,
+                    child: Text('${day.day}',
+                        style: styles[dateTimeRange.phase]!.rangeEndTextStyle),
+                  );
+                } else if (isWithinRange) {
+                  content = AnimatedContainer(
+                    duration: Duration(milliseconds: 250),
+                    margin: styles[dateTimeRange.phase]!.cellMargin,
+                    decoration:
+                        styles[dateTimeRange.phase]!.withinRangeDecoration,
+                    alignment: Alignment.center,
+                    child: Text('${day.day}',
+                        style:
+                            styles[dateTimeRange.phase]!.withinRangeTextStyle),
+                  );
+                }
+
+                if (content != null) {
+                  children.add(content);
+                }
+
+                return Stack(
+                  alignment: style.markersAlignment,
+                  children: children,
+                  clipBehavior:
+                      style.canMarkersOverflow ? Clip.none : Clip.hardEdge,
+                );
+              },
+            );
           }
+          return null;
         },
-        onRangeSelected: (start, end, focDay) {
+      ),
+      onDaySelected: (selDay, focDay) {
+        //print("onDaySelected ${focDay}");
+        if (!isSameDay(_selectedDay, selDay)) {
           setState(() {
-            _selectedDay = focDay;
+            _selectedDay = selDay;
             _focusedDay = focDay;
 
-            bool startDateInRange = false;
-            bool endDateInRange = false;
+            rangeSelectionMode = RangeSelectionMode.toggledOff;
+          });
+        }
+      },
+      onRangeSelected: (start, end, focDay) {
+        setState(() {
+          _selectedDay = focDay;
+          _focusedDay = focDay;
 
-            print("start: ${start}");
-            print("end: ${end}");
-            print("focDay: ${focDay}");
+          bool startDateInRange = false;
+          bool endDateInRange = false;
 
-            CustomDateTimeRange? range = dayInRange(start!);
-            print("range: ${range}");
+          print("start: ${start}");
+          print("end: ${end}");
+          print("focDay: ${focDay}");
 
-            DateTime endDate = range?.end ?? start;
-            DateTime startDate = range?.start ?? start;
-            print("startDate: ${startDate}");
-            print("endDate: ${endDate}");
+          CustomDateTimeRange? range = dayInRange(start!);
+          print("range: ${range}");
 
-            if (range == null && endDate != null) {
-              range = dayInRange(endDate);
-              if (range != null) {
-                endDateInRange = true;
-              }
-            } else if (range != null) {
-              startDateInRange = true;
-              if (endDate != null && dayInRange(endDate) != null) {
-                endDateInRange = true;
-              }
+          DateTime endDate = range?.end ?? start;
+          DateTime startDate = range?.start ?? start;
+          print("startDate: ${startDate}");
+          print("endDate: ${endDate}");
+
+          if (range == null && endDate != null) {
+            range = dayInRange(endDate);
+            if (range != null) {
+              endDateInRange = true;
             }
-
-            bool insertNewRange = true;
-
-            if (startDateInRange) {
-              if (isInRange(startDate, startDate, endDate)) {
-                int index = dateTimeRanges.indexOf(range!);
-                print("index: ${index}");
-
-                if (!endDateInRange && endDate != null) {
-                  dateTimeRanges[index] = CustomDateTimeRange(
-                      start: startDate,
-                      end: endDate,
-                      phase: dateTimeRanges[index].phase);
-                } else {
-                  dateTimeRanges[index] = CustomDateTimeRange(
-                      start: startDate,
-                      end: endDate,
-                      phase: dateTimeRanges[index].phase);
-                }
-                insertNewRange = false;
-              }
+          } else if (range != null) {
+            startDateInRange = true;
+            if (endDate != null && dayInRange(endDate) != null) {
+              endDateInRange = true;
             }
+          }
 
-            if (endDateInRange) {
-              if (isInRange(endDate, startDate, endDate)) {
-                print("enddate is not null and is in range");
-                int index = dateTimeRanges.indexOf(range!);
-                print("second index: ${index}");
+          bool insertNewRange = true;
+
+          if (startDateInRange) {
+            if (isInRange(startDate, startDate, endDate)) {
+              int index = dateTimeRanges.indexOf(range!);
+              print("index: ${index}");
+
+              if (!endDateInRange && endDate != null) {
                 dateTimeRanges[index] = CustomDateTimeRange(
                     start: startDate,
                     end: endDate,
                     phase: dateTimeRanges[index].phase);
-                insertNewRange = false;
+              } else {
+                dateTimeRanges[index] = CustomDateTimeRange(
+                    start: startDate,
+                    end: endDate,
+                    phase: dateTimeRanges[index].phase);
               }
+              insertNewRange = false;
             }
-
-            if (insertNewRange) {
-              dateTimeRanges
-                  .add(CustomDateTimeRange(start: startDate, end: endDate));
-              dateTimeRanges.add(CustomDateTimeRange(
-                  start: startDate.subtract(Duration(days: 6)),
-                  end: endDate.subtract(Duration(days: 6))));
-              dateTimeRanges.add(CustomDateTimeRange(
-                  start: startDate.add(Duration(days: 6)),
-                  end: endDate.add(Duration(days: 6))));
-            }
-          });
-        },
-
-        onFormatChanged: (format) {
-          if (_calendarFormat != format) {
-            // Call `setState()` when updating calendar format
-            setState(() {
-              _calendarFormat = format;
-            });
           }
-        },
-        onPageChanged: (focusedDay) {
-          // No need to call `setState()` here
-          _focusedDay = focusedDay;
-        },
-      ),
+
+          if (endDateInRange) {
+            if (isInRange(endDate, startDate, endDate)) {
+              print("enddate is not null and is in range");
+              int index = dateTimeRanges.indexOf(range!);
+              print("second index: ${index}");
+              dateTimeRanges[index] = CustomDateTimeRange(
+                  start: startDate,
+                  end: endDate,
+                  phase: dateTimeRanges[index].phase);
+              insertNewRange = false;
+            }
+          }
+
+          if (insertNewRange) {
+            dateTimeRanges
+                .add(CustomDateTimeRange(start: startDate, end: endDate));
+            dateTimeRanges.add(CustomDateTimeRange(
+                start: startDate.subtract(Duration(days: 6)),
+                end: endDate.subtract(Duration(days: 6))));
+            dateTimeRanges.add(CustomDateTimeRange(
+                start: startDate.add(Duration(days: 6)),
+                end: endDate.add(Duration(days: 6))));
+          }
+        });
+      },
+
+      onFormatChanged: (format) {
+        if (_calendarFormat != format) {
+          // Call `setState()` when updating calendar format
+          setState(() {
+            _calendarFormat = format;
+          });
+        }
+      },
+      onPageChanged: (focusedDay) {
+        // No need to call `setState()` here
+        _focusedDay = focusedDay;
+      },
     );
   }
 }
