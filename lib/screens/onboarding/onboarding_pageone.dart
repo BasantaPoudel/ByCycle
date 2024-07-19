@@ -1,8 +1,12 @@
+import 'dart:ffi';
+
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/models/onboarding_questions.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pagetwo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class OnboardingPageOne extends StatefulWidget {
   const OnboardingPageOne({super.key});
@@ -29,39 +33,72 @@ class _OnboardingScreenHomeState extends State<OnboardingPageOne> {
         builder: (context, state) {
           return Scaffold(
             body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'What is the Date of your last period?',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    width: 200,
-                    child: TextField(
-                      controller: controller,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'YYYY-MM-DD',
-                      ),
-                      onTap: () => _selectDate(context),
+              child: Container(
+                width: 280,
+                margin: const EdgeInsets.all(40),
+                decoration: BoxDecoration(
+                    // color: Colors.red,
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      formData.lastPeriod = DateTime.parse(controller.text);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                OnboardingPageTwo(formData: formData),
-                          ));
-                    },
-                    child: const Text('Next'),
-                  ),
-                ],
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'What is the date of your last period?',
+                      style: GoogleFonts.poppins(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: 282,
+                      height: 46,
+                      child: TextField(
+                        controller: controller,
+                        decoration: const InputDecoration(
+                          filled: true,
+                          fillColor: Color(0xFFDED4C5),
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30.0)),
+                            // borderSide: BorderSide.none,
+                          ),
+                          hintText: 'YYYY-MM-DD',
+                        ),
+                        onTap: () => _selectDate(context),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      width: 224,
+                      child: ElevatedButton(
+                          style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                              ),
+                              backgroundColor: controller.text == ""
+                                  ? MaterialStateProperty.all<Color>(
+                                      const Color(0xFFDED4C5))
+                                  : MaterialStateProperty.all<Color>(
+                                      const Color.fromRGBO(1, 1, 1, 1))),
+                          onPressed: () {
+                            formData.lastPeriod =
+                                DateTime.parse(controller.text);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      OnboardingPageTwo(formData: formData),
+                                ));
+                          },
+                          child: const Text('Next')),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

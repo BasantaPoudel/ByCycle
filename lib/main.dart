@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   final List<Widget> _children = [
-    const HomeScreen(),
+    const OnboardingPageOne(),
     const HomeScreen(),
     Calendar(
       initialDateTimeRanges: exampleInitialDateTimeRanges,

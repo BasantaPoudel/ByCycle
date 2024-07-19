@@ -33,7 +33,7 @@ class ThemeCubit extends Cubit<ThemeMode> {
             borderRadius: BorderRadius.circular(12.0),
           ),
         ),
-        elevation: MaterialStateProperty.all<double>(5.0),
+        // elevation: MaterialStateProperty.all<double>(5.0),
       )),
 
       buttonTheme: const ButtonThemeData(
@@ -107,7 +107,7 @@ class ThemeCubit extends Cubit<ThemeMode> {
             borderRadius: BorderRadius.circular(12.0),
           ),
         ),
-        elevation: MaterialStateProperty.all<double>(5.0),
+        // elevation: MaterialStateProperty.all<double>(5.0),
       )),
       buttonTheme: const ButtonThemeData(
         buttonColor: Color(0xFFDED4C5), // Set the button color
