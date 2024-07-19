@@ -1,9 +1,6 @@
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
-import 'package:by_cycle/examples/customDateTimeRanges/exampleInitialDateTimeRanges.dart';
-import 'package:by_cycle/screens/calendar.dart';
 import 'package:by_cycle/screens/daily_data_input_screen.dart';
-import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -15,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
+  final int _selectedIndex = 0;
   late TimeOfDay bedTime;
   late TimeOfDay wakeupTime;
 

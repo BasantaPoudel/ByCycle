@@ -1,19 +1,14 @@
-import 'package:android_intent_plus/android_intent.dart';
-import 'package:android_intent_plus/flag.dart';
 import 'package:by_cycle/cubits/theme/theme_cubit.dart' hide ThemeMode;
 import 'package:by_cycle/examples/customDateTimeRanges/exampleInitialDateTimeRanges.dart';
 import 'package:by_cycle/firebase_options.dart';
 import 'package:by_cycle/screens/home_screen.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
-import 'package:by_cycle/screens/daily_data_input_screen.dart';
 import 'package:by_cycle/screens/calendar.dart';
 import 'package:by_cycle/screens/profile.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -94,8 +89,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   final List<Widget> _children = [
-    HomeScreen(),
-    HomeScreen(),
+    const HomeScreen(),
+    const HomeScreen(),
     Calendar(
       initialDateTimeRanges: exampleInitialDateTimeRanges,
     )
@@ -156,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         drawer: SizedBox(
           width: MediaQuery.of(context).size.width * 0.8,
-          child: Drawer(
+          child: const Drawer(
               // Add a ListView to the drawer. This ensures the user can scroll
               // through the options in the drawer if there isn't enough vertical
               // space to fit everything.

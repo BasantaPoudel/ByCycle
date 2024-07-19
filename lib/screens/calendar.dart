@@ -8,7 +8,7 @@ class Calendar extends StatefulWidget {
   final List<CustomDateTimeRange>?
       initialDateTimeRanges; // Optional initial value
 
-  Calendar({Key? key, this.initialDateTimeRanges}) : super(key: key);
+  const Calendar({super.key, this.initialDateTimeRanges});
 
   @override
   _CalendarState createState() => _CalendarState();
@@ -24,17 +24,17 @@ class _CalendarState extends State<Calendar> {
   late List<CustomDateTimeRange> dateTimeRanges;
 
   // Default CustomDateTimeRanges if none provided through constructor
-  List<CustomDateTimeRange> _defaultDateTimeRanges = [
+  final List<CustomDateTimeRange> _defaultDateTimeRanges = [
     CustomDateTimeRange(
-      start: DateTime.now().add(Duration(days: 12)),
-      end: DateTime.now().add(Duration(days: 14)),
+      start: DateTime.now().add(const Duration(days: 12)),
+      end: DateTime.now().add(const Duration(days: 14)),
     ),
     CustomDateTimeRange(
-      start: DateTime.now().add(Duration(days: 3)),
-      end: DateTime.now().add(Duration(days: 5)),
+      start: DateTime.now().add(const Duration(days: 3)),
+      end: DateTime.now().add(const Duration(days: 5)),
     ),
   ];
-  CalendarStyle style = CalendarStyle(
+  CalendarStyle style = const CalendarStyle(
     rangeHighlightColor: Color.fromRGBO(237, 195, 191, 1),
     rangeStartDecoration: BoxDecoration(
       color: Color.fromRGBO(237, 195, 191, 1),
@@ -48,7 +48,7 @@ class _CalendarState extends State<Calendar> {
         BoxDecoration(color: Color.fromRGBO(237, 195, 191, 1)),
   );
   Map<String, CalendarStyle> styles = {
-    "menstrual": CalendarStyle(
+    "menstrual": const CalendarStyle(
       rangeHighlightColor: Color.fromRGBO(237, 195, 191, 1),
       rangeStartDecoration: BoxDecoration(
         color: Color.fromRGBO(237, 195, 191, 1),
@@ -61,7 +61,7 @@ class _CalendarState extends State<Calendar> {
       withinRangeDecoration:
           BoxDecoration(color: Color.fromRGBO(237, 195, 191, 1)),
     ),
-    "follicular": CalendarStyle(
+    "follicular": const CalendarStyle(
       rangeHighlightColor: Color.fromRGBO(213, 206, 229, 1),
       rangeStartDecoration: BoxDecoration(
         color: Color.fromRGBO(213, 206, 229, 1),
@@ -74,7 +74,7 @@ class _CalendarState extends State<Calendar> {
       withinRangeDecoration:
           BoxDecoration(color: Color.fromRGBO(213, 206, 229, 1)),
     ),
-    "ovulatory": CalendarStyle(
+    "ovulatory": const CalendarStyle(
       rangeHighlightColor: Color.fromRGBO(204, 218, 214, 1),
       rangeStartDecoration: BoxDecoration(
         color: Color.fromRGBO(204, 218, 214, 1),
@@ -87,7 +87,7 @@ class _CalendarState extends State<Calendar> {
       withinRangeDecoration:
           BoxDecoration(color: Color.fromRGBO(204, 218, 214, 1)),
     ),
-    "luteal": CalendarStyle(
+    "luteal": const CalendarStyle(
       rangeHighlightColor: Color.fromRGBO(241, 222, 204, 1),
       rangeStartDecoration: BoxDecoration(
         color: Color.fromRGBO(241, 222, 204, 1),
@@ -178,9 +178,7 @@ class _CalendarState extends State<Calendar> {
 
                 final children = <Widget>[];
 
-                final isWithinRange = dateTimeRange.start != null &&
-                    dateTimeRange.end != null &&
-                    isInRange(day, dateTimeRange.start, dateTimeRange.end);
+                final isWithinRange = isInRange(day, dateTimeRange.start, dateTimeRange.end);
 
                 final isRangeStart = isSameDay(day, dateTimeRange.start);
                 final isRangeEnd = isSameDay(day, dateTimeRange.end);
@@ -204,7 +202,7 @@ class _CalendarState extends State<Calendar> {
 
                 if (isRangeStart) {
                   content = AnimatedContainer(
-                    duration: Duration(milliseconds: 250),
+                    duration: const Duration(milliseconds: 250),
                     margin: styles[dateTimeRange.phase]!.cellMargin,
                     decoration:
                         styles[dateTimeRange.phase]!.rangeStartDecoration,
@@ -215,7 +213,7 @@ class _CalendarState extends State<Calendar> {
                   );
                 } else if (isRangeEnd) {
                   content = AnimatedContainer(
-                    duration: Duration(milliseconds: 250),
+                    duration: const Duration(milliseconds: 250),
                     margin: styles[dateTimeRange.phase]!.cellMargin,
                     decoration: styles[dateTimeRange.phase]!.rangeEndDecoration,
                     alignment: Alignment.center,
@@ -224,7 +222,7 @@ class _CalendarState extends State<Calendar> {
                   );
                 } else if (isWithinRange) {
                   content = AnimatedContainer(
-                    duration: Duration(milliseconds: 250),
+                    duration: const Duration(milliseconds: 250),
                     margin: styles[dateTimeRange.phase]!.cellMargin,
                     decoration:
                         styles[dateTimeRange.phase]!.withinRangeDecoration,
@@ -241,9 +239,9 @@ class _CalendarState extends State<Calendar> {
 
                 return Stack(
                   alignment: style.markersAlignment,
-                  children: children,
                   clipBehavior:
                       style.canMarkersOverflow ? Clip.none : Clip.hardEdge,
+                  children: children,
                 );
               },
             );
@@ -270,38 +268,39 @@ class _CalendarState extends State<Calendar> {
           bool startDateInRange = false;
           bool endDateInRange = false;
 
-          print("start: ${start}");
-          print("end: ${end}");
-          print("focDay: ${focDay}");
+          print("start: $start");
+          print("end: $end");
+          print("focDay: $focDay");
 
           CustomDateTimeRange? range = dayInRange(start!);
-          print("range: ${range}");
+          print("range: $range");
 
           DateTime endDate = range?.end ?? start;
           DateTime startDate = range?.start ?? start;
-          print("startDate: ${startDate}");
-          print("endDate: ${endDate}");
+          print("startDate: $startDate");
+          print("endDate: $endDate");
 
-          if (range == null && endDate != null) {
+          if (range == null) {
             range = dayInRange(endDate);
             if (range != null) {
               endDateInRange = true;
             }
-          } else if (range != null) {
+          } else {
             startDateInRange = true;
-            if (endDate != null && dayInRange(endDate) != null) {
-              endDateInRange = true;
-            }
           }
+          if (dayInRange(endDate) != null) {
+            endDateInRange = true;
+          }
+        
 
           bool insertNewRange = true;
 
           if (startDateInRange) {
             if (isInRange(startDate, startDate, endDate)) {
               int index = dateTimeRanges.indexOf(range!);
-              print("index: ${index}");
+              print("index: $index");
 
-              if (!endDateInRange && endDate != null) {
+              if (!endDateInRange) {
                 dateTimeRanges[index] = CustomDateTimeRange(
                     start: startDate,
                     end: endDate,
@@ -320,7 +319,7 @@ class _CalendarState extends State<Calendar> {
             if (isInRange(endDate, startDate, endDate)) {
               print("enddate is not null and is in range");
               int index = dateTimeRanges.indexOf(range!);
-              print("second index: ${index}");
+              print("second index: $index");
               dateTimeRanges[index] = CustomDateTimeRange(
                   start: startDate,
                   end: endDate,
@@ -333,11 +332,11 @@ class _CalendarState extends State<Calendar> {
             dateTimeRanges
                 .add(CustomDateTimeRange(start: startDate, end: endDate));
             dateTimeRanges.add(CustomDateTimeRange(
-                start: startDate.subtract(Duration(days: 6)),
-                end: endDate.subtract(Duration(days: 6))));
+                start: startDate.subtract(const Duration(days: 6)),
+                end: endDate.subtract(const Duration(days: 6))));
             dateTimeRanges.add(CustomDateTimeRange(
-                start: startDate.add(Duration(days: 6)),
-                end: endDate.add(Duration(days: 6))));
+                start: startDate.add(const Duration(days: 6)),
+                end: endDate.add(const Duration(days: 6))));
           }
         });
       },
