@@ -1,17 +1,15 @@
-import 'package:android_intent_plus/android_intent.dart';
-import 'package:android_intent_plus/flag.dart';
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/examples/customDateTimeRanges/example_initial_date_time_ranges.dart';
 import 'package:by_cycle/examples/users/user_after_onboardCalendar.dart';
 import 'package:by_cycle/firebase_options.dart';
+import 'package:by_cycle/screens/home_screen.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
-import 'package:by_cycle/screens/daily_data_input_screen.dart';
 import 'package:by_cycle/screens/calendar.dart';
+import 'package:by_cycle/screens/profile.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -88,22 +86,34 @@ class _MyHomePageState extends State<MyHomePage> {
     // initializeDateFormatting();
   }
 
+  final List<Widget> _children = [
+    const HomeScreen(),
+    const HomeScreen(),
+    Calendar(
+      //initialDateTimeRanges: user_after_onboardCalendar.phaseRanges,
+      initialDateTimeRanges: exampleInitialDateTimeRanges,
+    )
+  ];
+
   @override
   Widget build(BuildContext context) {
     final themeCubit = BlocProvider.of<ThemeCubit>(context);
+    final isLightTheme = Theme.of(context).brightness == Brightness.light;
+
     return Scaffold(
         appBar: AppBar(
+          leading: Builder(
+            builder: (context) => IconButton(
+              color: isLightTheme ? Colors.black : Colors.white,
+              icon: const Icon(Icons.more_vert_outlined),
+              // Change this to your custom icon
+              onPressed: () => Scaffold.of(context).openDrawer(),
+            ),
+          ),
           title: Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                IconButton(
-                  color: Colors.black,
-                  icon: const Icon(Icons.more_vert_outlined),
-                  onPressed: () {
-                    // Navigate to the search screen
-                  },
-                ),
                 Text(
                   'YESTERDAY',
                   style: Theme.of(context).textTheme.bodySmall,
@@ -122,7 +132,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 IconButton(
                   color: Colors.black,
-                  icon: const Icon(Icons.dark_mode_outlined),
+                  icon: isLightTheme
+                      ? SvgPicture.asset(
+                          'assets/icons/dark_mode.svg',
+                        )
+                      : SvgPicture.asset(
+                          'assets/icons/light_mode.svg',
+                        ),
                   onPressed: () {
                     themeCubit.toggleTheme();
                     // Navigate to the search screen
@@ -132,162 +148,15 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ),
-        body: Center(
-            child: Column(children: [
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DailyDataInputScreen()));
-                },
-                child: const Text("What is your temperature?")),
-            ElevatedButton(
-                onPressed: () {
-                  null;
-                },
-                child: const Text("+"))
-          ]),
-          const Center(
-            child: Text('Recommended sleep time'),
-          ),
-          const SizedBox(
-            height: 15.0,
-          ),
-          const SizedBox(
-              height: 180.0,
-              width: 180.0,
-              child: CircularProgressIndicator(
-                strokeWidth: 15,
-                value: 0.4,
-                backgroundColor: Color.fromRGBO(222, 212, 197, 1),
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-              )),
-          const SizedBox(
-            height: 15.0,
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            Column(
-              children: [
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color(0xFFDED4C5)),
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    padding: MaterialStateProperty.all<EdgeInsets>(
-                        const EdgeInsets.all(16)),
-                    textStyle: MaterialStateProperty.all<TextStyle>(
-                        const TextStyle(fontSize: 20)),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                    ),
-                    elevation: MaterialStateProperty.all<double>(5.0),
-                  ),
-                  onPressed: () async {
-                    final TimeOfDay? setBedTime = await showTimePicker(
-                        context: context,
-                        initialTime: bedTime,
-                        initialEntryMode: TimePickerEntryMode.dial);
-                    setState(() {
-                      if (setBedTime != null) bedTime = setBedTime;
-                    });
-                    calculateWakeUpTime(bedTime);
-                  },
-                  child: bedTime.minute > 9
-                      ? Text("${bedTime.hour}:${bedTime.minute}")
-                      : Text("${bedTime.hour}:0${bedTime.minute}"),
-                ),
-                const Text('Bed time'),
-              ],
-            ),
-            Column(
-              children: [
-                ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color(0xFFDED4C5)),
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                      padding: MaterialStateProperty.all<EdgeInsets>(
-                          const EdgeInsets.all(16)),
-                      textStyle: MaterialStateProperty.all<TextStyle>(
-                          const TextStyle(fontSize: 20)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                      ),
-                      elevation: MaterialStateProperty.all<double>(5.0),
-                    ),
-                    onPressed: () async {
-                      final TimeOfDay? setWakeupTime = await showTimePicker(
-                          context: context,
-                          initialTime: wakeupTime,
-                          initialEntryMode: TimePickerEntryMode.dial);
-
-                      // if (wakeupTime != null) {
-                      setState(() {
-                        if (setWakeupTime != null) wakeupTime = setWakeupTime;
-                      });
-                      calculateBedTime(wakeupTime);
-                    },
-                    // },
-                    child: wakeupTime.minute > 9
-                        ? Text("${wakeupTime.hour}:${wakeupTime.minute}")
-                        : Text("${wakeupTime.hour}:0${wakeupTime.minute}")),
-                const Text('WakeUp time'),
-              ],
-            ),
-          ]),
-          const SizedBox(
-            height: 15.0,
-          ),
-          ElevatedButton(
-            //Experiment overriding button styles
-            style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all<Color>(const Color(0x000ffded)),
-            ),
-            onPressed: openAlarmApp,
-            child: const Text('Set Alarm'),
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              print(exampleInitialDateTimeRanges);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Calendar(
-                    //initialDateTimeRanges: timeRanges
-                    initialDateTimeRanges: exampleInitialDateTimeRanges,
-                  ),
-                ),
-              );
-            },
-            child: const Text('Calendar'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              print(exampleInitialDateTimeRanges);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Calendar(
-                    initialDateTimeRanges:
-                        user_after_onboardCalendar.phaseRanges,
-                  ),
-                ),
-              );
-            },
-            child: const Text(
-                "Calendar based on example user_after_onboardCalendar data"),
-          ),
-        ])),
+        drawer: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.8,
+          child: const Drawer(
+              // Add a ListView to the drawer. This ensures the user can scroll
+              // through the options in the drawer if there isn't enough vertical
+              // space to fit everything.
+              child: Profile()),
+        ),
+        body: _children[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           onTap: (int index) {
             setState(() {
@@ -297,18 +166,11 @@ class _MyHomePageState extends State<MyHomePage> {
           currentIndex: _selectedIndex,
           type: BottomNavigationBarType.fixed,
           items: [
-            const BottomNavigationBarItem(
-              // icon: SvgPicture.asset(
-              //   'assets/icons/shop.svg',
-              // ),
-              icon: Icon(Icons.shopping_bag_outlined),
-              label: 'Shop',
-            ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                'assets/icons/sleep.svg',
+                'assets/icons/stats.svg',
               ),
-              label: 'Sleep',
+              label: 'Stats',
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
@@ -318,81 +180,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                'assets/icons/blood.svg',
+                'assets/icons/calendar.svg',
               ),
-              label: 'Symtoms',
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/icons/food.svg',
-              ),
-              label: 'Food',
+              label: 'Calendar',
             ),
           ],
         )); // This trailing comma makes auto-formatting nicer for build methods.
-  }
-
-  void calculateWakeUpTime(TimeOfDay time) {
-    // Calculate the recommended sleep time
-    var sleepCycle = 90;
-
-    //TODO: Get period phase from the personś input data
-    var numberOfCycles = 5;
-    var sleepTime = numberOfCycles * sleepCycle;
-    var timeInMins = time.hour * 60 + time.minute;
-    var wakeUpTimeInMins = timeInMins + sleepTime;
-
-    if (wakeUpTimeInMins >= 1440) {
-      wakeUpTimeInMins = wakeUpTimeInMins - 1440;
-    }
-
-    TimeOfDay calculatedWakeUpTime = TimeOfDay(
-        hour: (wakeUpTimeInMins ~/ 60), minute: (wakeUpTimeInMins % 60));
-
-    setState(() {
-      wakeupTime = calculatedWakeUpTime;
-    });
-  }
-
-  void calculateBedTime(TimeOfDay time) {
-    var sleepCycle = 90;
-    var numberOfCycles = 5;
-    var sleepTime = numberOfCycles * sleepCycle;
-
-    var timeInMins = time.hour * 60 + time.minute;
-    var bedTimeInMins = timeInMins - sleepTime;
-
-    if (bedTimeInMins < 0) {
-      bedTimeInMins = bedTimeInMins + 1440;
-    }
-
-    TimeOfDay calculatedBedTime =
-        TimeOfDay(hour: (bedTimeInMins ~/ 60), minute: (bedTimeInMins % 60));
-
-    setState(() {
-      bedTime = calculatedBedTime;
-    });
-  }
-
-  void openAlarmApp() async {
-    if (Theme.of(context).platform == TargetPlatform.android) {
-      AndroidIntent intent = const AndroidIntent(
-        action: 'android.intent.action.SET_ALARM',
-        //TODO - Find what flag serves for
-        flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
-      );
-      await intent.launch();
-    } else if (Theme.of(context).platform == TargetPlatform.iOS) {
-      // final Uri iosClockAppUri = Uri(scheme: 'clock');
-
-      //Test launching external link
-      if (await canLaunchUrl(Uri.parse("photos-redirect://"))) {
-        await launchUrl(Uri.parse("photos-redirect://"));
-      } else {
-        throw 'Could not open the Clock app.';
-      }
-    } else {
-      throw 'Platform not supported';
-    }
   }
 }
