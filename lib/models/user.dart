@@ -1,4 +1,3 @@
-import 'package:by_cycle/models/InsightInfo.dart';
 import 'package:by_cycle/models/custom_date_time_range.dart';
 
 class User {
@@ -157,5 +156,38 @@ class DailyDataInput {
   @override
   String toString() {
     return 'DailyDataInput(blood: $blood, date: $date, discharge: $discharge, energy_level: $energyLevel, hours_of_sleep: $hoursOfSleep, symptoms: $symptoms, temperature: $temperature, phase: $phase)';
+  }
+}
+
+class InsightInfo {
+  String insightId;
+  int viewCounter;
+  List<String> tags;
+
+  InsightInfo({
+    required this.insightId,
+    required this.viewCounter,
+    required this.tags,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'insightId': insightId,
+      'viewCounter': viewCounter,
+      'tags': tags,
+    };
+  }
+
+  factory InsightInfo.fromMap(Map<String, dynamic> map) {
+    return InsightInfo(
+      insightId: map['insightId'] ?? '',
+      viewCounter: map['viewCounter'] ?? 0,
+      tags: List<String>.from(map['tags'] ?? []),
+    );
+  }
+
+  @override
+  String toString() {
+    return 'InsightInfo(insightId: $insightId, viewCounter: $viewCounter, tags: $tags)';
   }
 }
