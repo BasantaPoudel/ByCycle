@@ -1,4 +1,3 @@
-import 'package:by_cycle/models/InsightInfo.dart';
 import 'package:by_cycle/models/user.dart';
 
 List<String> chooseInsightIdsBasedOnListOfTags(User user, List<String> tags) {
