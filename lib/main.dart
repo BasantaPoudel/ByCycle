@@ -2,6 +2,7 @@ import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/examples/customDateTimeRanges/example_initial_date_time_ranges.dart';
+import 'package:by_cycle/examples/users/user_after_onboardCalendar.dart';
 import 'package:by_cycle/firebase_options.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:by_cycle/screens/daily_data_input_screen.dart';
@@ -269,6 +270,22 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             },
             child: const Text('Calendar'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              print(exampleInitialDateTimeRanges);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Calendar(
+                    initialDateTimeRanges:
+                        user_after_onboardCalendar.phaseRanges,
+                  ),
+                ),
+              );
+            },
+            child: const Text(
+                "Calendar based on example user_after_onboardCalendar data"),
           ),
         ])),
         bottomNavigationBar: BottomNavigationBar(
