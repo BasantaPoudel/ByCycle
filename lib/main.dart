@@ -1,5 +1,6 @@
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/examples/customDateTimeRanges/example_initial_date_time_ranges.dart';
+import 'package:by_cycle/examples/users/user_after_onboardCalendar.dart';
 import 'package:by_cycle/firebase_options.dart';
 import 'package:by_cycle/screens/home_screen.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
@@ -89,6 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
     const HomeScreen(),
     const HomeScreen(),
     Calendar(
+      //initialDateTimeRanges: user_after_onboardCalendar.phaseRanges,
       initialDateTimeRanges: exampleInitialDateTimeRanges,
     )
   ];
