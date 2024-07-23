@@ -1,10 +1,11 @@
 import 'package:by_cycle/models/user.dart';
+import 'package:by_cycle/models/daily_data_input.dart';
 
 List<String> chooseInsightIdsBasedOnListOfTags(User user, List<String> tags) {
   /*A function that returns 3 ids of insights that should be shown to the user 
   based on the provided list of tags.
-  Tags are produced by functions A-F in a different file, and this function
-  selects which ones are suitable for the user based on how many times they
+  Tags are produced by produceTags which in turn uses functions A-F in a different file,
+  and this function selects which ones are suitable for the user based on how many times they
   were seen.
 
   Parameters:
@@ -13,7 +14,7 @@ List<String> chooseInsightIdsBasedOnListOfTags(User user, List<String> tags) {
   -a List<String> of tags e.g. ["blood", "backpain"...], can be a long list
 
   Returns:
-  -At most 3 InsightInfo instances. Each InsightInfo instance contains an
+  -A list of at most 3 insights ids as strings. Each InsightInfo instance contains an
   insightId that can be used to retrieve the right insight.
 
   Side-effects:
