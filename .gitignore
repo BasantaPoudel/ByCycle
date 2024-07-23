@@ -88,18 +88,10 @@ ios/**/.symlinks/
 ios/**/profile
 ios/**/xcuserdata
 ios/.generated/
-ios/Flutter/.last_build_id
-ios/Flutter/App.framework
-ios/Flutter/Flutter.framework
-ios/Flutter/Flutter.podspec
-ios/Flutter/Generated.xcconfig
-ios/Flutter/ephemeral
-ios/Flutter/app.flx
-ios/Flutter/app.zip
-ios/Flutter/flutter_assets/
-ios/Flutter/flutter_export_environment.sh
+ios/Flutter/*
 ios/ServiceDefinitions.json
-ios/Runner/GeneratedPluginRegistrant.*
+ios/Runner.xcodeproj/*
+ios/Runner.xcworkspace/*
 Podfile
 Podfile.lock
 
