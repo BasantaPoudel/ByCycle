@@ -1,3 +1,4 @@
+import 'package:by_cycle/models/insight_info.dart';
 import 'package:by_cycle/models/user.dart';
 import 'package:by_cycle/models/daily_data_input.dart';
 
