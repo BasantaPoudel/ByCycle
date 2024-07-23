@@ -1,4 +1,5 @@
 import 'package:by_cycle/models/custom_date_time_range.dart';
+import 'package:by_cycle/models/daily_data_input.dart';
 import 'package:by_cycle/models/user.dart';
 
 List<DateTime> initialSpottingOccurrences = [
