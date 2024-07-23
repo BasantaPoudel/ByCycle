@@ -1,6 +1,7 @@
 import 'package:by_cycle/models/onboarding_questions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:by_cycle/models/user.dart';
+import 'package:by_cycle/models/daily_data_input.dart';
 
 class UserRepository {
   //Takes a User object as a mandatory argument and
