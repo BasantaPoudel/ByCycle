@@ -88,10 +88,10 @@ ios/**/.symlinks/
 ios/**/profile
 ios/**/xcuserdata
 ios/.generated/
-ios/Flutter/*
+ios/Flutter/
 ios/ServiceDefinitions.json
-ios/Runner.xcodeproj
-ios/Runner.xcworkspace
+ios/Runner.xcodeproj/
+ios/Runner.xcworkspace/
 Podfile
 Podfile.lock
 
