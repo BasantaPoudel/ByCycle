@@ -1,6 +1,7 @@
 import 'package:by_cycle/algorithms/generateDateTimeRanges.dart';
 import 'package:by_cycle/examples/users/new_user.dart';
 import 'package:by_cycle/models/user.dart';
+import 'package:by_cycle/models/daily_data_input.dart';
 
 onboardCalendar(User user) {
 /* a function that can be executed immediately after the user logs in for the first time.

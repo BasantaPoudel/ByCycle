@@ -1,5 +1,6 @@
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/models/user.dart';
+import 'package:by_cycle/models/daily_data_input.dart';
 import 'package:by_cycle/repository/user_repository.dart';
 import 'package:by_cycle/widgets/custom_card.dart';
 import 'package:flutter/material.dart';

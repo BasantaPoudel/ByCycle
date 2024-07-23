@@ -1,5 +1,6 @@
 import 'package:by_cycle/algorithms/generateDateTimeRanges.dart';
 import 'package:by_cycle/models/user.dart';
+import 'package:by_cycle/models/daily_data_input.dart';
 
 void redrawCalendar(User user, List<String> tags) {
 /* a function that adjusts the phases in the user's calendar if there is a 

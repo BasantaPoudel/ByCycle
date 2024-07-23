@@ -1,4 +1,5 @@
 import 'package:by_cycle/models/user.dart';
+import 'package:by_cycle/models/daily_data_input.dart';
 
 void updateUsersAlgorithmData(User user) {
 /*Returns a user with an updated AlgorithmData property. This function should be run before algorithms
