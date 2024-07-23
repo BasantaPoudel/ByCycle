@@ -116,7 +116,7 @@ User user_after_onboardCalendar = User(
     CustomDateTimeRange(
         start: DateTime(2024, 5, 24),
         end: DateTime(2024, 5, 27),
-        phase: "menstrual"),
+        phase: "menstruation"),
     CustomDateTimeRange(
         start: DateTime(2024, 5, 28),
         end: DateTime(2024, 6, 6),
@@ -132,7 +132,7 @@ User user_after_onboardCalendar = User(
     CustomDateTimeRange(
         start: DateTime(2024, 6, 21),
         end: DateTime(2024, 6, 24),
-        phase: "menstrual"),
+        phase: "menstruation"),
     CustomDateTimeRange(
         start: DateTime(2024, 6, 25),
         end: DateTime(2024, 7, 4),
@@ -148,7 +148,7 @@ User user_after_onboardCalendar = User(
     CustomDateTimeRange(
         start: DateTime(2024, 7, 19),
         end: DateTime(2024, 7, 22),
-        phase: "menstrual"),
+        phase: "menstruation"),
     CustomDateTimeRange(
         start: DateTime(2024, 7, 23),
         end: DateTime(2024, 8, 1),
@@ -164,7 +164,7 @@ User user_after_onboardCalendar = User(
     CustomDateTimeRange(
         start: DateTime(2024, 8, 16),
         end: DateTime(2024, 8, 19),
-        phase: "menstrual"),
+        phase: "menstruation"),
     CustomDateTimeRange(
         start: DateTime(2024, 8, 20),
         end: DateTime(2024, 8, 22),

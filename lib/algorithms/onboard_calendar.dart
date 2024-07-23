@@ -27,7 +27,7 @@ Side-effects:
   print("dailyDataInput is empty");
   print("last period date: ${user.lastPeriod}");
   print("complete cycle length ${user.completeCycleLength}");
-  print("menstrual phase length ${user.menstruationPhaseLength}");
+  print("menstruation phase length ${user.menstruationPhaseLength}");
   user.follicularPhaseLength =
       user.completeCycleLength - user.menstruationPhaseLength - 14;
   user.ovulationPhaseLength = 4;
@@ -44,7 +44,7 @@ Side-effects:
         date.difference(user.lastPeriod).inDays % user.completeCycleLength;
 
     if (dayOfCycle < user.menstruationPhaseLength) {
-      return "menstrual";
+      return "menstruation";
     } else if (dayOfCycle <
         user.menstruationPhaseLength + user.follicularPhaseLength) {
       return "follicular";

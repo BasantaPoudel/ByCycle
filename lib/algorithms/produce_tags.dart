@@ -97,8 +97,8 @@ List<String> mucus(User user) {
   if (allowedValues.contains(d0) &&
       allowedValues.contains(d1) &&
       allowedValues.contains(d2)) {
-    print("ADJUST cycle, change into Ovulatory phase from follicular phase");
-    out.add('follicular_to_ovulatory');
+    print("ADJUST cycle, change into ovulation phase from follicular phase");
+    out.add('follicular_to_ovulation');
 
     //data repeated < 3 log ins
     //I'm assuming that we want to display it if it
@@ -106,7 +106,7 @@ List<String> mucus(User user) {
   } else if (allowedValues.contains(d0)) {
     out.add("Cervical mucus");
   }
-  //should it check that it's not the ovulatory phase???
+  //should it check that it's not the ovulation phase???
   if (d0 == "spotting") {
     print("Spotting today!");
     user.algorithmData['spottingOccurences'].add(DateTime.now());
@@ -115,12 +115,12 @@ List<String> mucus(User user) {
         .difference(user.algorithmData['spottingOccurences'][1]);
     print("Difference in days: ${diff.inDays.abs()}");
 
-    //Data repeated across =/> 2 menstrual cycles
+    //Data repeated across =/> 2 menstruation cycles
     if (diff.inDays.abs() > user.completeCycleLength) {
       print("spotting, data repeated =/> 2 menstural cycle");
       print("DISPLAY General insights insight number 3");
       out.add("insight_3");
-    } else if (user.dailyDataInput[0].phase == "ovulatory") {
+    } else if (user.dailyDataInput[0].phase == "ovulation") {
       print("Display datab > General insights > insight number: 4");
       out.add("insight_4");
     }
@@ -155,7 +155,7 @@ List<String> energyLevel(User user) {
           out.add("increase energy");
           break;
         case "follicular":
-        case "ovulatory":
+        case "ovulation":
           print(
               'DISPLAY database > Cycle:Ovulation / Cycle:Follicular > insight tag 1 choice "Increase Energy" "Sleep Quality", "Alcohol" & "Coffee"');
           out.add("Increase Energy");

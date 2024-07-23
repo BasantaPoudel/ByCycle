@@ -48,7 +48,7 @@ class _CalendarState extends State<Calendar> {
         BoxDecoration(color: Color.fromRGBO(237, 195, 191, 1)),
   );
   Map<String, CalendarStyle> styles = {
-    "menstrual": const CalendarStyle(
+    "menstruation": const CalendarStyle(
       rangeHighlightColor: Color.fromRGBO(237, 195, 191, 1),
       rangeStartDecoration: BoxDecoration(
         color: Color.fromRGBO(237, 195, 191, 1),

@@ -17,7 +17,7 @@ class DailyDataInput {
     this.symptoms = const [],
     this.temperature = 0,
     this.phase =
-        "", // Should be equal to "menstrual", "follicular", "ovulation" or "luteal"
+        "", // Should be equal to "menstruation", "follicular", "ovulation" or "luteal"
   });
 
   Map<String, dynamic> toMap() {

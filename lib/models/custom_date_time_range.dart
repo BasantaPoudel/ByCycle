@@ -12,7 +12,7 @@ class CustomDateTimeRange {
   /// The end of the range of dates.
   final DateTime end;
 
-  /// The phase of the date range, one of "menstrual", "follicular", "ovulatory", "luteal", or "" by default.
+  /// The phase of the date range, one of "menstruation", "follicular", "ovulation", "luteal", or "" by default.
   final String phase;
 
   /// Returns a [Duration] of the time between [start] and [end].

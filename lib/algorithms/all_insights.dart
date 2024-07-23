@@ -487,7 +487,7 @@ List<Map<String, dynamic>> allInsights = [
   },
   {
     "id": "eeaf354b6e15072a8e5441348ab5229fce52b00ea956d1dbad4c0b545a9f0bdb",
-    "tags": ["menstrual_funfact", "menstrual_lowenergy"],
+    "tags": ["menstruation_funfact", "menstruation_lowenergy"],
     "headline": "Include magnesium in your diet.",
     "explanation":
         "Magnesium is a great mineral for better sleep, as it soothes and calms your nervous system. Examples of magnesium-rich foods: nuts, seeds, and green leafy vegetables. Supplement: 300 mg of magnesium glycinate daily.",
@@ -495,7 +495,7 @@ List<Map<String, dynamic>> allInsights = [
   },
   {
     "id": "f9431d309ecd5587d3cad73d4367892cae33b03f3a0ce7babcb657d1dad7245a",
-    "tags": ["menstrual_lowenrgy", "menstrual_funfact"],
+    "tags": ["menstruation_lowenrgy", "menstruation_funfact"],
     "headline": "Give yourslef plenty of time to relax tonight.",
     "explanation":
         "Low energy is common during your period due to decreasing estrogen levels. A relaxed mind can help you sleep better during this time.",
@@ -504,9 +504,9 @@ List<Map<String, dynamic>> allInsights = [
   {
     "id": "f9431d309ecd5587d3cad73d4367892cae33b03f3a0ce7babcb657d1dad7245a",
     "tags": [
-      "menstrual_lowenrgy",
-      "menstrual_funfact",
-      "menstrual_mediumenergy"
+      "menstruation_lowenrgy",
+      "menstruation_funfact",
+      "menstruation_mediumenergy"
     ],
     "headline": "Maintain a consistent sleeping routine while on your period.",
     "explanation":
@@ -515,7 +515,7 @@ List<Map<String, dynamic>> allInsights = [
   },
   {
     "id": "d8ac34a05d6cc8284f047573ef5aec37482819de0f2388fbc0dc8b2f08732beb",
-    "tags": ["menstrual_lowenergy", "menstrual_mediumenergy funfact"],
+    "tags": ["menstruation_lowenergy", "menstruation_mediumenergy funfact"],
     "headline": "Wear light clothing to bed.",
     "explanation":
         "Sleep occurs when the temperature is dropping but during menstruation progesterone levels are high, rising your body temperature.                          This causes you to not achive the same state of deep, restorative sleep.",
@@ -524,9 +524,9 @@ List<Map<String, dynamic>> allInsights = [
   {
     "id": "4eb9085ad1c3c238d94e585ef08d1e751349ab2b608edeace5e5ff8360687456",
     "tags": [
-      "menstrual_lowenergy",
-      "menstrual_mediumenergy",
-      "menstrual_funfact"
+      "menstruation_lowenergy",
+      "menstruation_mediumenergy",
+      "menstruation_funfact"
     ],
     "headline": "Drink more water before going to bed",
     "explanation":
@@ -536,9 +536,9 @@ List<Map<String, dynamic>> allInsights = [
   {
     "id": "4eb9085ad1c3c238d94e585ef08d1e751349ab2b608edeace5e5ff8360687456",
     "tags": [
-      "menstrual_lowenergy",
-      "menstrual_mediumenergy",
-      "menstrual_funfact"
+      "menstruation_lowenergy",
+      "menstruation_mediumenergy",
+      "menstruation_funfact"
     ],
     "headline": "Take a refreshing shower before bed",
     "explanation":
@@ -548,9 +548,9 @@ List<Map<String, dynamic>> allInsights = [
   {
     "id": "add74eb92626271ada5a22cfe26b33c871903ed5647c051eb9ab85be8f88c603",
     "tags": [
-      "menstrual_funfact",
-      "menstrual_lowenergy",
-      "menstrual_moodswings"
+      "menstruation_funfact",
+      "menstruation_lowenergy",
+      "menstruation_moodswings"
     ],
     "headline": "Take a break and do something that brings you joy",
     "explanation":
@@ -560,10 +560,10 @@ List<Map<String, dynamic>> allInsights = [
   {
     "id": "e3aa88a0e51417c1a9280b838b796e359ed5183fc1275d7fa4ca8ad09257c550",
     "tags": [
-      "menstrual_cramps",
-      "menstrual_muscleaches",
-      "menstrual_abdominalpain",
-      "menstrual_backpain"
+      "menstruation_cramps",
+      "menstruation_muscleaches",
+      "menstruation_abdominalpain",
+      "menstruation_backpain"
     ],
     "headline": "Try massage or a heating pad for your period pain",
     "explanation":
@@ -573,9 +573,9 @@ List<Map<String, dynamic>> allInsights = [
   {
     "id": "8b27b8c1e28cfc811a3dce2ba1a0477fe6f8fe39c97f16a6116c2dae0b50746f",
     "tags": [
-      "menstrual_irregularperiods",
-      "menstrual_inflammation",
-      "menstrual_funfact"
+      "menstruation_irregularperiods",
+      "menstruation_inflammation",
+      "menstruation_funfact"
     ],
     "headline": "Include zinc in your diet",
     "explanation":
@@ -585,11 +585,11 @@ List<Map<String, dynamic>> allInsights = [
   {
     "id": "2c6c4087a9e629af8265cdfffb66be8d4cd3421802a95ac91a2a83c53703e915",
     "tags": [
-      "menstrual_backpain",
-      "menstrual_abdominalpain",
-      "menstrual_cramps",
-      "menstrual_pms",
-      "menstrual_funfact"
+      "menstruation_backpain",
+      "menstruation_abdominalpain",
+      "menstruation_cramps",
+      "menstruation_pms",
+      "menstruation_funfact"
     ],
     "headline": "Include magnesium in your diet",
     "explanation":
@@ -598,7 +598,7 @@ List<Map<String, dynamic>> allInsights = [
   },
   {
     "id": "1eff0bec45566d37da614d90fa3ff6e8eddb3b66600e5fe8e1818c46898fb2b7",
-    "tags": ["menstrual_heavyflow", "menstrual_funfact"],
+    "tags": ["menstruation_heavyflow", "menstruation_funfact"],
     "headline": "Eat iron rich foods",
     "explanation":
         "With menstruation iron levels decrease, so eating foods rich in this nutrient is essential. Examples include dark green leafy vegetables like spinach, nuts, lean beef, chicken, turkey, beans, and clams.",
@@ -607,9 +607,9 @@ List<Map<String, dynamic>> allInsights = [
   {
     "id": "d92ab297fcc7189b237c17ff8387305c8c1e21b21222b7b83e21c3fcba44d308",
     "tags": [
-      "menstrual_bloodheavy",
-      "menstrual_energylow",
-      "menstrual_funfact"
+      "menstruation_bloodheavy",
+      "menstruation_energylow",
+      "menstruation_funfact"
     ],
     "headline": "Try to avoid caffeine to prevent heavy bleeding.",
     "explanation":
@@ -619,11 +619,11 @@ List<Map<String, dynamic>> allInsights = [
   {
     "id": "f88f580e4e6f17f5b98ab0c244f045c992dee9e48675e3c0d86113f17d566b67",
     "tags": [
-      "menstrual_mediumenergy, lowenergy",
-      "menstrual_cramps",
-      "menstrual_bloating",
-      "menstrual_diarrhea",
-      "menstrual_abdominalpain"
+      "menstruation_mediumenergy, lowenergy",
+      "menstruation_cramps",
+      "menstruation_bloating",
+      "menstruation_diarrhea",
+      "menstruation_abdominalpain"
     ],
     "headline": "Replace coffee with green or black tea.",
     "explanation":
@@ -633,10 +633,10 @@ List<Map<String, dynamic>> allInsights = [
   {
     "id": "01be36467a4122b7d9bfe64037a78ac4e19dac3bfd643bdc1e4f60e57d8b4c03",
     "tags": [
-      "menstrual_cramps",
-      "menstrual_bloating",
-      "menstrual_diarrhea",
-      "menstrual_abdominalpain"
+      "menstruation_cramps",
+      "menstruation_bloating",
+      "menstruation_diarrhea",
+      "menstruation_abdominalpain"
     ],
     "headline": "Swap candy with a sugar free alternative.",
     "explanation":
@@ -645,7 +645,7 @@ List<Map<String, dynamic>> allInsights = [
   },
   {
     "id": "a6ababca918b4ca951d90f1bd028dffb68f7e2a1617f8f14795c4d049b4717b6",
-    "tags": ["menstrual_funfact", "menstrual_cravings"],
+    "tags": ["menstruation_funfact", "menstruation_cravings"],
     "headline": "Eat smaller and more frequent meals to combat cravings.",
     "explanation":
         "During menstruation, your body produces less serotonin and your brain's sensitivity to insulin decreases, causing cravings. Smaller and more frequent meals are useful to control spikes in hunger.",
@@ -653,7 +653,11 @@ List<Map<String, dynamic>> allInsights = [
   },
   {
     "id": "74aaddd3ed25ca16d830696cd120b8910e1f20451151332c7d9f9a59beaa7f6b",
-    "tags": ["menstrual_cravings", "menstrual_bloating", "menstrual_cramps"],
+    "tags": [
+      "menstruationcravings",
+      "menstruation_bloating",
+      "menstruation_cramps"
+    ],
     "headline": "Include more fiber in your meal,",
     "explanation":
         "During menstruation, your body produces less serotonin and your brain's sensitivity to insulin decreases, causing cravings. Consuming more fiber helps to regulate blood sugar and makes you feel full and satisfied for longer. Fiber examples: fruit, vegetables, whole grains, legumes, nuts.",
@@ -662,10 +666,10 @@ List<Map<String, dynamic>> allInsights = [
   {
     "id": "efcbe2b10d664f2acdbb69f16f4ee9700243b34a7d3f573628eceb44058e4035",
     "tags": [
-      "menstrual_bloating",
-      "menstrual_diarrhea",
-      "menstrual_brakeouts",
-      "menstrual_abdominalpain"
+      "menstruation_bloating",
+      "menstruation_diarrhea",
+      "menstruation_brakeouts",
+      "menstruation_abdominalpain"
     ],
     "headline": "Avoid junk food for a couple of days!",
     "explanation":
@@ -675,12 +679,12 @@ List<Map<String, dynamic>> allInsights = [
   {
     "id": "ec58d6fefbf1ce5b7602e45a39affa345c5264225adc9b01d493ce420f098f91",
     "tags": [
-      "menstrual_bloating",
-      "menstrual_diarrhea",
-      "menstrual_brakeouts",
-      "menstrual_abdominalpain",
-      "menstrual_lowenergy",
-      "menstrual_moodswings"
+      "menstruation_bloating",
+      "menstruation_diarrhea",
+      "menstruation_brakeouts",
+      "menstruation_abdominalpain",
+      "menstruation_lowenergy",
+      "menstruation_moodswings"
     ],
     "headline": "Minimize your alcohol intake.",
     "explanation":
@@ -690,13 +694,13 @@ List<Map<String, dynamic>> allInsights = [
   {
     "id": "957c67eb83b14c7dc2d18352bbc9c9d4e9a0e54cc19352b30f2783d9c7f4964c",
     "tags": [
-      "menstrual_bloating",
-      "menstrual_diarrhea",
-      "menstrual_brakeouts",
-      "menstrual_abdominalpain",
-      "menstrual_lowenergy",
-      "menstrual_moodswings",
-      "menstrual_pain"
+      "menstruation_bloating",
+      "menstruation_diarrhea",
+      "menstruation_brakeouts",
+      "menstruation_abdominalpain",
+      "menstruation_lowenergy",
+      "menstruation_moodswings",
+      "menstruation_pain"
     ],
     "headline": "Consume omega 3 rich foods.",
     "explanation":
@@ -706,9 +710,9 @@ List<Map<String, dynamic>> allInsights = [
   {
     "id": "b37ab751a4ccc983eec51ff4ede1983b4f8b0ae30c7f74c45df60ef8b13b9dc6",
     "tags": [
-      "menstrual_nausea",
-      "menstrual_diarrhea",
-      "menstrual_abdominal pain"
+      "menstruation_nausea",
+      "menstruation_diarrhea",
+      "menstruation_abdominal pain"
     ],
     "headline": "Drink ginger tea or lemonade for nausea.",
     "explanation":
@@ -717,7 +721,7 @@ List<Map<String, dynamic>> allInsights = [
   },
   {
     "id": "28a9ed364a2e483118b422a772977f45761d56bdbc01b0e374e7824c63321472",
-    "tags": ["ovulatory_funfact", "ovulatory_highenergy"],
+    "tags": ["ovulation_funfact", "ovulation_highenergy"],
     "headline": "It's the best time to be productive!",
     "explanation":
         "The peak in estrogen might make you feel more energetic than usual. Ovulation only lasts 24h but the high hormone levels stay for some days, making you want to be more active. Use this to your advantage.",
@@ -725,7 +729,7 @@ List<Map<String, dynamic>> allInsights = [
   },
   {
     "id": "d8aabc1cd4f21f3ba9283d1cad80dd3a744dcc7d5dac1e9d5084a0ab333eedf5",
-    "tags": ["ovulatory_funfact"],
+    "tags": ["ovulation_funfact"],
     "headline": "Your luteal phase might be approaching.",
     "explanation":
         "After ovulation, during your luteal phase, progestorene levels rise. Progestorene has the very handy effect of rising your body temperature. This helps identify your post-ovulation infertile (safe) days. If you felt, like you're a bit wormer, don't worry. It's perfectly normal.",
@@ -733,7 +737,7 @@ List<Map<String, dynamic>> allInsights = [
   },
   {
     "id": "8983e8de3281c8f6605c19d0f137b3b9dca1077b102312526e834d44c1135241",
-    "tags": ["ovulatory_funfact", "ovulatory_mucus"],
+    "tags": ["ovulation_funfact", "ovulation_mucus"],
     "headline": "Don't forget to track your cervical fluid",
     "explanation":
         "You will see some fertile mucus in the days before ovulation. The best way to identify it, is by seeing an increase in moisture + the progression of the mucus into a more fertile pattern (egg white, clear, lubricant, strechy)",
@@ -742,9 +746,9 @@ List<Map<String, dynamic>> allInsights = [
   {
     "id": "a4a588eb21a2af0fb2eeecd37a1bf1ba5a52da7450f79f9ba930c8000d2d9a4d",
     "tags": [
-      "ovulatory_funfact",
-      "ovulatory_spotting",
-      "ovulatory_bleedinglight"
+      "ovulation_funfact",
+      "ovulation_spotting",
+      "ovulation_bleedinglight"
     ],
     "headline": "Ligth bleeding during ovualtion?",
     "explanation":
@@ -754,9 +758,9 @@ List<Map<String, dynamic>> allInsights = [
   {
     "id": "5d26933627db42b9f72a01e4208a5768cf26e4e2df63b698a6684d697d810e46",
     "tags": [
-      "ovulatory_funfact",
-      "ovulatory_moodswings",
-      "ovulatory_bloodlight"
+      "ovulation_funfact",
+      "ovulation_moodswings",
+      "ovulation_bloodlight"
     ],
     "headline": "You deserve some relaxation.",
     "explanation":
@@ -765,7 +769,7 @@ List<Map<String, dynamic>> allInsights = [
   },
   {
     "id": "fc435db224a4110068d4a79b284a89ca66e6278924522863d42928afe0c4a70b",
-    "tags": ["ovulatory_funfact", "ovulatory_highenergy"],
+    "tags": ["ovulation_funfact", "ovulation_highenergy"],
     "headline": "Time for great rest!",
     "explanation":
         "Elevated estrogen levels makes you more active during the day, resulting in better sleep afterwards.",
@@ -774,9 +778,9 @@ List<Map<String, dynamic>> allInsights = [
   {
     "id": "4e636463e8f25f2cd56b09ff6897ec8a6aacb10d75dc15c652e02b1124777d90",
     "tags": [
-      "ovulatory_funfact",
-      "ovulatory_mediumenergy",
-      "ovulatory_highenergy"
+      "ovulation_funfact",
+      "ovulation_mediumenergy",
+      "ovulation_highenergy"
     ],
     "headline": "Meditate if you struggle to fall asleep.",
     "explanation":
@@ -785,7 +789,7 @@ List<Map<String, dynamic>> allInsights = [
   },
   {
     "id": "7160db3462dd2acee3d32e34ce4de475eb98ea04efa1fa8ca49f350e02d1ae29",
-    "tags": ["ovulatory_funfact"],
+    "tags": ["ovulation_funfact"],
     "headline": "Eat more cruciferous veggies.",
     "explanation":
         "Because your estrogen is at its peak, it’s helpful to eat foods that will support liver detoxification of potentially harmful excess estrogen. Examples: brussel sprouts, kale, cabbage, cauliflower, broccoli, turnips.",
@@ -794,10 +798,10 @@ List<Map<String, dynamic>> allInsights = [
   {
     "id": "dab0e8ee647d0f38aa988ccc01b8135ea458fdd96515af26b449853e1146dd43",
     "tags": [
-      "ovulatory_funfact",
-      "ovulatory_moddswings",
-      "ovulatory_lowenergy",
-      "ovulatory_mediumenergy"
+      "ovulation_funfact",
+      "ovulation_moddswings",
+      "ovulation_lowenergy",
+      "ovulation_mediumenergy"
     ],
     "headline": "Eat a small portion of protein with every meal.",
     "explanation":
@@ -806,7 +810,7 @@ List<Map<String, dynamic>> allInsights = [
   },
   {
     "id": "53e9d737d91a6431fcee6bee9807047a08f1c48e6d97dae269de798011051197",
-    "tags": ["ovulatory_funfact"],
+    "tags": ["ovulation_funfact"],
     "headline": "Boost cell division with folate-rich foods.",
     "explanation":
         "As the eggs are formed, thin layers of cells (granulose cells) grow around them. Thus it is essential to support cell growth during your menstrual cycle with nutrients such as leafy greens, citrus fruits, and beans.",
@@ -814,7 +818,7 @@ List<Map<String, dynamic>> allInsights = [
   },
   {
     "id": "e4f33cda83bac11acbaff2ad4683047eecc594b188193d8c07765b4d2c5d079d",
-    "tags": ["ovulatory_funfact"],
+    "tags": ["ovulation_funfact"],
     "headline":
         "Optimize hormone production by including foods high in healthy fats.",
     "explanation":
@@ -823,7 +827,7 @@ List<Map<String, dynamic>> allInsights = [
   },
   {
     "id": "586568891810eb0b82111d537c018022e11eba218d7c92e8413f039ff4b28dc6",
-    "tags": ["ovulatory_funfact"],
+    "tags": ["ovulation_funfact"],
     "headline": "Get yourself a chia pudding to support fertility.",
     "explanation":
         "Omega 3s are structural components of all cellular membranes, and all cells require omega 3s to function normally. They are found in foods like salmon, chia seeds or flaxseeds and are essential to the proper functioning of egg cells.",
