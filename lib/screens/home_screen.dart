@@ -1,7 +1,10 @@
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
 import 'package:by_cycle/screens/daily_data_input_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final int _selectedIndex = 0;
   late TimeOfDay bedTime;
   late TimeOfDay wakeupTime;
-
+  late String timeDifference;
   @override
   void initState() {
     // TODO: implement initState
@@ -32,58 +35,89 @@ class _HomeScreenState extends State<HomeScreen> {
     return Center(
       child: Column(children: [
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          SizedBox(
+            width: 280,
+            // height: 44,
+            child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color(0xFFD6A879)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    )),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DailyDataInputScreen()));
+                },
+                child: const Text("What is your temperature?")),
+          ),
+          SizedBox(
+            width: 10,
+          ),
           ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const DailyDataInputScreen()));
-              },
-              child: const Text("What is your temperature?")),
-          ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(const Color(0xFFD6A879)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                  )),
               onPressed: () {
                 null;
               },
-              child: const Text("+"))
+              child: Icon(Icons.add_circle_rounded)),
         ]),
+        SizedBox(
+          height: 40,
+        ),
         const Center(
           child: Text('Recommended sleep time'),
+        ),
+        const Center(
+          child: Text('for today ---cycles'),
+        ),
+        SizedBox(
+          height: 15,
         ),
         const SizedBox(
           height: 15.0,
         ),
-        const SizedBox(
-            height: 180.0,
-            width: 180.0,
+        Stack(alignment: Alignment.center, children: [
+          SizedBox(
+            height: 180,
+            width: 180,
             child: CircularProgressIndicator(
               strokeWidth: 15,
               value: 0.4,
               backgroundColor: Color.fromRGBO(222, 212, 197, 1),
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-            )),
+              valueColor: Theme.of(context).brightness == Brightness.light
+                  ? AlwaysStoppedAnimation<Color>(Colors.black)
+                  : AlwaysStoppedAnimation<Color>(Color(0xFFD6A879)),
+            ),
+          ),
+          Text('7h 30m', style: Theme.of(context).textTheme.displaySmall),
+        ]),
         const SizedBox(
           height: 15.0,
         ),
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           Column(
             children: [
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(const Color(0xFFDED4C5)),
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
-                  padding: MaterialStateProperty.all<EdgeInsets>(
-                      const EdgeInsets.all(16)),
-                  textStyle: MaterialStateProperty.all<TextStyle>(
-                      const TextStyle(fontSize: 20)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                  ),
-                  elevation: MaterialStateProperty.all<double>(5.0),
-                ),
+              TextButton(
+                style: TextButton.styleFrom(
+                    foregroundColor:
+                        Theme.of(context).brightness == Brightness.light
+                            ? Colors.black
+                            : Colors.white,
+                    textStyle: TextStyle(
+                        fontSize: 22,
+                        decoration: TextDecoration.underline,
+                        color: Colors.green)),
                 onPressed: () async {
                   final TimeOfDay? setBedTime = await showTimePicker(
                       context: context,
@@ -98,28 +132,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     ? Text("${bedTime.hour}:${bedTime.minute}")
                     : Text("${bedTime.hour}:0${bedTime.minute}"),
               ),
-              const Text('Bed time'),
+              const Text('Bedtime'),
             ],
           ),
           Column(
             children: [
-              ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color(0xFFDED4C5)),
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    padding: MaterialStateProperty.all<EdgeInsets>(
-                        const EdgeInsets.all(16)),
-                    textStyle: MaterialStateProperty.all<TextStyle>(
-                        const TextStyle(fontSize: 20)),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                    ),
-                    elevation: MaterialStateProperty.all<double>(5.0),
-                  ),
+              TextButton(
+                  style: TextButton.styleFrom(
+                      foregroundColor:
+                          Theme.of(context).brightness == Brightness.light
+                              ? Colors.black
+                              : Colors.white,
+                      textStyle: TextStyle(
+                          fontSize: 22,
+                          decoration: TextDecoration.underline,
+                          color: Colors.black)),
                   onPressed: () async {
                     final TimeOfDay? setWakeupTime = await showTimePicker(
                         context: context,
@@ -136,26 +163,60 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: wakeupTime.minute > 9
                       ? Text("${wakeupTime.hour}:${wakeupTime.minute}")
                       : Text("${wakeupTime.hour}:0${wakeupTime.minute}")),
-              const Text('WakeUp time'),
+              const Text('WakeUp'),
             ],
           ),
         ]),
         const SizedBox(
           height: 15.0,
         ),
-        ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all<Color>(const Color(0xFFDED4C5)),
-            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            padding: MaterialStateProperty.all<EdgeInsets>(
-                const EdgeInsets.only(left: 25, right: 25)),
-            textStyle: MaterialStateProperty.all<TextStyle>(
-                const TextStyle(fontSize: 20, color: Colors.black)),
-            elevation: MaterialStateProperty.all<double>(5.0),
+        SizedBox(
+          width: 110,
+          // height: 40,
+          child: Theme.of(context).platform == TargetPlatform.android
+              ? ElevatedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                  ),
+                  onPressed: openAlarmApp,
+                  child: Text(
+                      style: Theme.of(context).textTheme.bodySmall,
+                      'SET ALARM'),
+                )
+              : null,
+        ),
+        const SizedBox(
+          height: 15.0,
+        ),
+        Text(
+            //TODO- Align Properly
+            textAlign: TextAlign.left,
+            style: Theme.of(context).textTheme.bodyLarge,
+            'You are in the --- phase'),
+        Container(
+          margin: EdgeInsets.only(right: 55, left: 55, top: 10),
+          child: const LinearProgressIndicator(
+            minHeight: 10,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            value: 0.5,
+            backgroundColor: Color.fromRGBO(222, 212, 197, 1),
+            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFD6A879)),
           ),
-          onPressed: openAlarmApp,
-          child: const Text('Set Alarm'),
+        ),
+        Container(
+          margin: EdgeInsets.only(right: 55, left: 55, top: 10),
+          child: Column(children: [
+            const Text(
+                'Phase description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
+            SizedBox(height: 30),
+            Text(
+                style: Theme.of(context).textTheme.bodyLarge,
+                'Your daily insights'),
+          ]),
         ),
       ]),
     );

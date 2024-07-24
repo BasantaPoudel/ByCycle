@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ThemeCubit extends Cubit<ThemeMode> {
   ThemeCubit() : super(ThemeMode.system);
@@ -61,7 +62,7 @@ class ThemeCubit extends Cubit<ThemeMode> {
         displayMedium: TextStyle(
           fontSize: 36.0,
           color: Colors.white,
-          fontStyle: FontStyle.italic,
+          // fontStyle: FontStyle.italic,
         ),
         displaySmall: TextStyle(
           fontSize: 14.0,
@@ -84,7 +85,12 @@ class ThemeCubit extends Cubit<ThemeMode> {
           fontFamily: 'Hind',
         ),
       ),
-
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Color(0xFFD6A879),
+          selectedItemColor: Colors.black,
+          selectedIconTheme: IconThemeData(
+              fill: BorderSide.strokeAlignCenter) // Set the selected item color
+          ),
       scaffoldBackgroundColor:
           Colors.black, // Set the background color to a dark shade
     );
@@ -110,37 +116,39 @@ class ThemeCubit extends Cubit<ThemeMode> {
         // elevation: MaterialStateProperty.all<double>(5.0),
       )),
       buttonTheme: const ButtonThemeData(
-        buttonColor: Color(0xFFDED4C5), // Set the button color
-        textTheme: ButtonTextTheme.primary, // Set the button text theme
-      ),
+          // buttonColor: Color(0xFFDED4C5), // Set the button color
+          // textTheme: ButtonTextTheme.primary, // Set the button text theme
+          ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor:
             Color(0xFFDED4C5), // Set the floating button background color
       ),
-      textTheme: const TextTheme(
-        displayLarge: TextStyle(
+      textTheme: TextTheme(
+        displayLarge: GoogleFonts.poppins(
           fontSize: 72.0,
+          color: Colors.black,
           fontWeight: FontWeight.bold,
         ),
-        displayMedium: TextStyle(
+        displayMedium: GoogleFonts.poppins(
           fontSize: 36.0,
-          fontStyle: FontStyle.italic,
+          color: Colors.black,
+          // fontStyle: FontStyle.italic,
         ),
-        displaySmall: TextStyle(
+        displaySmall: GoogleFonts.poppins(
+          fontSize: 20.0,
+          color: Colors.black,
+        ),
+        bodyLarge: GoogleFonts.poppins(
           fontSize: 14.0,
-          fontFamily: 'Hind',
+          color: Colors.black,
         ),
-        bodyLarge: TextStyle(
-          fontSize: 14.0,
-          fontFamily: 'Hind',
-        ),
-        bodyMedium: TextStyle(
+        bodyMedium: GoogleFonts.poppins(
           fontSize: 12.0,
-          fontFamily: 'Hind',
+          color: Colors.black,
         ),
-        bodySmall: TextStyle(
+        bodySmall: GoogleFonts.poppins(
           fontSize: 10.0,
-          fontFamily: 'Hind',
+          color: Colors.black,
         ),
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(

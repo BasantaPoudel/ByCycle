@@ -103,6 +103,9 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: Theme.of(context).brightness == Brightness.light
+            ? IconThemeData(color: Colors.black)
+            : IconThemeData(color: Colors.white),
         title: const Text('Daily Data Input'),
       ),
       body: Padding(
@@ -110,6 +113,10 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Text(
+                'To get the most out of your syncing experience, it\'s important to log your symptoms!',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
               _buildTemperatureCard(),
               _buildDischargeCard(),
               _buildSleepCard(),
