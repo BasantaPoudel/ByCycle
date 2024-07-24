@@ -1,6 +1,7 @@
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/examples/customDateTimeRanges/example_initial_date_time_ranges.dart';
 import 'package:by_cycle/firebase_options.dart';
+import 'package:by_cycle/repository/user_repository.dart';
 import 'package:by_cycle/screens/home_screen.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:by_cycle/screens/calendar.dart';
@@ -9,6 +10,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -74,8 +76,11 @@ class _MyHomePageState extends State<MyHomePage> {
   late TimeOfDay bedTime;
   late TimeOfDay wakeupTime;
 
+  var logger = Logger();
+
+  UserRepository userRepo = UserRepository();
   @override
-  void initState() {
+  void initState() async {
     super.initState();
     setState(() {
       bedTime = TimeOfDay.now();

@@ -1,8 +1,10 @@
-import 'package:by_cycle/algorithms/generateDateTimeRanges.dart';
+import 'package:by_cycle/algorithms/generate_date_time_ranges.dart';
 import 'package:by_cycle/examples/users/new_user.dart';
 import 'package:by_cycle/models/user.dart';
 import 'package:by_cycle/models/daily_data_input.dart';
+import 'package:logger/logger.dart';
 
+var logger = Logger();
 onboardCalendar(User user) {
 /* a function that can be executed immediately after the user logs in for the first time.
 The function assumes there is no daily_data_inputs yet and that the user instance has all
@@ -20,22 +22,23 @@ Side-effects:
   one dailyDataInput per day from 2024-05-24 until 2024-08-22
 */
   if (user.dailyDataInput.isNotEmpty) {
-    print("user's dailyDataInput is not empty, aborting to avoid overwrites");
+    logger
+        .d("user's dailyDataInput is not empty, aborting to avoid overwrites");
     return;
   }
 
-  print("dailyDataInput is empty");
-  print("last period date: ${user.lastPeriod}");
-  print("complete cycle length ${user.completeCycleLength}");
-  print("menstruation phase length ${user.menstruationPhaseLength}");
+  logger.d("dailyDataInput is empty");
+  logger.d("last period date: ${user.lastPeriod}");
+  logger.d("complete cycle length ${user.completeCycleLength}");
+  logger.d("menstruation phase length ${user.menstruationPhaseLength}");
   user.follicularPhaseLength =
       user.completeCycleLength - user.menstruationPhaseLength - 14;
   user.ovulationPhaseLength = 4;
   user.lutealPhaseLength = 10;
-  print("follicular phase length ${user.follicularPhaseLength}");
-  print("ovulation phase length ${user.ovulationPhaseLength}");
-  print("luteal phase length ${user.lutealPhaseLength}");
-  print("Time now: ${DateTime.now()}");
+  logger.d("follicular phase length ${user.follicularPhaseLength}");
+  logger.d("ovulation phase length ${user.ovulationPhaseLength}");
+  logger.d("luteal phase length ${user.lutealPhaseLength}");
+  logger.d("Time now: ${DateTime.now()}");
   //user.daily_data_input.add(DailyDataInput(date: ))
 
   // Function to determine phase based on day
@@ -69,17 +72,17 @@ Side-effects:
   user.phaseRanges = generateDateTimeRanges(user);
 
   for (var data in user.dailyDataInput) {
-    print(
-      'DailyDataInput(date: DateTime(${data.date.year.toString()},${data.date.month.toString()},${data.date.day.toString()}), phase: "${data.phase}"),');
+    logger.d(
+        'DailyDataInput(date: DateTime(${data.date.year.toString()},${data.date.month.toString()},${data.date.day.toString()}), phase: "${data.phase}"),');
   }
   for (var data in user.phaseRanges) {
-    print(
-      'CustomDateTimeRange(start: DateTime(${data.start.year.toString()},${data.start.month.toString()},${data.start.day.toString()}), end: DateTime(${data.end.year.toString()},${data.end.month.toString()},${data.end.day.toString()}), phase: "${data.phase}"),');
+    logger.d(
+        'CustomDateTimeRange(start: DateTime(${data.start.year.toString()},${data.start.month.toString()},${data.start.day.toString()}), end: DateTime(${data.end.year.toString()},${data.end.month.toString()},${data.end.day.toString()}), phase: "${data.phase}"),');
   }
-  //print(user.phaseRanges);
+  //logger.d(user.phaseRanges);
 }
 
 void main() {
   onboardCalendar(new_user);
-  //print(generateDateTimeRanges(new_user));
+  //logger.d(generateDateTimeRanges(new_user));
 }

@@ -1,5 +1,7 @@
 import 'package:by_cycle/models/user.dart';
+import 'package:logger/web.dart';
 
+var logger = Logger();
 List<String> produceTagsForToday(User user) {
   /*A function that executes each of algorithms A-F to produce a list
   containing all tags relevant for the user today.
@@ -48,30 +50,30 @@ List<String> bodyTemperature(User user) {
   if (tempDiff(user.dailyDataInput[0].temperature,
           user.dailyDataInput[1].temperature) <=
       -0.3) {
-    print("temperature fall greater or equal to 0.3");
+    logger.d("temperature fall greater or equal to 0.3");
     if (user.dailyDataInput[0].phase == "luteal") {
-      print("NOTIFY: Prepare yourself for the upcoming menstruation");
+      logger.d("NOTIFY: Prepare yourself for the upcoming menstruation");
       out.add("NOTIFY: Prepare...");
     }
   }
 
   //temperature RISE by 0.3 celsius or more for 2 data log ins
-  print(user.dailyDataInput[0].temperature);
-  print(tempDiff(
+  logger.d(user.dailyDataInput[0].temperature);
+  logger.d(tempDiff(
       user.dailyDataInput[1].temperature, user.dailyDataInput[2].temperature));
-  print(user.dailyDataInput[1].temperature);
-  print(user.dailyDataInput[2].temperature);
+  logger.d(user.dailyDataInput[1].temperature);
+  logger.d(user.dailyDataInput[2].temperature);
   if (tempDiff(user.dailyDataInput[0].temperature,
               user.dailyDataInput[1].temperature) >=
           0.3 &&
       tempDiff(user.dailyDataInput[1].temperature,
               user.dailyDataInput[2].temperature) >=
           0.3) {
-    print("TAGS: 'temperature', 'identify ovulation'");
+    logger.d("TAGS: 'temperature', 'identify ovulation'");
     out.add('temperature');
     out.add('identify ovulation');
     if (user.dailyDataInput[0].phase == "ovulation") {
-      print("ADJUST: Change from ovulation into luteal phase");
+      logger.d("ADJUST: Change from ovulation into luteal phase");
       out.add('ovulation_to_luteal');
     }
   }
@@ -97,7 +99,7 @@ List<String> mucus(User user) {
   if (allowedValues.contains(d0) &&
       allowedValues.contains(d1) &&
       allowedValues.contains(d2)) {
-    print("ADJUST cycle, change into Ovulatory phase from follicular phase");
+    logger.d("ADJUST cycle, change into Ovulatory phase from follicular phase");
     out.add('follicular_to_ovulatory');
 
     //data repeated < 3 log ins
@@ -108,20 +110,21 @@ List<String> mucus(User user) {
   }
   //should it check that it's not the ovulatory phase???
   if (d0 == "spotting") {
-    print("Spotting today!");
+    logger.d("Spotting today!");
     user.algorithmData['spottingOccurences'].add(DateTime.now());
-    print("Spotting occurences: ${user.algorithmData['spottingOccurences']}");
+    logger
+        .d("Spotting occurences: ${user.algorithmData['spottingOccurences']}");
     final Duration diff = user.algorithmData['spottingOccurences'][0]
         .difference(user.algorithmData['spottingOccurences'][1]);
-    print("Difference in days: ${diff.inDays.abs()}");
+    logger.d("Difference in days: ${diff.inDays.abs()}");
 
     //Data repeated across =/> 2 menstruation cycles
     if (diff.inDays.abs() > user.completeCycleLength) {
-      print("spotting, data repeated =/> 2 menstural cycle");
-      print("DISPLAY General insights insight number 3");
+      logger.d("spotting, data repeated =/> 2 menstural cycle");
+      logger.d("DISPLAY General insights insight number 3");
       out.add("insight_3");
     } else if (user.dailyDataInput[0].phase == "ovulatory") {
-      print("Display datab > General insights > insight number: 4");
+      logger.d("Display datab > General insights > insight number: 4");
       out.add("insight_4");
     }
   }
@@ -140,23 +143,23 @@ List<String> energyLevel(User user) {
     return out;
   } else {
     if (user.dailyDataInput[0].hoursOfSleep < 8) {
-      print("DISPLAY database > Sleep insights > insight number: 1");
+      logger.d("DISPLAY database > Sleep insights > insight number: 1");
       out.add("insight_1");
     } else {
       switch (user.dailyDataInput[0].phase) {
         case "luteal":
-          print(
+          logger.d(
               'DISPLAY database > cycle:luteal > insight tag"increase energy"');
           out.add("increase energy");
           break;
         case "menstruation":
-          print(
+          logger.d(
               'DISPLAY database > cycle:Menstruation > insight tag: "increase energy"');
           out.add("increase energy");
           break;
         case "follicular":
         case "ovulatory":
-          print(
+          logger.d(
               'DISPLAY database > Cycle:Ovulation / Cycle:Follicular > insight tag 1 choice "Increase Energy" "Sleep Quality", "Alcohol" & "Coffee"');
           out.add("Increase Energy");
           out.add("Increase Energy");
@@ -171,7 +174,7 @@ List<String> hoursOfSleep(User user) {
   List<String> out = [];
   //if ()
   if (user.dailyDataInput[0].hoursOfSleep == 0) {
-    print('DISPLAY database > insight tags: "sleep disruption", "insomnia"');
+    logger.d('DISPLAY database > insight tags: "sleep disruption", "insomnia"');
     out.add("sleep disruption");
     out.add("insomnia");
   }

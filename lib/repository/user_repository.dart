@@ -2,8 +2,10 @@ import 'package:by_cycle/models/onboarding_questions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:by_cycle/models/user.dart';
 import 'package:by_cycle/models/daily_data_input.dart';
+import 'package:logger/logger.dart';
 
 class UserRepository {
+  var logger = Logger();
   //Takes a User object as a mandatory argument and
   //an optional name for the document in firestore
   Future<void> addUserToFirestore(User data, {String? documentId}) async {
@@ -17,7 +19,7 @@ class UserRepository {
         await FirebaseFirestore.instance.collection('users').add(data.toMap());
       }
     } catch (e) {
-      print('Error adding data to Firestore: $e');
+      logger.d('Error adding data to Firestore: $e');
     }
   }
 
@@ -25,11 +27,11 @@ class UserRepository {
     try {
       await FirebaseFirestore.instance.collection('users').get().then((event) {
         for (var doc in event.docs) {
-          print("${doc.id} => ${doc.data()}");
+          logger.d("${doc.id} => ${doc.data()}");
         }
       });
     } catch (e) {
-      print('Error getting all users from Firestore: $e');
+      logger.d('Error getting all users from Firestore: $e');
     }
   }
 
@@ -42,10 +44,10 @@ class UserRepository {
       (DocumentSnapshot doc) {
         final data = doc.data() as Map<String, dynamic>;
         final user = User.fromMap(data);
-        //print(user!.email);
+        //logger.d(user!.email);
         return user;
       },
-      onError: (e) => print("Error getting document: $e"),
+      onError: (e) => logger.d("Error getting document: $e"),
     );
     return null;
   }
@@ -58,10 +60,10 @@ class UserRepository {
         .then(
       (querySnapshot) {
         for (var docSnapshot in querySnapshot.docs) {
-          print('${docSnapshot.id} => ${docSnapshot.data()}');
+          logger.d('${docSnapshot.id} => ${docSnapshot.data()}');
         }
       },
-      onError: (e) => print("Error completing: $e"),
+      onError: (e) => logger.d("Error completing: $e"),
     );
   }
 
@@ -71,9 +73,9 @@ class UserRepository {
       await FirebaseFirestore.instance
           .collection("users")
           .add(dailyDataInput.toMap());
-      print("Daily data sent");
+      logger.d("Daily data sent");
     } catch (e) {
-      print("Error: $e");
+      logger.d("Error: $e");
     }
   }
 
@@ -83,7 +85,42 @@ class UserRepository {
           .collection('onboarding')
           .add(formData.toMap());
     } catch (e) {
-      print('Error adding data to Firestore: $e');
+      logger.d('Error adding data to Firestore: $e');
     }
+  }
+
+  Future<String> getTodaysPhase() async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc("user_after_onboardCalendar")
+          .get()
+          .then((value) {
+        var dailyDataInput = value.data()!['daily_data_input'];
+        int index =
+            findDailyDataInputIndexByDate(dailyDataInput, DateTime.now());
+        var phase = dailyDataInput[index]['phase'];
+        logger.d(phase);
+        return phase;
+      });
+    } catch (e) {
+      logger.d("Error getting user data");
+    }
+    return "Error - No data found";
+  }
+
+  // a handy function for identifying the index of a dailyDataInput on a specific day.
+  int findDailyDataInputIndexByDate(
+      List<dynamic> dailyDataInputs, DateTime targetDate) {
+    for (int i = 0; i < dailyDataInputs.length; i++) {
+      dynamic input = dailyDataInputs[i];
+      DateTime inputDate = input['date'].toDate();
+      if (inputDate.year == targetDate.year &&
+          inputDate.month == targetDate.month &&
+          inputDate.day == targetDate.day) {
+        return i;
+      }
+    }
+    return -1; // Return -1 if no matching date is found
   }
 }

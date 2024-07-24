@@ -1,5 +1,6 @@
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
+import 'package:by_cycle/repository/user_repository.dart';
 import 'package:by_cycle/screens/daily_data_input_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -16,6 +17,9 @@ class _HomeScreenState extends State<HomeScreen> {
   late TimeOfDay bedTime;
   late TimeOfDay wakeupTime;
   late String timeDifference;
+  late String phaseOfTheDay;
+  UserRepository userRepo = UserRepository();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -25,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
       wakeupTime =
           TimeOfDay.now().replacing(hour: bedTime.hour, minute: bedTime.minute);
     });
+    calculatePhaseOfTheDay();
   }
 
   @override
@@ -193,7 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
             //TODO- Align Properly
             textAlign: TextAlign.left,
             style: Theme.of(context).textTheme.bodyLarge,
-            'You are in the --- phase'),
+            'You are in the $phaseOfTheDay phase'),
         Container(
           margin: const EdgeInsets.only(right: 55, left: 55, top: 10),
           child: const LinearProgressIndicator(
@@ -217,6 +222,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ]),
     );
+  }
+
+  void calculatePhaseOfTheDay() async {
+    phaseOfTheDay = await userRepo.getTodaysPhase();
   }
 
   void calculateWakeUpTime(TimeOfDay time) {

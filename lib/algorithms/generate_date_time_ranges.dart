@@ -2,6 +2,9 @@ import 'package:by_cycle/examples/users/user_after_onboardCalendar.dart';
 import 'package:by_cycle/models/custom_date_time_range.dart';
 import 'package:by_cycle/models/user.dart';
 import 'package:by_cycle/models/daily_data_input.dart';
+import 'package:logger/logger.dart';
+
+var logger = Logger();
 
 List<CustomDateTimeRange> generateDateTimeRanges(User user) {
   /*a function for creating a list of ranges of specific phases based on
@@ -51,5 +54,5 @@ List<CustomDateTimeRange> generateDateTimeRanges(User user) {
 }
 
 void main() {
-  print(generateDateTimeRanges(user_after_onboardCalendar));
+  logger.d(generateDateTimeRanges(user_after_onboardCalendar));
 }

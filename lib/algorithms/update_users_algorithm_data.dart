@@ -1,6 +1,8 @@
 import 'package:by_cycle/models/user.dart';
 import 'package:by_cycle/models/daily_data_input.dart';
+import 'package:logger/logger.dart';
 
+var logger = Logger();
 void updateUsersAlgorithmData(User user) {
 /*Returns a user with an updated AlgorithmData property. This function should be run before algorithms
 A-F returning the tags are run to make sure they execute correctly.
@@ -24,7 +26,7 @@ Side-effects:
   user.algorithmData["indexOfToday"] =
       findDailyDataInputIndexByDate(user.dailyDataInput, today);
 
-  print(user.algorithmData["indexOfToday"]);
+  logger.d(user.algorithmData["indexOfToday"]);
 
   user.algorithmData["lastFiveDays"] = [];
 
@@ -33,7 +35,7 @@ Side-effects:
         .add(user.dailyDataInput[user.algorithmData["indexOfToday"] - i]);
   }
 
-  print(user.algorithmData["lastFiveDays"]);
+  logger.d(user.algorithmData["lastFiveDays"]);
 }
 
 // a handy function for identifying the index of a dailyDataInput on a specific day.
