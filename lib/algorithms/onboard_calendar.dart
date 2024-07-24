@@ -68,10 +68,14 @@ Side-effects:
 
   user.phaseRanges = generateDateTimeRanges(user);
 
-  user.dailyDataInput.forEach((data) => print(
-      'DailyDataInput(date: DateTime(${data.date.year.toString()},${data.date.month.toString()},${data.date.day.toString()}), phase: "${data.phase}"),'));
-  user.phaseRanges.forEach((data) => print(
-      'CustomDateTimeRange(start: DateTime(${data.start.year.toString()},${data.start.month.toString()},${data.start.day.toString()}), end: DateTime(${data.end.year.toString()},${data.end.month.toString()},${data.end.day.toString()}), phase: "${data.phase}"),'));
+  for (var data in user.dailyDataInput) {
+    print(
+      'DailyDataInput(date: DateTime(${data.date.year.toString()},${data.date.month.toString()},${data.date.day.toString()}), phase: "${data.phase}"),');
+  }
+  for (var data in user.phaseRanges) {
+    print(
+      'CustomDateTimeRange(start: DateTime(${data.start.year.toString()},${data.start.month.toString()},${data.start.day.toString()}), end: DateTime(${data.end.year.toString()},${data.end.month.toString()},${data.end.day.toString()}), phase: "${data.phase}"),');
+  }
   //print(user.phaseRanges);
 }
 

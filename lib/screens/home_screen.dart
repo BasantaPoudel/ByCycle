@@ -1,10 +1,7 @@
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
 import 'package:by_cycle/screens/daily_data_input_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -55,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: const Text("What is your temperature?")),
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           ElevatedButton(
@@ -70,9 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 null;
               },
-              child: Icon(Icons.add_circle_rounded)),
+              child: const Icon(Icons.add_circle_rounded)),
         ]),
-        SizedBox(
+        const SizedBox(
           height: 40,
         ),
         const Center(
@@ -81,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
         const Center(
           child: Text('for today ---cycles'),
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         const SizedBox(
@@ -94,10 +91,10 @@ class _HomeScreenState extends State<HomeScreen> {
             child: CircularProgressIndicator(
               strokeWidth: 15,
               value: 0.4,
-              backgroundColor: Color.fromRGBO(222, 212, 197, 1),
+              backgroundColor: const Color.fromRGBO(222, 212, 197, 1),
               valueColor: Theme.of(context).brightness == Brightness.light
-                  ? AlwaysStoppedAnimation<Color>(Colors.black)
-                  : AlwaysStoppedAnimation<Color>(Color(0xFFD6A879)),
+                  ? const AlwaysStoppedAnimation<Color>(Colors.black)
+                  : const AlwaysStoppedAnimation<Color>(Color(0xFFD6A879)),
             ),
           ),
           Text('7h 30m', style: Theme.of(context).textTheme.displaySmall),
@@ -114,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Theme.of(context).brightness == Brightness.light
                             ? Colors.black
                             : Colors.white,
-                    textStyle: TextStyle(
+                    textStyle: const TextStyle(
                         fontSize: 22,
                         decoration: TextDecoration.underline,
                         color: Colors.green)),
@@ -143,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Theme.of(context).brightness == Brightness.light
                               ? Colors.black
                               : Colors.white,
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                           fontSize: 22,
                           decoration: TextDecoration.underline,
                           color: Colors.black)),
@@ -198,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
             style: Theme.of(context).textTheme.bodyLarge,
             'You are in the --- phase'),
         Container(
-          margin: EdgeInsets.only(right: 55, left: 55, top: 10),
+          margin: const EdgeInsets.only(right: 55, left: 55, top: 10),
           child: const LinearProgressIndicator(
             minHeight: 10,
             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -208,11 +205,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(right: 55, left: 55, top: 10),
+          margin: const EdgeInsets.only(right: 55, left: 55, top: 10),
           child: Column(children: [
             const Text(
                 'Phase description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Text(
                 style: Theme.of(context).textTheme.bodyLarge,
                 'Your daily insights'),

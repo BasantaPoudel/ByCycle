@@ -1,6 +1,5 @@
 import 'package:by_cycle/models/insight_info.dart';
 import 'package:by_cycle/models/user.dart';
-import 'package:by_cycle/models/daily_data_input.dart';
 
 List<String> chooseInsightIdsBasedOnListOfTags(User user, List<String> tags) {
   /*A function that returns 3 ids of insights that should be shown to the user 
@@ -40,7 +39,7 @@ List<String> chooseInsightIdsBasedOnListOfTags(User user, List<String> tags) {
         secondaryList.add(lowestViewInsight);
       }
     } else {
-      print("No matching insight for ${tag} in user.tags or tag is empty");
+      print("No matching insight for $tag in user.tags or tag is empty");
     }
   }
 

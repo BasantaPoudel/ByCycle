@@ -1,10 +1,8 @@
-import 'dart:ffi';
 
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/models/onboarding_questions.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pagetwo.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -36,7 +34,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageOne> {
               child: Container(
                 width: 280,
                 margin: const EdgeInsets.all(40),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     // color: Colors.red,
                     ),
                 child: Column(

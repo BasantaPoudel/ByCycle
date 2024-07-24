@@ -95,5 +95,7 @@ Parameters:
     }
   }
   user.phaseRanges = generateDateTimeRanges(user);
-  user.dailyDataInput.forEach((data) => print(data));
+  for (var data in user.dailyDataInput) {
+    print(data);
+  }
 }

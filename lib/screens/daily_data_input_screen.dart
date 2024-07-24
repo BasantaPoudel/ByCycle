@@ -1,5 +1,4 @@
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
-import 'package:by_cycle/models/user.dart';
 import 'package:by_cycle/models/daily_data_input.dart';
 import 'package:by_cycle/repository/user_repository.dart';
 import 'package:by_cycle/widgets/custom_card.dart';
@@ -105,8 +104,8 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: Theme.of(context).brightness == Brightness.light
-            ? IconThemeData(color: Colors.black)
-            : IconThemeData(color: Colors.white),
+            ? const IconThemeData(color: Colors.black)
+            : const IconThemeData(color: Colors.white),
         title: const Text('Daily Data Input'),
       ),
       body: Padding(

@@ -1,6 +1,5 @@
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/examples/customDateTimeRanges/example_initial_date_time_ranges.dart';
-import 'package:by_cycle/examples/users/user_after_onboardCalendar.dart';
 import 'package:by_cycle/firebase_options.dart';
 import 'package:by_cycle/screens/home_screen.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
@@ -158,14 +157,14 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: _children[_selectedIndex],
         bottomNavigationBar: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25),
                 topRight: Radius.circular(25),
               ),
               color: Colors.red),
           child: ClipRRect(
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(25),
               topRight: Radius.circular(25),
             ),
