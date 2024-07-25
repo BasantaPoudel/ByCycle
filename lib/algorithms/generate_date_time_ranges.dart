@@ -1,4 +1,4 @@
-import 'package:by_cycle/examples/users/user_after_onboardCalendar.dart';
+import 'package:by_cycle/examples/users/new_ovulating_user.dart';
 import 'package:by_cycle/models/custom_date_time_range.dart';
 import 'package:by_cycle/models/user.dart';
 import 'package:by_cycle/models/daily_data_input.dart';
@@ -54,5 +54,5 @@ List<CustomDateTimeRange> generateDateTimeRanges(User user) {
 }
 
 void main() {
-  logger.d(generateDateTimeRanges(user_after_onboardCalendar));
+  logger.d(generateDateTimeRanges(new_ovulating_user));
 }

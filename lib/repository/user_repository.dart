@@ -66,7 +66,7 @@ class UserRepository {
     } catch (e) {
       logger.d("Error getting user by email: $e");
 
-      // return null;
+      return null;
     }
     return null;
   }
@@ -98,7 +98,7 @@ class UserRepository {
     try {
       DocumentSnapshot snapshot = await FirebaseFirestore.instance
           .collection("users")
-          .doc("user_after_onboardCalendar")
+          .doc("new_pa_lucia")
           .get();
 
       var data = snapshot.data() as Map<String, dynamic>;

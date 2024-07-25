@@ -20,6 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
   late TimeOfDay bedTime;
   late TimeOfDay wakeupTime;
   late String timeDifference;
+  late int recommendedSleepTime;
+  late int recommendedSleepCycles;
   late String phaseOfTheDay;
   late double phaseProgressPercentage;
   UserRepository userRepo = UserRepository();
@@ -99,8 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 const Center(
                   child: Text('Recommended sleep time'),
                 ),
-                const Center(
-                  child: Text('for today ---cycles'),
+                Center(
+                  child: Text('for today $recommendedSleepCycles cycles'),
                 ),
                 const SizedBox(
                   height: 15,
@@ -123,7 +125,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               Color(0xFFD6A879)),
                     ),
                   ),
-                  Text('7h 30m',
+                  Text(
+                      '${recommendedSleepTime ~/ 60}h ${recommendedSleepTime % 60}m',
                       style: Theme.of(context).textTheme.displaySmall),
                 ]),
                 const SizedBox(
@@ -280,13 +283,33 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<String> calculatePhaseOfTheDay() async {
     phaseOfTheDay = await userRepo.getTodaysPhase();
     //TODO - Remove Hardcoded fetch of user
+
+    // ovulating.user@example.com
+    // "pblongercycle@example.com"
+    // "pcos_pa@example.com"
+    // "lucia_pa@example.com"
+
     var user =
-        await userRepo.getUserByEmailFromFirestore("pa_lucia@example.com");
+        await userRepo.getUserByEmailFromFirestore("pcos_pa@example.com");
 
     //Find the current phase DateTimeRange
     var currentDateTimeRange = findCurrentPhaseDateTimeRange(user);
     phaseProgressPercentage = findProgressPercentage(currentDateTimeRange);
     logger.d('Phase progress percentage: $phaseProgressPercentage');
+
+    if (user!.algorithmData["averageSleepTime"][phaseOfTheDay]["count"] >= 3) {
+      recommendedSleepTime =
+          user.algorithmData["averageSleepTime"][phaseOfTheDay]["inMinutes"];
+    } else {
+      recommendedSleepTime =
+          phaseOfTheDay == "follicular" || phaseOfTheDay == "ovulation"
+              ? (450 + user.timeToFallAsleep)
+              : 540 + user.timeToFallAsleep;
+    }
+
+    //  recommendedSleepTime ~/ 60 - hours
+    recommendedSleepCycles =
+        phaseOfTheDay == "follicular" || phaseOfTheDay == "ovulation" ? 5 : 6;
     return phaseOfTheDay;
   }
 
@@ -315,6 +338,7 @@ class _HomeScreenState extends State<HomeScreen> {
       return false;
     });
     return currentPhaseDateTimeRange;
+    // return null;
   }
 
   void detectCurrentPhaseLength() {}
