@@ -1,5 +1,11 @@
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
+import 'package:by_cycle/algorithms/onboard_calendar.dart';
+import 'package:by_cycle/examples/users/new_ovulating_user.dart';
+import 'package:by_cycle/examples/users/new_pa_lucia.dart';
+import 'package:by_cycle/examples/users/new_pb_longer_cycle.dart';
+import 'package:by_cycle/examples/users/new_pcos_pa.dart';
+import 'package:by_cycle/examples/users/new_user.dart';
 import 'package:by_cycle/screens/daily_data_input_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -156,6 +162,46 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           onPressed: openAlarmApp,
           child: const Text('Set Alarm'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            print(new_user);
+            onboardCalendar(new_user);
+            print(new_user);
+          },
+          child: const Text('onboard new_user aka pa lucia'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            print(new_pb_longer_cycle);
+            onboardCalendar(new_pb_longer_cycle);
+            print(new_pb_longer_cycle);
+          },
+          child: const Text('onboard new_pb_longer_cycle'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            print(new_pcos_pa);
+            onboardCalendar(new_pcos_pa);
+            print(new_pcos_pa);
+          },
+          child: const Text('onboard new_pcos_pa'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            print(new_pa_lucia);
+            onboardCalendar(new_pa_lucia);
+            print(new_pa_lucia);
+          },
+          child: const Text('onboard new_pa_lucia'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            print(new_ovulating_user);
+            onboardCalendar(new_ovulating_user);
+            print(new_ovulating_user);
+          },
+          child: const Text('onboard new_ovulating_user'),
         ),
       ]),
     );

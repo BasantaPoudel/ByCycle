@@ -111,7 +111,26 @@ User user_after_onboardCalendar = User(
     DailyDataInput(date: DateTime(2024, 8, 22), phase: "follicular")
   ],
 
-  algorithmData: {}, // Using default values for algorithmData
+  algorithmData: {
+    "averageSleepTime": {
+      "menstruation": {
+        "inMinutes": 0,
+        "count": 0,
+      },
+      "follicular": {
+        "inMinutes": 0,
+        "count": 0,
+      },
+      "ovulation": {
+        "inMinutes": 0,
+        "count": 0,
+      },
+      "luteal": {
+        "inMinutes": 0,
+        "count": 0,
+      },
+    }
+  }, // Using default values for algorithmData
   phaseRanges: [
     CustomDateTimeRange(
         start: DateTime(2024, 5, 24),
