@@ -52,19 +52,23 @@ class UserRepository {
     return null;
   }
 
-  Future<void> getUserByEmailFromFirestore(String email) async {
-    FirebaseFirestore.instance
-        .collection("users")
-        .where("email", isEqualTo: email)
-        .get()
-        .then(
-      (querySnapshot) {
-        for (var docSnapshot in querySnapshot.docs) {
-          logger.d('${docSnapshot.id} => ${docSnapshot.data()}');
-        }
-      },
-      onError: (e) => logger.d("Error completing: $e"),
-    );
+  Future<User?> getUserByEmailFromFirestore(String email) async {
+    try {
+      QuerySnapshot qs = await FirebaseFirestore.instance
+          .collection("users")
+          .where("email", isEqualTo: email)
+          .get();
+
+      for (var doc in qs.docs) {
+        final user = User.fromMap(doc.data() as Map<String, dynamic>);
+        return user;
+      }
+    } catch (e) {
+      logger.d("Error getting user by email: $e");
+
+      // return null;
+    }
+    return null;
   }
 
   Future<void> sendDailyData(DailyDataInput dailyDataInput) async {
@@ -89,24 +93,24 @@ class UserRepository {
     }
   }
 
+//TODO - Might be completely irrelevant at this point but I'm leaving it here for now as an example
   Future<String> getTodaysPhase() async {
     try {
-      await FirebaseFirestore.instance
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance
           .collection("users")
           .doc("user_after_onboardCalendar")
-          .get()
-          .then((value) {
-        var dailyDataInput = value.data()!['daily_data_input'];
-        int index =
-            findDailyDataInputIndexByDate(dailyDataInput, DateTime.now());
-        var phase = dailyDataInput[index]['phase'];
-        logger.d(phase);
-        return phase;
-      });
+          .get();
+
+      var data = snapshot.data() as Map<String, dynamic>;
+      var dailyDataInput = data['daily_data_input'];
+      int index = findDailyDataInputIndexByDate(dailyDataInput, DateTime.now());
+      var phase = dailyDataInput[index]['phase'];
+      logger.d(phase);
+      return phase;
     } catch (e) {
       logger.d("Error getting user data");
+      return "Error - No data found";
     }
-    return "Error - No data found";
   }
 
   // a handy function for identifying the index of a dailyDataInput on a specific day.

@@ -80,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   UserRepository userRepo = UserRepository();
   @override
-  void initState() async {
+  void initState() {
     super.initState();
     setState(() {
       bedTime = TimeOfDay.now();
