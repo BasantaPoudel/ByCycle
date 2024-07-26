@@ -58,13 +58,40 @@ class CustomCard extends StatelessWidget {
                         showDialog<String>(
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
+                            contentTextStyle:
+                                Theme.of(context).textTheme.bodyMedium,
+
+                            backgroundColor:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.black
+                                    : Colors.white,
                             // title: const Text('AlertDialog Title'),
                             content: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(info),
+                                Text(info,
+                                    style: Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(color: Colors.white)
+                                        : Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(color: Colors.black)),
                                 const SizedBox(height: 10.0),
-                                Text(infoSource),
+                                Text(infoSource,
+                                    style: Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(color: Colors.white)
+                                        : Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(color: Colors.black)),
                               ],
                             ),
                             actions: <Widget>[
