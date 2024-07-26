@@ -1,10 +1,10 @@
 import 'package:by_cycle/algorithms/produce_tags.dart';
 import 'package:by_cycle/algorithms/update_users_algorithm_data.dart';
-import 'package:by_cycle/examples/users/user_after_onboardCalendar.dart';
+import 'package:by_cycle/examples/users/new_ovulating_user.dart';
 
 void main() {
   //how the
-  var user = user_after_onboardCalendar;
+  var user = new_ovulating_user;
   updateUsersAlgorithmData(user);
   print(user.algorithmData);
   hoursOfSleep(user);
