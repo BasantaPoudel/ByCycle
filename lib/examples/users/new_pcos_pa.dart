@@ -1,4 +1,5 @@
 import 'package:by_cycle/models/user.dart';
+import 'package:flutter/material.dart';
 
 List<DateTime> initialSpottingOccurrences = [
   DateTime(2024, 6, 10), // Example: Specific date
@@ -13,26 +14,27 @@ User new_pcos_pa = User(
   timeToFallAsleep: 20,
   cycleRegular: true,
   cycleHeavy: false,
+  bedTime: TimeOfDay(hour: 22, minute: 20),
   would_like_reminders_about_data_log_in: false,
   would_like_reminders_about_self_care_checklist: false,
   dailyDataInput: [],
   algorithmData: {
     "averageSleepTime": {
       "menstruation": {
-        "inMinutes": 0,
-        "count": 0,
+        "inMinutes": 499,
+        "count": 20,
       },
       "follicular": {
         "inMinutes": 467,
         "count": 1,
       },
       "ovulation": {
-        "inMinutes": 0,
-        "count": 0,
+        "inMinutes": 444,
+        "count": 2,
       },
       "luteal": {
-        "inMinutes": 0,
-        "count": 0,
+        "inMinutes": 478,
+        "count": 1,
       },
     }
   },

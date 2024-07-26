@@ -1,4 +1,5 @@
 import 'package:by_cycle/models/user.dart';
+import 'package:flutter/material.dart';
 
 List<DateTime> initialSpottingOccurrences = [
   DateTime(2024, 6, 10), // Example: Specific date
@@ -13,6 +14,7 @@ User new_ovulating_user = User(
   timeToFallAsleep: 20,
   cycleRegular: true,
   cycleHeavy: false,
+  bedTime: TimeOfDay(hour: 22, minute: 55),
   would_like_reminders_about_data_log_in: false,
   would_like_reminders_about_self_care_checklist: false,
   dailyDataInput: [],

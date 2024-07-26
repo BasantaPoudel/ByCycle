@@ -1,4 +1,5 @@
 import 'package:by_cycle/models/user.dart';
+import 'package:flutter/material.dart';
 
 List<DateTime> initialSpottingOccurrences = [
   DateTime(2024, 6, 10), // Example: Specific date
@@ -13,6 +14,7 @@ User new_pb_longer_cycle = User(
   timeToFallAsleep: 20,
   cycleRegular: false,
   cycleHeavy: false,
+  bedTime: TimeOfDay(hour: 23, minute: 25),
   would_like_reminders_about_data_log_in: true,
   would_like_reminders_about_self_care_checklist: true,
   dailyDataInput: [],
