@@ -49,7 +49,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageTwo> {
                     borderRadius: BorderRadius.all(Radius.circular(30.0)),
                     // borderSide: BorderSide.none,
                   ),
-                  hintText: '# Days',
+                  hintText: '5 Days',
                 ),
                 keyboardType: TextInputType.number,
                 onChanged: (value) {

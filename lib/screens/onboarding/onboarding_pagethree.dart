@@ -30,7 +30,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageThree> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'How long is your complete period cycle?',
+              'How long is your cycle?',
               style: GoogleFonts.poppins(
                 fontSize: 22,
                 fontWeight: FontWeight.w500,

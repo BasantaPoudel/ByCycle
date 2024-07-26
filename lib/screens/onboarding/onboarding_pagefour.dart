@@ -50,7 +50,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFour> {
                     borderRadius: BorderRadius.all(Radius.circular(30.0)),
                     // borderSide: BorderSide.none,
                   ),
-                  hintText: '# Mins',
+                  hintText: '30 Minutes',
                 ),
                 onChanged: (value) {
                   setState(() {
