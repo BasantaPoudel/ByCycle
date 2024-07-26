@@ -1,4 +1,3 @@
-
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/models/onboarding_questions.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pagetwo.dart';
@@ -51,7 +50,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageOne> {
                     const SizedBox(height: 10),
                     SizedBox(
                       width: 282,
-                      height: 46,
+                      // height: 46,
                       child: TextField(
                         controller: controller,
                         decoration: const InputDecoration(
@@ -84,14 +83,23 @@ class _OnboardingScreenHomeState extends State<OnboardingPageOne> {
                                   : MaterialStateProperty.all<Color>(
                                       const Color.fromRGBO(1, 1, 1, 1))),
                           onPressed: () {
-                            formData.lastPeriod =
-                                DateTime.parse(controller.text);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      OnboardingPageTwo(formData: formData),
-                                ));
+                            if (controller.text != "") {
+                              formData.lastPeriod =
+                                  DateTime.parse(controller.text);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        OnboardingPageTwo(formData: formData),
+                                  ));
+                            } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content:
+                                    Text("Please input the data to continue"),
+                                duration: Duration(seconds: 2),
+                              ));
+                            }
                           },
                           child: const Text('Next')),
                     ),

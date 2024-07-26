@@ -110,7 +110,7 @@ class UserRepository {
 
           // new_ovulating user
           // in ovulation
-          .doc("new_pb_longer_cycle")
+          .doc("new_pa_lucia")
           .get();
 
       var data = snapshot.data() as Map<String, dynamic>;

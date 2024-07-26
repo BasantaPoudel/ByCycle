@@ -151,14 +151,21 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
                     : MaterialStateProperty.all<Color>(
                         const Color.fromRGBO(1, 1, 1, 1))),
             onPressed: () async {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => OnboardingPageSeven(
-                    formData: widget.formData,
+              if (logInDataController.text != "") {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => OnboardingPageSeven(
+                      formData: widget.formData,
+                    ),
                   ),
-                ),
-              );
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("Please input the data to continue"),
+                  duration: Duration(seconds: 2),
+                ));
+              }
             },
             child: const Text('Done!'),
           ),

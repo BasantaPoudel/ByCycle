@@ -301,7 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // "lucia_pa@example.com"
 
     var user =
-        await userRepo.getUserByEmailFromFirestore("pblongercycle@example.com");
+        await userRepo.getUserByEmailFromFirestore("lucia_pa@example.com");
 
     // var dailyDataInput = user!.dailyDataInput;
     // int index = findDailyDataInputIndexByDate(dailyDataInput, DateTime.now());

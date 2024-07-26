@@ -75,14 +75,22 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFour> {
                         : MaterialStateProperty.all<Color>(
                             const Color.fromRGBO(1, 1, 1, 1))),
                 onPressed: () {
-                  widget.formData.timeToFallAsleep = int.parse(controller.text);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          OnboardingPageFive(formData: widget.formData),
-                    ),
-                  );
+                  if (controller.text != "") {
+                    widget.formData.timeToFallAsleep =
+                        int.parse(controller.text);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            OnboardingPageFive(formData: widget.formData),
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("Please input the data to continue"),
+                      duration: Duration(seconds: 2),
+                    ));
+                  }
                 },
                 child: const Text('Next'),
               ),
