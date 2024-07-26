@@ -98,7 +98,19 @@ class UserRepository {
     try {
       DocumentSnapshot snapshot = await FirebaseFirestore.instance
           .collection("users")
-          .doc("new_pa_lucia")
+          //TODO - Change this to the user's id
+          // new_pb_longer_cycle
+          // in menstruation
+
+          // new_pcos_pa
+          // in luteal
+
+          // new_pa_lucia
+          // in follicular
+
+          // new_ovulating user
+          // in ovulation
+          .doc("new_pb_longer_cycle")
           .get();
 
       var data = snapshot.data() as Map<String, dynamic>;

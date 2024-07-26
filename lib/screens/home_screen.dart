@@ -24,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late int recommendedSleepCycles;
   late String phaseOfTheDay;
   late double phaseProgressPercentage;
+  late var phaseColor;
   UserRepository userRepo = UserRepository();
   var logger = Logger();
   @override
@@ -32,10 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     setState(() {
       bedTime = TimeOfDay.now();
-      wakeupTime =
-          TimeOfDay.now().replacing(hour: bedTime.hour, minute: bedTime.minute);
+      wakeupTime = TimeOfDay.now();
     });
-    calculatePhaseOfTheDay();
+    // calculatePhaseOfTheDay();
   }
 
   @override
@@ -52,8 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     // height: 44,
                     child: ElevatedButton(
                         style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                const Color(0xFFD6A879)),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(phaseColor),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
                               RoundedRectangleBorder(
@@ -77,8 +77,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   ElevatedButton(
                       style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color(0xFFD6A879)),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(phaseColor),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
@@ -157,7 +157,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               setState(() {
                                 if (setBedTime != null) bedTime = setBedTime;
                               });
-                              calculateWakeUpTime(bedTime);
+                              calculateWakeUpTime(
+                                  bedTime, recommendedSleepTime);
                             },
                             child: bedTime.minute > 9
                                 ? Text("${bedTime.hour}:${bedTime.minute}")
@@ -193,7 +194,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     wakeupTime = setWakeupTime;
                                   }
                                 });
-                                calculateBedTime(wakeupTime);
+                                calculateBedTime(
+                                    wakeupTime, recommendedSleepTime);
                               },
                               // },
                               child: wakeupTime.minute > 9
@@ -256,8 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                     value: phaseProgressPercentage,
                     backgroundColor: const Color.fromRGBO(222, 212, 197, 1),
-                    valueColor:
-                        const AlwaysStoppedAnimation<Color>(Color(0xFFD6A879)),
+                    valueColor: AlwaysStoppedAnimation<Color>(phaseColor),
                   ),
                 ),
                 Container(
@@ -282,6 +283,16 @@ class _HomeScreenState extends State<HomeScreen> {
   //TODO - Split methods into smaller methods while implementing BlocBuilder
   Future<String> calculatePhaseOfTheDay() async {
     phaseOfTheDay = await userRepo.getTodaysPhase();
+    if (phaseOfTheDay == "follicular") {
+      phaseColor = Color(0xFF8E79BB);
+    } else if (phaseOfTheDay == "ovulation") {
+      phaseColor = Color(0xFF85A79D);
+    } else if (phaseOfTheDay == "luteal") {
+      phaseColor = Color(0xFFD6A879);
+    } else if (phaseOfTheDay == "menstruation") {
+      phaseColor = Color(0xFFD48078);
+    }
+
     //TODO - Remove Hardcoded fetch of user
 
     // ovulating.user@example.com
@@ -290,7 +301,11 @@ class _HomeScreenState extends State<HomeScreen> {
     // "lucia_pa@example.com"
 
     var user =
-        await userRepo.getUserByEmailFromFirestore("pcos_pa@example.com");
+        await userRepo.getUserByEmailFromFirestore("pblongercycle@example.com");
+
+    // var dailyDataInput = user!.dailyDataInput;
+    // int index = findDailyDataInputIndexByDate(dailyDataInput, DateTime.now());
+    // phaseOfTheDay = dailyDataInput[index].phase;
 
     //Find the current phase DateTimeRange
     var currentDateTimeRange = findCurrentPhaseDateTimeRange(user);
@@ -310,7 +325,25 @@ class _HomeScreenState extends State<HomeScreen> {
     //  recommendedSleepTime ~/ 60 - hours
     recommendedSleepCycles =
         phaseOfTheDay == "follicular" || phaseOfTheDay == "ovulation" ? 5 : 6;
+
+    calculateWakeUpTime(bedTime, recommendedSleepTime);
+
     return phaseOfTheDay;
+  }
+
+  // a handy function for identifying the index of a dailyDataInput on a specific day.
+  int findDailyDataInputIndexByDate(
+      List<dynamic> dailyDataInputs, DateTime targetDate) {
+    for (int i = 0; i < dailyDataInputs.length; i++) {
+      dynamic input = dailyDataInputs[i];
+      DateTime inputDate = input['date'].toDate();
+      if (inputDate.year == targetDate.year &&
+          inputDate.month == targetDate.month &&
+          inputDate.day == targetDate.day) {
+        return i;
+      }
+    }
+    return -1; // Return -1 if no matching date is found
   }
 
   findCurrentPhaseDateTimeRange(User? user) {
@@ -343,15 +376,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void detectCurrentPhaseLength() {}
 
-  void calculateWakeUpTime(TimeOfDay time) {
+  void calculateWakeUpTime(TimeOfDay time, int recommendedSleepTime) {
     // Calculate the recommended sleep time
     var sleepCycle = 90;
 
     //TODO: Get period phase from the personś input data
-    var numberOfCycles = 5;
-    var sleepTime = numberOfCycles * sleepCycle;
+    // var numberOfCycles = 5;
+    // var sleepTime = numberOfCycles * sleepCycle;
     var timeInMins = time.hour * 60 + time.minute;
-    var wakeUpTimeInMins = timeInMins + sleepTime;
+    var wakeUpTimeInMins = timeInMins + recommendedSleepTime;
 
     if (wakeUpTimeInMins >= 1440) {
       wakeUpTimeInMins = wakeUpTimeInMins - 1440;
@@ -360,18 +393,20 @@ class _HomeScreenState extends State<HomeScreen> {
     TimeOfDay calculatedWakeUpTime = TimeOfDay(
         hour: (wakeUpTimeInMins ~/ 60), minute: (wakeUpTimeInMins % 60));
 
-    setState(() {
-      wakeupTime = calculatedWakeUpTime;
-    });
+    // setState(() {
+    //   wakeupTime = calculatedWakeUpTime;
+    // });
+
+    wakeupTime = calculatedWakeUpTime;
   }
 
-  void calculateBedTime(TimeOfDay time) {
-    var sleepCycle = 90;
-    var numberOfCycles = 5;
-    var sleepTime = numberOfCycles * sleepCycle;
+  void calculateBedTime(TimeOfDay time, int recommendedSleepTime) {
+    // var sleepCycle = 90;
+    // var numberOfCycles = 5;
+    // var sleepTime = numberOfCycles * sleepCycle;
 
     var timeInMins = time.hour * 60 + time.minute;
-    var bedTimeInMins = timeInMins - sleepTime;
+    var bedTimeInMins = timeInMins - recommendedSleepTime;
 
     if (bedTimeInMins < 0) {
       bedTimeInMins = bedTimeInMins + 1440;
@@ -380,9 +415,10 @@ class _HomeScreenState extends State<HomeScreen> {
     TimeOfDay calculatedBedTime =
         TimeOfDay(hour: (bedTimeInMins ~/ 60), minute: (bedTimeInMins % 60));
 
-    setState(() {
-      bedTime = calculatedBedTime;
-    });
+    // setState(() {
+    //   bedTime = calculatedBedTime;
+    // });
+    bedTime = calculatedBedTime;
   }
 
   void openAlarmApp() async {

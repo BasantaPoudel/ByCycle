@@ -1,3 +1,4 @@
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -20,10 +21,33 @@ class _ProfileState extends State<Profile> {
           title: const Text('MyAccount'),
           // selected: _selectedIndex == 0,
           onTap: () {
-            // Update the state of the app
-            // _onItemTapped(0);
-            // Then close the drawer
-            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute<ProfileScreen>(
+                builder: (context) => ProfileScreen(
+                  appBar: AppBar(
+                    title: const Text('User Profile'),
+                  ),
+                  actions: [
+                    SignedOutAction((context) {
+                      Navigator.of(context).pop();
+                    })
+                  ],
+                  children: [
+                    const Divider(),
+                    Padding(
+                      padding: const EdgeInsets.all(2),
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: SvgPicture.asset(
+                          'assets/icons/drawer_icon.svg',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
           },
         ),
         ListTile(

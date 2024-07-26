@@ -2,6 +2,7 @@ import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/examples/customDateTimeRanges/example_initial_date_time_ranges.dart';
 import 'package:by_cycle/firebase_options.dart';
 import 'package:by_cycle/repository/user_repository.dart';
+import 'package:by_cycle/screens/auth_gate.dart';
 import 'package:by_cycle/screens/home_screen.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:by_cycle/screens/calendar.dart';
@@ -17,7 +18,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final bool onboardingComplete = prefs.getBool('onboardingComplete') ?? false;
+  final bool onboardingComplete = prefs.getBool('onboardingComplete') ?? true;
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -28,7 +29,12 @@ void main() async {
           ?
           // Create the ThemeCubit
           //TODO - Fix the way to access themeData if this is not correct
-          const MyApp()
+          MaterialApp(
+              home: const AuthGate(),
+              theme: ThemeCubit().getLightThemeData(),
+              darkTheme: ThemeCubit().getDarkThemeData(),
+              themeMode: ThemeCubit().state,
+            )
           : MaterialApp(
               home: const OnboardingPageOne(),
               theme: ThemeCubit().getLightThemeData(),
@@ -73,8 +79,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
-  late TimeOfDay bedTime;
-  late TimeOfDay wakeupTime;
 
   var logger = Logger();
 
@@ -82,11 +86,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      bedTime = TimeOfDay.now();
-      wakeupTime =
-          TimeOfDay.now().replacing(hour: bedTime.hour, minute: bedTime.minute);
-    });
     // initializeDateFormatting();
   }
 
@@ -162,6 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: _children[_selectedIndex],
         bottomNavigationBar: Container(
+          height: 70,
           decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25),
