@@ -169,6 +169,9 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
       title: 'Temperature',
       color: Theme.of(context).cardTheme.color,
       borderRadius: 15.0,
+      info:
+          'Measuring temperature helps to understand the menstrual phase of the cycle by providing insight into hormonal fluctuations and identifying ovulation, which is crucial for fertility tracking and health monitoring.',
+      infoSource: '– Journal of Obstetric, Gynecologic, and Neonatal Nursing',
       padding: const EdgeInsets.all(16.0),
       onPressed: () {
         logger.d('Temperature card tapped');
@@ -205,6 +208,10 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
   _buildDischargeCard() {
     return CustomCard(
       title: 'Discharge',
+      info:
+          'Cervical mucus is another important indicator of where a person is in their menstrual cycle. The consistency and amount of cervical mucus change throughout the cycle due to hormonal fluctuations.',
+      infoSource:
+          '– Hilgers, (2012). The ovulation method - natural family planning. Omaha, NE: Pope Paul VI Institute Press.',
       color: Theme.of(context).cardTheme.color,
       onPressed: () {
         // setState(() {
@@ -228,6 +235,10 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
 
   _buildEnergyLevelCard() {
     return CustomCard(
+      info:
+          'Tracking energy levels alongside menstrual cycle phases and sleep patterns helps to identify correlations and better understand how hormonal changes affect their energy levels and sleep quality throughout the cycle.',
+      infoSource:
+          '– Baker, (1999). Circadian rhythms, sleep, and the menstrual cycle. ',
       title: 'EnergyLevel',
       color: Theme.of(context).cardTheme.color,
       onPressed: () {
@@ -249,6 +260,9 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
 
   _buildBloodCard() {
     return CustomCard(
+      info:
+          'Blood is important indicator of where a person is in their menstrual cycle..',
+      infoSource: '– Journal of Obstetric, Gynecologic, and Neonatal Nursing',
       title: 'Blood',
       color: Theme.of(context).cardTheme.color,
       onPressed: () {
@@ -270,6 +284,9 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
 
   _buildSymtomsCard() {
     return CustomCard(
+      info:
+          'Most women experience mild symptoms in the few days leading up to menstruation and in the first day or two of menstruating when the flow of blood is heavier.',
+      infoSource: '– Society of Obstetricians and Gynaecologists of Canada',
       title: 'Symptoms',
       color: Theme.of(context).cardTheme.color,
       onPressed: () {
@@ -291,6 +308,10 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
 
   _buildSleepCard() {
     return CustomCard(
+      info:
+          ' Consistently logging sleep  can indicate potential sleep problems or lifestyle factors that need adjustment.',
+      infoSource:
+          '– Buysse, D. J. (2014). Sleep health: Can we define it? Does it matter? Sleep. ',
       title: 'Hours Of Sleep',
       color: Theme.of(context).cardTheme.color,
       onPressed: () {

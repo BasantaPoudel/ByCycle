@@ -1,3 +1,4 @@
+import 'package:by_cycle/widgets/daily_input_info.dart';
 import 'package:flutter/material.dart';
 
 class CustomCard extends StatelessWidget {
@@ -7,6 +8,8 @@ class CustomCard extends StatelessWidget {
   final double? borderRadius;
   final EdgeInsets? padding;
   final VoidCallback? onPressed;
+  final String info;
+  final String infoSource;
 
   const CustomCard({
     super.key,
@@ -16,6 +19,8 @@ class CustomCard extends StatelessWidget {
     this.padding,
     required this.title,
     this.onPressed,
+    required this.info,
+    required this.infoSource,
   });
 
   @override
@@ -49,7 +54,33 @@ class CustomCard extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      onPressed: onPressed,
+                      onPressed: () {
+                        showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            // title: const Text('AlertDialog Title'),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(info),
+                                const SizedBox(height: 10.0),
+                                Text(infoSource),
+                              ],
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(context, 'Cancel'),
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, 'OK'),
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                       icon: const Icon(Icons.info_outline),
                     ),
                   ],
@@ -58,6 +89,15 @@ class CustomCard extends StatelessWidget {
                 child ?? Container(),
               ]),
         ));
+  }
+
+  showAlertDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false, // User must tap button to dismiss dialog
+        builder: (BuildContext context) {
+          return DailyInputInfo();
+        });
   }
 }
 
