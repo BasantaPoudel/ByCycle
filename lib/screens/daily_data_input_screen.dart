@@ -1,8 +1,9 @@
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
-import 'package:by_cycle/models/user.dart';
+import 'package:by_cycle/models/daily_data_input.dart';
 import 'package:by_cycle/repository/user_repository.dart';
 import 'package:by_cycle/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 enum Discharge {
   NO_DISCHARGE,
@@ -48,6 +49,7 @@ class DailyDataInputScreen extends StatefulWidget {
 }
 
 class _DailyDataInputState extends State<DailyDataInputScreen> {
+  var logger = Logger();
   double _currentSliderValue = 35;
   final List<Color> _energyOptionsColor = [
     const Color.fromRGBO(254, 247, 237, 1),
@@ -103,6 +105,9 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: Theme.of(context).brightness == Brightness.light
+            ? const IconThemeData(color: Colors.black)
+            : const IconThemeData(color: Colors.white),
         title: const Text('Daily Data Input'),
       ),
       body: Padding(
@@ -110,6 +115,10 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Text(
+                'To get the most out of your syncing experience, it\'s important to log your symptoms!',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
               _buildTemperatureCard(),
               _buildDischargeCard(),
               _buildSleepCard(),
@@ -129,7 +138,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                     elevation: MaterialStateProperty.all<double>(5.0),
                   ),
                   onPressed: () async {
-                    print("Submit button pressed");
+                    logger.d("Submit button pressed");
                     dailyDataInput.temperature = _currentSliderValue;
                     //TODO - Change the hours and minutes to a single field
                     dailyDataInput.hoursOfSleep =
@@ -162,7 +171,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
       borderRadius: 15.0,
       padding: const EdgeInsets.all(16.0),
       onPressed: () {
-        print('Temperature card tapped');
+        logger.d('Temperature card tapped');
       },
       child: Column(
         children: [
@@ -178,7 +187,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
               setState(() {
                 _currentSliderValue = value;
               });
-              print("object");
+              logger.d("object");
             },
           ),
           const Row(
@@ -201,7 +210,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
         // setState(() {
         //   _dischargeOptionsColor = Color.fromARGB(255, 34, 33, 32);
         // });
-        print('Discharge info tapped');
+        logger.d('Discharge info tapped');
       },
       borderRadius: 15.0,
       padding: const EdgeInsets.all(16.0),
@@ -222,7 +231,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
       title: 'EnergyLevel',
       color: Theme.of(context).cardTheme.color,
       onPressed: () {
-        print('Energy info tapped');
+        logger.d('Energy info tapped');
       },
       borderRadius: 15.0,
       padding: const EdgeInsets.all(16.0),
@@ -243,7 +252,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
       title: 'Blood',
       color: Theme.of(context).cardTheme.color,
       onPressed: () {
-        print('Blood info tapped');
+        logger.d('Blood info tapped');
       },
       borderRadius: 15.0,
       padding: const EdgeInsets.all(16.0),
@@ -264,7 +273,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
       title: 'Symptoms',
       color: Theme.of(context).cardTheme.color,
       onPressed: () {
-        print('Symptoms info tapped');
+        logger.d('Symptoms info tapped');
       },
       borderRadius: 15.0,
       padding: const EdgeInsets.all(16.0),
@@ -285,7 +294,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
       title: 'Hours Of Sleep',
       color: Theme.of(context).cardTheme.color,
       onPressed: () {
-        print('Hours info tapped');
+        logger.d('Hours info tapped');
       },
       borderRadius: 15.0,
       padding: const EdgeInsets.all(16.0),
@@ -328,7 +337,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                   : _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
                       const Color.fromRGBO(254, 247, 237, 1);
             });
-            print(itemType.toString().split('.').last);
+            logger.d(itemType.toString().split('.').last);
             dailyDataInput.discharge = itemType.toString().split('.').last;
           } else if (dailyDataInput.discharge ==
               itemType.toString().split('.').last) {
@@ -340,10 +349,10 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                   : _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
                       const Color.fromRGBO(254, 247, 237, 1);
             });
-            print(itemType.toString().split('.').last);
+            logger.d(itemType.toString().split('.').last);
             dailyDataInput.discharge = "";
           } else {
-            print("Only one discharge can be selected");
+            logger.d("Only one discharge can be selected");
           }
         },
         child: Container(
@@ -378,7 +387,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                   : _bloodOptionsColor[Blood.values.indexOf(itemType)] =
                       const Color.fromRGBO(254, 247, 237, 1);
             });
-            print(itemType.toString().split('.').last);
+            logger.d(itemType.toString().split('.').last);
             dailyDataInput.blood = itemType.toString().split('.').last;
           } else if (dailyDataInput.blood ==
               itemType.toString().split('.').last) {
@@ -390,10 +399,10 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                   : _bloodOptionsColor[Blood.values.indexOf(itemType)] =
                       const Color.fromRGBO(254, 247, 237, 1);
             });
-            print(itemType.toString().split('.').last);
+            logger.d(itemType.toString().split('.').last);
             dailyDataInput.blood = "";
           } else {
-            print("Only one blood type can be selected");
+            logger.d("Only one blood type can be selected");
           }
         },
         child: Container(
@@ -428,7 +437,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                   : _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
                       const Color.fromRGBO(254, 247, 237, 1);
             });
-            print(itemType.toString().split('.').last);
+            logger.d(itemType.toString().split('.').last);
             dailyDataInput.energyLevel = itemType.toString().split('.').last;
           } else if (dailyDataInput.energyLevel ==
               itemType.toString().split('.').last) {
@@ -440,10 +449,10 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                   : _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
                       const Color.fromRGBO(254, 247, 237, 1);
             });
-            print(itemType.toString().split('.').last);
+            logger.d(itemType.toString().split('.').last);
             dailyDataInput.energyLevel = "";
           } else {
-            print("Only one energy level can be selected");
+            logger.d("Only one energy level can be selected");
           }
         },
         child: Container(
@@ -472,7 +481,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
     return Symptoms.values.map((itemType) {
       return GestureDetector(
         onTap: () {
-          print(itemType.toString().split('.').last);
+          logger.d(itemType.toString().split('.').last);
           dailyDataInput.symptoms.contains(itemType.toString().split('.').last)
               ? dailyDataInput.symptoms
                   .remove(itemType.toString().split('.').last)

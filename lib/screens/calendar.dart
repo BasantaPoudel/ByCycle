@@ -1,5 +1,6 @@
 import 'package:by_cycle/models/custom_date_time_range.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/web.dart';
 import 'package:table_calendar/table_calendar.dart';
 //a package from table calendar repository that turned out to be unneded
 //import 'package:by_cycle/models/calendar_utils.dart';
@@ -16,7 +17,7 @@ class Calendar extends StatefulWidget {
 
 class _CalendarState extends State<Calendar> {
   RangeSelectionMode rangeSelectionMode = RangeSelectionMode.enforced;
-
+  var logger = Logger();
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
@@ -48,7 +49,7 @@ class _CalendarState extends State<Calendar> {
         BoxDecoration(color: Color.fromRGBO(237, 195, 191, 1)),
   );
   Map<String, CalendarStyle> styles = {
-    "menstrual": const CalendarStyle(
+    "menstruation": const CalendarStyle(
       rangeHighlightColor: Color.fromRGBO(237, 195, 191, 1),
       rangeStartDecoration: BoxDecoration(
         color: Color.fromRGBO(237, 195, 191, 1),
@@ -74,7 +75,7 @@ class _CalendarState extends State<Calendar> {
       withinRangeDecoration:
           BoxDecoration(color: Color.fromRGBO(213, 206, 229, 1)),
     ),
-    "ovulatory": const CalendarStyle(
+    "ovulation": const CalendarStyle(
       rangeHighlightColor: Color.fromRGBO(204, 218, 214, 1),
       rangeStartDecoration: BoxDecoration(
         color: Color.fromRGBO(204, 218, 214, 1),
@@ -251,7 +252,7 @@ class _CalendarState extends State<Calendar> {
         },
       ),
       onDaySelected: (selDay, focDay) {
-        //print("onDaySelected ${focDay}");
+        //logger.d("onDaySelected ${focDay}");
         if (!isSameDay(_selectedDay, selDay)) {
           setState(() {
             _selectedDay = selDay;
@@ -269,17 +270,17 @@ class _CalendarState extends State<Calendar> {
           bool startDateInRange = false;
           bool endDateInRange = false;
 
-          print("start: $start");
-          print("end: $end");
-          print("focDay: $focDay");
+          logger.d("start: $start");
+          logger.d("end: $end");
+          logger.d("focDay: $focDay");
 
           CustomDateTimeRange? range = dayInRange(start!);
-          print("range: $range");
+          logger.d("range: $range");
 
           DateTime endDate = range?.end ?? start;
           DateTime startDate = range?.start ?? start;
-          print("startDate: $startDate");
-          print("endDate: $endDate");
+          logger.d("startDate: $startDate");
+          logger.d("endDate: $endDate");
 
           if (range == null) {
             range = dayInRange(endDate);
@@ -298,7 +299,7 @@ class _CalendarState extends State<Calendar> {
           if (startDateInRange) {
             if (isInRange(startDate, startDate, endDate)) {
               int index = dateTimeRanges.indexOf(range!);
-              print("index: $index");
+              logger.d("index: $index");
 
               if (!endDateInRange) {
                 dateTimeRanges[index] = CustomDateTimeRange(
@@ -317,9 +318,9 @@ class _CalendarState extends State<Calendar> {
 
           if (endDateInRange) {
             if (isInRange(endDate, startDate, endDate)) {
-              print("enddate is not null and is in range");
+              logger.d("enddate is not null and is in range");
               int index = dateTimeRanges.indexOf(range!);
-              print("second index: $index");
+              logger.d("second index: $index");
               dateTimeRanges[index] = CustomDateTimeRange(
                   start: startDate,
                   end: endDate,

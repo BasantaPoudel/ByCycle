@@ -1,6 +1,7 @@
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/examples/customDateTimeRanges/example_initial_date_time_ranges.dart';
 import 'package:by_cycle/firebase_options.dart';
+import 'package:by_cycle/repository/user_repository.dart';
 import 'package:by_cycle/screens/home_screen.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:by_cycle/screens/calendar.dart';
@@ -9,6 +10,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -74,6 +76,9 @@ class _MyHomePageState extends State<MyHomePage> {
   late TimeOfDay bedTime;
   late TimeOfDay wakeupTime;
 
+  var logger = Logger();
+
+  UserRepository userRepo = UserRepository();
   @override
   void initState() {
     super.initState();
@@ -86,9 +91,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   final List<Widget> _children = [
-    const HomeScreen(),
+    const OnboardingPageOne(),
     const HomeScreen(),
     Calendar(
+      //initialDateTimeRanges: user_after_onboardCalendar.phaseRanges,
       initialDateTimeRanges: exampleInitialDateTimeRanges,
     )
   ];
@@ -155,34 +161,48 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Profile()),
         ),
         body: _children[_selectedIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: (int index) {
-            setState(() {
-              _selectedIndex = index;
-            });
-          },
-          currentIndex: _selectedIndex,
-          type: BottomNavigationBarType.fixed,
-          items: [
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/icons/stats.svg',
+        bottomNavigationBar: Container(
+          decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
               ),
-              label: 'Stats',
+              color: Colors.red),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(25),
+              topRight: Radius.circular(25),
             ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/icons/home.svg',
-              ),
-              label: 'Home',
+            child: BottomNavigationBar(
+              onTap: (int index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+              currentIndex: _selectedIndex,
+              type: BottomNavigationBarType.fixed,
+              items: [
+                BottomNavigationBarItem(
+                  icon: SvgPicture.asset(
+                    'assets/icons/stats.svg',
+                  ),
+                  label: 'Stats',
+                ),
+                BottomNavigationBarItem(
+                  icon: SvgPicture.asset(
+                    'assets/icons/home.svg',
+                  ),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                  icon: SvgPicture.asset(
+                    'assets/icons/calendar.svg',
+                  ),
+                  label: 'Calendar',
+                ),
+              ],
             ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/icons/calendar.svg',
-              ),
-              label: 'Calendar',
-            ),
-          ],
+          ),
         )); // This trailing comma makes auto-formatting nicer for build methods.
   }
 }

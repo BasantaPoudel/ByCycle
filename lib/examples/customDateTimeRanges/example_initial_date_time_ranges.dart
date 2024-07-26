@@ -9,7 +9,7 @@ final List<CustomDateTimeRange> exampleInitialDateTimeRanges = [
   CustomDateTimeRange(
     start: DateTime(2024, 07, 19),
     end: DateTime(2024, 07, 22),
-    phase: 'menstrual',
+    phase: 'menstruation',
   ),
   CustomDateTimeRange(
     start: DateTime(2024, 07, 23),
@@ -19,7 +19,7 @@ final List<CustomDateTimeRange> exampleInitialDateTimeRanges = [
   CustomDateTimeRange(
     start: DateTime(2024, 08, 02),
     end: DateTime(2024, 08, 05),
-    phase: 'ovulatory',
+    phase: 'ovulation',
   ),
   CustomDateTimeRange(
     start: DateTime(2024, 08, 06),
