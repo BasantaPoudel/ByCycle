@@ -76,17 +76,17 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
     const Color.fromRGBO(254, 247, 237, 1),
   ];
   final List<Color> _symptomsOptionsColor = [
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
+    Color(0xFFDED4C5),
+    Color(0xFFDED4C5),
+    Color(0xFFDED4C5),
+    Color(0xFFDED4C5),
+    Color(0xFFDED4C5),
+    Color(0xFFDED4C5),
+    Color(0xFFDED4C5),
+    Color(0xFFDED4C5),
+    Color(0xFFDED4C5),
+    Color(0xFFDED4C5),
+    Color(0xFFDED4C5)
   ];
 
   final TextEditingController _hoursController = TextEditingController();
@@ -482,6 +482,16 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
       return GestureDetector(
         onTap: () {
           logger.d(itemType.toString().split('.').last);
+
+          // if (itemType.toString().split('.').last == "NO") {
+          //   dailyDataInput.symptoms.clear();
+          //   for (int i = 0; i < _symptomsOptionsColor.length; i++) {
+          //     setState(() {
+          //       _symptomsOptionsColor[i] = Color(0xFFDED4C5);
+          //     });
+          //   }
+          // }
+
           dailyDataInput.symptoms.contains(itemType.toString().split('.').last)
               ? dailyDataInput.symptoms
                   .remove(itemType.toString().split('.').last)
@@ -490,25 +500,32 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
 
           setState(() {
             _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] ==
-                    const Color.fromRGBO(254, 247, 237, 1)
+                    Color(0xFFDED4C5)
                 ? _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] =
                     const Color.fromRGBO(82, 82, 76, 1)
                 : _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] =
-                    const Color.fromRGBO(254, 247, 237, 1);
+                    Color(0xFFDED4C5);
           });
         },
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: _symptomsOptionsColor[Symptoms.values.indexOf(itemType)]),
+              color: Color(0xFFFEF7ED)),
           padding: const EdgeInsets.all(3.0),
           // margin: EdgeInsets.all(8.0),
-          child: Text(
-            itemType.toString().split('.').last,
-            style: _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] ==
-                    const Color.fromRGBO(254, 247, 237, 1)
-                ? lightThemeData.textTheme.bodySmall
-                : darkThemedata.textTheme.bodySmall,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // itemType.toString().split('.').last == "NO"
+              //     ?
+              Icon(Icons.circle_outlined,
+                  color:
+                      _symptomsOptionsColor[Symptoms.values.indexOf(itemType)]),
+              Text(
+                itemType.toString().split('.').last,
+                style: lightThemeData.textTheme.bodySmall,
+              ),
+            ],
           ),
         ),
       );
