@@ -151,7 +151,7 @@ class _CalendarState extends State<Calendar> {
       firstDay: DateTime(2020, 1, 1),
       lastDay: DateTime(2025, 1, 1),
       focusedDay: _focusedDay,
-      calendarFormat: _calendarFormat,
+      // calendarFormat: _calendarFormat,
       selectedDayPredicate: (day) {
         // Use `selectedDayPredicate` to determine which day is currently selected.
         // If this returns true, then `day` will be marked as selected.
@@ -343,12 +343,13 @@ class _CalendarState extends State<Calendar> {
       },
 
       onFormatChanged: (format) {
-        if (_calendarFormat != format) {
-          // Call `setState()` when updating calendar format
-          setState(() {
-            _calendarFormat = format;
-          });
-        }
+        // if (_calendarFormat != format) {
+        //   // Call `setState()` when updating calendar format
+        //   setState(() {
+        //     _calendarFormat = format;
+        //   });
+        // }
+        null;
       },
       onPageChanged: (focusedDay) {
         // No need to call `setState()` here

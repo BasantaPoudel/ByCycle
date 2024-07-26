@@ -1,6 +1,7 @@
 import 'package:by_cycle/models/onboarding_questions.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pagefive.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class OnboardingPageFour extends StatefulWidget {
   final OnBoardingQuestions formData;
@@ -28,9 +29,13 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFour> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
+            Text(
               'How long does it take you to fall asleep?',
-              style: TextStyle(fontSize: 20),
+              style: GoogleFonts.poppins(
+                fontSize: 22,
+                fontWeight: FontWeight.w500,
+              ),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 10),
             SizedBox(
@@ -39,13 +44,62 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFour> {
                 controller: controller,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Color(0xFFDED4C5),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                    // borderSide: BorderSide.none,
+                  ),
                   hintText: '# Mins',
                 ),
+                onChanged: (value) {
+                  setState(() {
+                    controller.text = value;
+                  });
+                },
               ),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
+            SizedBox(
+              width: 224,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                    backgroundColor: controller.text == ""
+                        ? MaterialStateProperty.all<Color>(
+                            const Color(0xFFDED4C5))
+                        : MaterialStateProperty.all<Color>(
+                            const Color.fromRGBO(1, 1, 1, 1))),
+                onPressed: () {
+                  widget.formData.timeToFallAsleep = int.parse(controller.text);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          OnboardingPageFive(formData: widget.formData),
+                    ),
+                  );
+                },
+                child: const Text('Next'),
+              ),
+            ),
+            const SizedBox(
+              height: 28,
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                  foregroundColor:
+                      Theme.of(context).brightness == Brightness.light
+                          ? Colors.black
+                          : Colors.white,
+                  textStyle: const TextStyle(
+                      fontSize: 22,
+                      decoration: TextDecoration.underline,
+                      color: Colors.green)),
               onPressed: () {
                 widget.formData.timeToFallAsleep = int.parse(controller.text);
                 Navigator.push(
@@ -56,7 +110,14 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFour> {
                   ),
                 );
               },
-              child: const Text('Next'),
+              child: Text(
+                'I don\'t know',
+                style: GoogleFonts.poppins(
+                  fontSize: 12,
+                  // fontWeight: FontWeight.w500,
+                  color: const Color(0xFF9B907E),
+                ),
+              ),
             ),
           ],
         ),
