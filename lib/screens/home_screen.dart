@@ -6,6 +6,7 @@ import 'package:by_cycle/examples/users/new_pa_lucia.dart';
 import 'package:by_cycle/examples/users/new_pb_longer_cycle.dart';
 import 'package:by_cycle/examples/users/new_pcos_pa.dart';
 import 'package:by_cycle/examples/users/new_user.dart';
+import 'package:by_cycle/repository/user_repository.dart';
 import 'package:by_cycle/screens/daily_data_input_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -32,6 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
           TimeOfDay.now().replacing(hour: bedTime.hour, minute: bedTime.minute);
     });
   }
+
+  final userRepository = UserRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -176,6 +179,8 @@ class _HomeScreenState extends State<HomeScreen> {
             print(new_pb_longer_cycle);
             onboardCalendar(new_pb_longer_cycle);
             print(new_pb_longer_cycle);
+            userRepository.addUserToFirestore(new_pb_longer_cycle,
+                documentId: "new_pb_longer_cycle");
           },
           child: const Text('onboard new_pb_longer_cycle'),
         ),
@@ -184,6 +189,8 @@ class _HomeScreenState extends State<HomeScreen> {
             print(new_pcos_pa);
             onboardCalendar(new_pcos_pa);
             print(new_pcos_pa);
+            userRepository.addUserToFirestore(new_pcos_pa,
+                documentId: "new_pcos_pa");
           },
           child: const Text('onboard new_pcos_pa'),
         ),
@@ -192,6 +199,8 @@ class _HomeScreenState extends State<HomeScreen> {
             print(new_pa_lucia);
             onboardCalendar(new_pa_lucia);
             print(new_pa_lucia);
+            userRepository.addUserToFirestore(new_pa_lucia,
+                documentId: "new_pa_lucia");
           },
           child: const Text('onboard new_pa_lucia'),
         ),
@@ -200,6 +209,8 @@ class _HomeScreenState extends State<HomeScreen> {
             print(new_ovulating_user);
             onboardCalendar(new_ovulating_user);
             print(new_ovulating_user);
+            userRepository.addUserToFirestore(new_ovulating_user,
+                documentId: "new_ovulating_user");
           },
           child: const Text('onboard new_ovulating_user'),
         ),
