@@ -49,26 +49,48 @@ void main() async {
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
+  bool onboardingCompleteCheck = false;
+
+  @override
+  initState() {
+    super.initState();
+    // getPhaseRanges();
+    // initializeDateFormatting();
+    getOnBoadingCompleteValue();
+  }
+
+  Future<void> getOnBoadingCompleteValue() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final bool onboardingComplete =
+        prefs.getBool('onboardingComplete') ?? false;
+    setState(() {
+      onboardingCompleteCheck = onboardingComplete;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var themeCubit = BlocProvider.of<ThemeCubit>(context);
     return BlocBuilder(
       bloc: themeCubit,
       builder: (context, state) {
-        return MaterialApp(
-          title: 'ByCycle',
-          theme: themeCubit.getLightThemeData(),
-          darkTheme: themeCubit.getDarkThemeData(),
-          themeMode: themeCubit.state, // Set the theme mode
-          home: const MyHomePage(
-            title: 'ByCycle Home Page',
-          ),
-        );
+        return onboardingCompleteCheck
+            ? MaterialApp(
+                title: 'ByCycle',
+                theme: themeCubit.getLightThemeData(),
+                darkTheme: themeCubit.getDarkThemeData(),
+                themeMode: themeCubit.state, // Set the theme mode
+                home: const MyHomePage(
+                  title: 'ByCycle Home Page',
+                ),
+              )
+            : const OnboardingPageOne();
       },
     );
   }
@@ -95,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   final List<Widget> _children = [
-    const OnboardingPageOne(),
+    const HomeScreen(),
     const HomeScreen(),
   ];
 

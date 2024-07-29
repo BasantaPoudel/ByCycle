@@ -45,12 +45,38 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           if (snapshot.hasData) {
             return Center(
-              child: Column(children: [
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  SizedBox(
-                    width: 250,
-                    // height: 44,
-                    child: ElevatedButton(
+              child: SingleChildScrollView(
+                child: Column(children: [
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    SizedBox(
+                      width: 250,
+                      // height: 44,
+                      child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(phaseColor),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(22.0),
+                                ),
+                              )),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const DailyDataInputScreen()));
+                          },
+                          child: Text(
+                            "What is your temperature?",
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          )),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor:
                                 MaterialStateProperty.all<Color>(phaseColor),
@@ -61,115 +87,59 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             )),
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const DailyDataInputScreen()));
+                          null;
                         },
-                        child: Text(
-                          "What is your temperature?",
-                          style: Theme.of(context).textTheme.bodyLarge,
+                        child: Icon(
+                          Icons.add_circle_outline,
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Colors.black87
+                                  : Colors.white,
                         )),
+                  ]),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  const Center(
+                    child: Text('Recommended sleep time'),
+                  ),
+                  Center(
+                    child: Text('for today $recommendedSleepCycles cycles'),
                   ),
                   const SizedBox(
-                    width: 10,
+                    height: 15,
                   ),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(phaseColor),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(22.0),
-                            ),
-                          )),
-                      onPressed: () {
-                        null;
-                      },
-                      child: Icon(
-                        Icons.add_circle_outline,
-                        color: Theme.of(context).brightness == Brightness.light
-                            ? Colors.black87
-                            : Colors.white,
-                      )),
-                ]),
-                const SizedBox(
-                  height: 40,
-                ),
-                const Center(
-                  child: Text('Recommended sleep time'),
-                ),
-                Center(
-                  child: Text('for today $recommendedSleepCycles cycles'),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                const SizedBox(
-                  height: 15.0,
-                ),
-                Stack(alignment: Alignment.center, children: [
-                  SizedBox(
-                    height: 180,
-                    width: 180,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 15,
-                      value: 0.4,
-                      backgroundColor: const Color.fromRGBO(222, 212, 197, 1),
-                      valueColor: Theme.of(context).brightness ==
-                              Brightness.light
-                          ? const AlwaysStoppedAnimation<Color>(Colors.black)
-                          : const AlwaysStoppedAnimation<Color>(
-                              Color(0xFFD6A879)),
-                    ),
+                  const SizedBox(
+                    height: 15.0,
                   ),
-                  Text(
-                      '${recommendedSleepTime ~/ 60}h ${recommendedSleepTime % 60}m',
-                      style: Theme.of(context).textTheme.displaySmall),
-                ]),
-                const SizedBox(
-                  height: 15.0,
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        children: [
-                          TextButton(
-                            style: TextButton.styleFrom(
-                                foregroundColor: Theme.of(context).brightness ==
-                                        Brightness.light
-                                    ? Colors.black
-                                    : Colors.white,
-                                textStyle: const TextStyle(
-                                    fontSize: 22,
-                                    decoration: TextDecoration.underline,
-                                    color: Colors.green)),
-                            onPressed: () async {
-                              final TimeOfDay? setBedTime =
-                                  await showTimePicker(
-                                      context: context,
-                                      initialTime: bedTime,
-                                      initialEntryMode:
-                                          TimePickerEntryMode.dial);
-                              setState(() {
-                                if (setBedTime != null) bedTime = setBedTime;
-                              });
-                              calculateWakeUpTime(
-                                  bedTime, recommendedSleepTime);
-                            },
-                            child: bedTime.minute > 9
-                                ? Text("${bedTime.hour}:${bedTime.minute}")
-                                : Text("${bedTime.hour}:0${bedTime.minute}"),
-                          ),
-                          const Text('Bedtime'),
-                        ],
+                  Stack(alignment: Alignment.center, children: [
+                    SizedBox(
+                      height: 180,
+                      width: 180,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 15,
+                        value: 0.4,
+                        backgroundColor: const Color.fromRGBO(222, 212, 197, 1),
+                        valueColor: Theme.of(context).brightness ==
+                                Brightness.light
+                            ? const AlwaysStoppedAnimation<Color>(Colors.black)
+                            : const AlwaysStoppedAnimation<Color>(
+                                Color(0xFFD6A879)),
                       ),
-                      Column(
-                        children: [
-                          TextButton(
+                    ),
+                    Text(
+                        '${recommendedSleepTime ~/ 60}h ${recommendedSleepTime % 60}m',
+                        style: Theme.of(context).textTheme.displaySmall),
+                  ]),
+                  const SizedBox(
+                    height: 15.0,
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          children: [
+                            TextButton(
                               style: TextButton.styleFrom(
                                   foregroundColor:
                                       Theme.of(context).brightness ==
@@ -179,100 +149,134 @@ class _HomeScreenState extends State<HomeScreen> {
                                   textStyle: const TextStyle(
                                       fontSize: 22,
                                       decoration: TextDecoration.underline,
-                                      color: Colors.black)),
+                                      color: Colors.green)),
                               onPressed: () async {
-                                final TimeOfDay? setWakeupTime =
+                                final TimeOfDay? setBedTime =
                                     await showTimePicker(
                                         context: context,
-                                        initialTime: wakeupTime,
+                                        initialTime: bedTime,
                                         initialEntryMode:
                                             TimePickerEntryMode.dial);
-
-                                // if (wakeupTime != null) {
                                 setState(() {
-                                  if (setWakeupTime != null) {
-                                    wakeupTime = setWakeupTime;
-                                  }
+                                  if (setBedTime != null) bedTime = setBedTime;
                                 });
-                                calculateBedTime(
-                                    wakeupTime, recommendedSleepTime);
+                                calculateWakeUpTime(
+                                    bedTime, recommendedSleepTime);
                               },
-                              // },
-                              child: wakeupTime.minute > 9
-                                  ? Text(
-                                      "${wakeupTime.hour}:${wakeupTime.minute}")
-                                  : Text(
-                                      "${wakeupTime.hour}:0${wakeupTime.minute}")),
-                          const Text('WakeUp'),
-                        ],
-                      ),
-                    ]),
-                const SizedBox(
-                  height: 15.0,
-                ),
-                SizedBox(
-                  width: 110,
-                  // height: 40,
-                  child: Theme.of(context).platform == TargetPlatform.android
-                      ? ElevatedButton(
-                          style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0),
+                              child: bedTime.minute > 9
+                                  ? Text("${bedTime.hour}:${bedTime.minute}")
+                                  : Text("${bedTime.hour}:0${bedTime.minute}"),
+                            ),
+                            const Text('Bedtime'),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            TextButton(
+                                style: TextButton.styleFrom(
+                                    foregroundColor:
+                                        Theme.of(context).brightness ==
+                                                Brightness.light
+                                            ? Colors.black
+                                            : Colors.white,
+                                    textStyle: const TextStyle(
+                                        fontSize: 22,
+                                        decoration: TextDecoration.underline,
+                                        color: Colors.black)),
+                                onPressed: () async {
+                                  final TimeOfDay? setWakeupTime =
+                                      await showTimePicker(
+                                          context: context,
+                                          initialTime: wakeupTime,
+                                          initialEntryMode:
+                                              TimePickerEntryMode.dial);
+
+                                  // if (wakeupTime != null) {
+                                  setState(() {
+                                    if (setWakeupTime != null) {
+                                      wakeupTime = setWakeupTime;
+                                    }
+                                  });
+                                  calculateBedTime(
+                                      wakeupTime, recommendedSleepTime);
+                                },
+                                // },
+                                child: wakeupTime.minute > 9
+                                    ? Text(
+                                        "${wakeupTime.hour}:${wakeupTime.minute}")
+                                    : Text(
+                                        "${wakeupTime.hour}:0${wakeupTime.minute}")),
+                            const Text('WakeUp'),
+                          ],
+                        ),
+                      ]),
+                  const SizedBox(
+                    height: 15.0,
+                  ),
+                  SizedBox(
+                    width: 110,
+                    // height: 40,
+                    child: Theme.of(context).platform == TargetPlatform.android
+                        ? ElevatedButton(
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
                               ),
                             ),
-                          ),
-                          onPressed: openAlarmApp,
-                          child: Text(
-                              style: Theme.of(context).textTheme.bodySmall,
-                              'SET ALARM'),
-                        )
-                      : null,
-                ),
-                const SizedBox(
-                  height: 15.0,
-                ),
-                Transform.translate(
-                  offset: const Offset(55, 10),
-                  child: Row(
-                    children: [
+                            onPressed: openAlarmApp,
+                            child: Text(
+                                style: Theme.of(context).textTheme.bodySmall,
+                                'SET ALARM'),
+                          )
+                        : null,
+                  ),
+                  const SizedBox(
+                    height: 15.0,
+                  ),
+                  Transform.translate(
+                    offset: const Offset(55, 10),
+                    child: Row(
+                      children: [
+                        Text(
+                            //TODO- Align Properly
+                            style: Theme.of(context).textTheme.bodyLarge,
+                            'You are in the $phaseOfTheDay phase'),
+                        // TextButton(
+                        //     onPressed: null,
+                        //     child: Text('$phaseOfTheDay phase',
+                        //         style: Theme.of(context).textTheme.bodyLarge)),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(right: 55, left: 55, top: 10),
+                    child: LinearProgressIndicator(
+                      minHeight: 10,
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      value: phaseProgressPercentage,
+                      backgroundColor: const Color.fromRGBO(222, 212, 197, 1),
+                      valueColor: AlwaysStoppedAnimation<Color>(phaseColor),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(right: 55, left: 55, top: 10),
+                    child: const Column(children: [
                       Text(
-                          //TODO- Align Properly
-                          style: Theme.of(context).textTheme.bodyLarge,
-                          'You are in the $phaseOfTheDay phase'),
-                      // TextButton(
-                      //     onPressed: null,
-                      //     child: Text('$phaseOfTheDay phase',
-                      //         style: Theme.of(context).textTheme.bodyLarge)),
-                    ],
+                          'Phase description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
+                      // const SizedBox(height: 30),
+                      // Text(
+                      //     style: Theme.of(context).textTheme.bodyLarge,
+                      //     'Your daily insights'),
+                    ]),
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  margin: const EdgeInsets.only(right: 55, left: 55, top: 10),
-                  child: LinearProgressIndicator(
-                    minHeight: 10,
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    value: phaseProgressPercentage,
-                    backgroundColor: const Color.fromRGBO(222, 212, 197, 1),
-                    valueColor: AlwaysStoppedAnimation<Color>(phaseColor),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(right: 55, left: 55, top: 10),
-                  child: const Column(children: [
-                    Text(
-                        'Phase description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
-                    // const SizedBox(height: 30),
-                    // Text(
-                    //     style: Theme.of(context).textTheme.bodyLarge,
-                    //     'Your daily insights'),
-                  ]),
-                ),
-              ]),
+                ]),
+              ),
             );
           } else {
             return const Center(child: CircularProgressIndicator());
