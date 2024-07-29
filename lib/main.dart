@@ -1,6 +1,7 @@
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
-import 'package:by_cycle/examples/customDateTimeRanges/example_initial_date_time_ranges.dart';
+
 import 'package:by_cycle/firebase_options.dart';
+import 'package:by_cycle/models/custom_date_time_range.dart';
 import 'package:by_cycle/repository/user_repository.dart';
 import 'package:by_cycle/screens/auth_gate.dart';
 import 'package:by_cycle/screens/home_screen.dart';
@@ -8,6 +9,7 @@ import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:by_cycle/screens/calendar.dart';
 import 'package:by_cycle/screens/profile.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,29 +20,31 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final bool onboardingComplete = prefs.getBool('onboardingComplete') ?? true;
+  final bool onboardingComplete = prefs.getBool('onboardingComplete') ?? false;
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(BlocProvider(
       create: (BuildContext context) => ThemeCubit(),
-      child: onboardingComplete
-          ?
+      child:
+          // onboardingComplete
+          //     ?
           // Create the ThemeCubit
           //TODO - Fix the way to access themeData if this is not correct
           MaterialApp(
-              home: const AuthGate(),
-              theme: ThemeCubit().getLightThemeData(),
-              darkTheme: ThemeCubit().getDarkThemeData(),
-              themeMode: ThemeCubit().state,
-            )
-          : MaterialApp(
-              home: const OnboardingPageOne(),
-              theme: ThemeCubit().getLightThemeData(),
-              darkTheme: ThemeCubit().getDarkThemeData(),
-              themeMode: ThemeCubit().state,
-            )));
+        home: const AuthGate(),
+        theme: ThemeCubit().getLightThemeData(),
+        darkTheme: ThemeCubit().getDarkThemeData(),
+        themeMode: ThemeCubit().state,
+      )
+      // : MaterialApp(
+      //     home: const OnboardingPageOne(),
+      //     theme: ThemeCubit().getLightThemeData(),
+      //     darkTheme: ThemeCubit().getDarkThemeData(),
+      //     themeMode: ThemeCubit().state,
+      //   ))
+      ));
 }
 
 class MyApp extends StatefulWidget {
@@ -78,131 +82,186 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
 
   var logger = Logger();
-
+  late List<CustomDateTimeRange> phaseRanges;
   UserRepository userRepo = UserRepository();
   @override
   void initState() {
     super.initState();
+    // getPhaseRanges();
     // initializeDateFormatting();
   }
 
   final List<Widget> _children = [
     const OnboardingPageOne(),
     const HomeScreen(),
-    Calendar(
-      //initialDateTimeRanges: user_after_onboardCalendar.phaseRanges,
-      initialDateTimeRanges: exampleInitialDateTimeRanges,
-    )
   ];
+
+  Future<String> getPhaseRanges() async {
+    var phaseRangesFromUser = await userRepo.getPhaseRanges();
+    setState(() {
+      phaseRanges = phaseRangesFromUser;
+      if (_children.length == 3) _children.remove(2);
+      // _children.remove(3);
+      _children.add(Calendar(initialDateTimeRanges: phaseRanges));
+    });
+    return 'Success';
+  }
 
   @override
   Widget build(BuildContext context) {
     final themeCubit = BlocProvider.of<ThemeCubit>(context);
     final isLightTheme = Theme.of(context).brightness == Brightness.light;
-
-    return Scaffold(
-        appBar: AppBar(
-          leading: Builder(
-            builder: (context) => IconButton(
-              color: isLightTheme ? Colors.black : Colors.white,
-              icon: const Icon(Icons.more_vert_outlined),
-              // Change this to your custom icon
-              onPressed: () => Scaffold.of(context).openDrawer(),
-            ),
-          ),
-          title: Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  'YESTERDAY',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                TextButton(
-                  child: const Text('TODAY'),
-                  onPressed: () {
-                    // Navigate to the search screen
-                    null;
-                  },
-                  // style: Theme.of(context).buttonTheme.layoutBehavior,
-                ),
-                Text(
-                  'TOMORROW',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                IconButton(
-                  color: Colors.black,
-                  icon: isLightTheme
-                      ? SvgPicture.asset(
-                          'assets/icons/dark_mode.svg',
-                        )
-                      : SvgPicture.asset(
-                          'assets/icons/light_mode.svg',
+    // );
+    return FutureBuilder(
+        future: getPhaseRanges(),
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          if (snapshot.hasData) {
+            return Scaffold(
+                appBar: AppBar(
+                  leading: Builder(
+                    builder: (context) => IconButton(
+                      color: isLightTheme ? Colors.black : Colors.white,
+                      icon: const Icon(Icons.more_vert_outlined),
+                      // Change this to your custom icon
+                      // onPressed: () => Scaffold.of(context).openDrawer(),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<ProfileScreen>(
+                            builder: (context) => ProfileScreen(
+                              appBar: AppBar(
+                                title: const Text('Your Profile'),
+                              ),
+                              actions: [
+                                SignedOutAction((context) {
+                                  Navigator.of(context).pop();
+                                })
+                              ],
+                              children: [
+                                const Divider(),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const OnboardingPageOne()));
+                                    },
+                                    child: Text("Edit Onboarding Answers")),
+                                const Divider(),
+                                Padding(
+                                  padding: const EdgeInsets.all(2),
+                                  child: AspectRatio(
+                                    aspectRatio: 3,
+                                    child: SvgPicture.asset(
+                                      'assets/icons/drawer_icon.svg',
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  title: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          'YESTERDAY',
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
-                  onPressed: () {
-                    themeCubit.toggleTheme();
-                    // Navigate to the search screen
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
-        drawer: SizedBox(
-          width: MediaQuery.of(context).size.width * 0.8,
-          child: const Drawer(
-              // Add a ListView to the drawer. This ensures the user can scroll
-              // through the options in the drawer if there isn't enough vertical
-              // space to fit everything.
-              child: Profile()),
-        ),
-        body: _children[_selectedIndex],
-        bottomNavigationBar: Container(
-          height: 70,
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(25),
-                topRight: Radius.circular(25),
-              ),
-              color: Colors.red),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(25),
-              topRight: Radius.circular(25),
-            ),
-            child: BottomNavigationBar(
-              onTap: (int index) {
-                setState(() {
-                  _selectedIndex = index;
-                });
-              },
-              currentIndex: _selectedIndex,
-              type: BottomNavigationBarType.fixed,
-              items: [
-                BottomNavigationBarItem(
-                  icon: SvgPicture.asset(
-                    'assets/icons/stats.svg',
+                        TextButton(
+                          child: const Text('TODAY'),
+                          onPressed: () {
+                            // Navigate to the search screen
+                            null;
+                          },
+                          // style: Theme.of(context).buttonTheme.layoutBehavior,
+                        ),
+                        Text(
+                          'TOMORROW',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                        IconButton(
+                          color: Colors.black,
+                          icon: isLightTheme
+                              ? SvgPicture.asset(
+                                  'assets/icons/dark_mode.svg',
+                                )
+                              : SvgPicture.asset(
+                                  'assets/icons/light_mode.svg',
+                                ),
+                          onPressed: () {
+                            themeCubit.toggleTheme();
+                            // Navigate to the search screen
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                  label: 'Stats',
                 ),
-                BottomNavigationBarItem(
-                  icon: SvgPicture.asset(
-                    'assets/icons/home.svg',
+                drawer: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: const Drawer(
+                      // Add a ListView to the drawer. This ensures the user can scroll
+                      // through the options in the drawer if there isn't enough vertical
+                      // space to fit everything.
+                      child: Profile()),
+                ),
+                body: _children[_selectedIndex],
+                bottomNavigationBar: Container(
+                  height: 70,
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25),
+                      ),
+                      color: Colors.red),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(25),
+                      topRight: Radius.circular(25),
+                    ),
+                    child: BottomNavigationBar(
+                      onTap: (int index) {
+                        setState(() {
+                          _selectedIndex = index;
+                        });
+                      },
+                      currentIndex: _selectedIndex,
+                      type: BottomNavigationBarType.fixed,
+                      items: [
+                        BottomNavigationBarItem(
+                          icon: SvgPicture.asset(
+                            'assets/icons/stats.svg',
+                          ),
+                          label: 'Stats',
+                        ),
+                        BottomNavigationBarItem(
+                          icon: SvgPicture.asset(
+                            'assets/icons/home.svg',
+                          ),
+                          label: 'Home',
+                        ),
+                        BottomNavigationBarItem(
+                          icon: SvgPicture.asset(
+                            'assets/icons/calendar.svg',
+                          ),
+                          label: 'Calendar',
+                        ),
+                      ],
+                    ),
                   ),
-                  label: 'Home',
-                ),
-                BottomNavigationBarItem(
-                  icon: SvgPicture.asset(
-                    'assets/icons/calendar.svg',
-                  ),
-                  label: 'Calendar',
-                ),
-              ],
-            ),
-          ),
-        )); // This trailing comma makes auto-formatting nicer for build methods.
+                ));
+          } else {
+            return const CircularProgressIndicator();
+          }
+        }); // This trailing comma makes auto-formatting nicer for build methods.
   }
 }
