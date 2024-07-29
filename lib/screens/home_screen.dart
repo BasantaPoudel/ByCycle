@@ -1,7 +1,7 @@
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
 import 'package:by_cycle/models/custom_date_time_range.dart';
-import 'package:by_cycle/models/user.dart';
+import 'package:by_cycle/models/user_model.dart';
 import 'package:by_cycle/repository/user_repository.dart';
 import 'package:by_cycle/screens/daily_data_input_screen.dart';
 import 'package:flutter/material.dart';
@@ -300,8 +300,8 @@ class _HomeScreenState extends State<HomeScreen> {
     // "pcos_pa@example.com"
     // "lucia_pa@example.com"
 
-    var user =
-        await userRepo.getUserByEmailFromFirestore("lucia_pa@example.com");
+    var user = await userRepo
+        .getUserByEmailFromFirestore(userRepo.loggedInUser!.email!);
 
     // var dailyDataInput = user!.dailyDataInput;
     // int index = findDailyDataInputIndexByDate(dailyDataInput, DateTime.now());
@@ -346,7 +346,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return -1; // Return -1 if no matching date is found
   }
 
-  findCurrentPhaseDateTimeRange(User? user) {
+  findCurrentPhaseDateTimeRange(UserModel? user) {
     var currentPhaseDateTimeRange = CustomDateTimeRange(
         start: DateTime.now(), end: DateTime.now(), phase: '');
     if (user?.phaseRanges == null) return currentPhaseDateTimeRange;

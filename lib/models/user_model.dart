@@ -83,10 +83,13 @@ class UserModel {
           would_like_reminders_about_self_care_checklist,
       'daily_data_input': dailyDataInput.map((input) => input.toMap()).toList(),
       'phase_ranges': phaseRanges.map((input) => input.toMap()).toList(),
-      'algorithm_data':
-          algorithmData.entries.every((element) => element.value is Map)
-              ? algorithmData
-              : algorithmData.map((key, value) => MapEntry(key, value.toMap())),
+      //'algorithm_data': algorithmData,
+      'algorithm_data': {
+        'lastFiveDays': algorithmData['lastFiveDays']
+            ?.map((input) => (input as DailyDataInput).toMap())
+            .toList(),
+        'averageSleepTime': algorithmData['averageSleepTime']
+      },
       'tags': tags.map((key, value) =>
           MapEntry(key, value.map((tag) => tag.toMap()).toList())),
     };
@@ -96,7 +99,7 @@ class UserModel {
     return UserModel(
       name: map['name'],
       email: map['email'],
-      lastPeriod: map['last_period'] ?? map['last_period'].toDate(),
+      lastPeriod: map['last_period'].toDate(),
       menstruationPhaseLength: map['menstuation_phase_length'],
       follicularPhaseLength: map['follicular_phase_length'],
       ovulationPhaseLength: map['ovulation_phase_length'],
@@ -121,7 +124,15 @@ class UserModel {
       ),
       bedTime: TimeOfDay(
           hour: map['bedtime']['hour'], minute: map['bedtime']['minute']),
-      algorithmData: Map<String, dynamic>.from(map['algorithm_data'] ?? {}),
+      //algorithmData: Map<String, dynamic>.from(map['algorithm_data'] ?? {}),
+      algorithmData: {
+        'lastFiveDays': List<DailyDataInput>.from(map['algorithm_data']
+                ['lastFiveDays']
+            .map((input) => DailyDataInput.fromMap(input))),
+        'averageSleepTime':
+            Map<String, dynamic>.from(map['algorithm_data']['averageSleepTime'])
+      },
+
       tags: (map['tags'] as Map<String, dynamic>?)?.map(
             (key, value) => MapEntry(
                 key,

@@ -144,7 +144,8 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                     dailyDataInput.hoursOfSleep =
                         int.parse(_hoursController.text);
                     try {
-                      await UserRepository().sendDailyData(dailyDataInput);
+                      await UserRepository()
+                          .saveDailyDataInputData(dailyDataInput);
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text("Data Submitted Successfully"),
                         duration: Duration(seconds: 2),
