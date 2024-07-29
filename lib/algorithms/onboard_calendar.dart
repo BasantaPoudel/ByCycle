@@ -1,11 +1,11 @@
 import 'package:by_cycle/algorithms/generate_date_time_ranges.dart';
 import 'package:by_cycle/examples/users/new_user.dart';
-import 'package:by_cycle/models/user.dart';
+import 'package:by_cycle/models/user_model.dart';
 import 'package:by_cycle/models/daily_data_input.dart';
 import 'package:logger/logger.dart';
 
 var logger = Logger();
-onboardCalendar(User user) {
+onboardCalendar(UserModel user) {
 /* a function that can be executed immediately after the user logs in for the first time.
 The function assumes there is no daily_data_inputs yet and that the user instance has all
 onboarding information like the length of the period.

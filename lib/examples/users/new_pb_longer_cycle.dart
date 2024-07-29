@@ -1,11 +1,11 @@
-import 'package:by_cycle/models/user.dart';
+import 'package:by_cycle/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 List<DateTime> initialSpottingOccurrences = [
   DateTime(2024, 6, 10), // Example: Specific date
 ];
 
-User new_pb_longer_cycle = User(
+UserModel new_pb_longer_cycle = UserModel(
   name: 'PB Longer Cycle',
   email: 'pblongercycle@example.com',
   lastPeriod: DateTime(2024, 7, 24),

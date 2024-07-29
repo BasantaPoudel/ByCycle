@@ -1,9 +1,10 @@
 import 'package:by_cycle/models/insight_info.dart';
-import 'package:by_cycle/models/user.dart';
+import 'package:by_cycle/models/user_model.dart';
 import 'package:logger/logger.dart';
 
 var logger = Logger();
-List<String> chooseInsightIdsBasedOnListOfTags(User user, List<String> tags) {
+List<String> chooseInsightIdsBasedOnListOfTags(
+    UserModel user, List<String> tags) {
   /*A function that returns 3 ids of insights that should be shown to the user 
   based on the provided list of tags.
   Tags are produced by produceTags which in turn uses functions A-F in a different file,

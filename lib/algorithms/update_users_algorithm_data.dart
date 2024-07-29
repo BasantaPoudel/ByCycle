@@ -1,9 +1,9 @@
-import 'package:by_cycle/models/user.dart';
+import 'package:by_cycle/models/user_model.dart';
 import 'package:by_cycle/models/daily_data_input.dart';
 import 'package:logger/logger.dart';
 
 var logger = Logger();
-void updateUsersAlgorithmData(User user) {
+void updateUsersAlgorithmData(UserModel user) {
 /*Returns a user with an updated AlgorithmData property. This function should be run before algorithms
 A-F returning the tags are run to make sure they execute correctly.
 As of now, the function just ensure that algorithmData property has the key-value pair lastFiveDays:

@@ -3,7 +3,7 @@ import 'package:by_cycle/models/daily_data_input.dart';
 import 'package:by_cycle/models/insight_info.dart';
 import 'package:flutter/material.dart';
 
-class User {
+class UserModel {
   String name;
   String email;
   DateTime lastPeriod;
@@ -23,7 +23,7 @@ class User {
   Map<String, dynamic> algorithmData;
   Map<String, List<InsightInfo>> tags;
 
-  User({
+  UserModel({
     required this.name,
     required this.email,
     required this.lastPeriod,
@@ -83,17 +83,20 @@ class User {
           would_like_reminders_about_self_care_checklist,
       'daily_data_input': dailyDataInput.map((input) => input.toMap()).toList(),
       'phase_ranges': phaseRanges.map((input) => input.toMap()).toList(),
-      'algorithm_data': algorithmData,
+      'algorithm_data':
+          algorithmData.entries.every((element) => element.value is Map)
+              ? algorithmData
+              : algorithmData.map((key, value) => MapEntry(key, value.toMap())),
       'tags': tags.map((key, value) =>
           MapEntry(key, value.map((tag) => tag.toMap()).toList())),
     };
   }
 
-  factory User.fromMap(Map<String, dynamic> map) {
-    return User(
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
       name: map['name'],
       email: map['email'],
-      lastPeriod: map['last_period'].toDate(),
+      lastPeriod: map['last_period'] ?? map['last_period'].toDate(),
       menstruationPhaseLength: map['menstuation_phase_length'],
       follicularPhaseLength: map['follicular_phase_length'],
       ovulationPhaseLength: map['ovulation_phase_length'],
@@ -109,12 +112,12 @@ class User {
       dailyDataInput: List<DailyDataInput>.from(
         map['daily_data_input']
                 ?.map((input) => DailyDataInput.fromMap(input)) ??
-            const [],
+            [], // Default to follicular phase
       ),
       phaseRanges: List<CustomDateTimeRange>.from(
         map['phase_ranges']
                 ?.map((input) => CustomDateTimeRange.fromMap(input)) ??
-            const [],
+            [],
       ),
       bedTime: TimeOfDay(
           hour: map['bedtime']['hour'], minute: map['bedtime']['minute']),

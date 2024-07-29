@@ -1,8 +1,8 @@
-import 'package:by_cycle/models/user.dart';
+import 'package:by_cycle/models/user_model.dart';
 import 'package:logger/web.dart';
 
 var logger = Logger();
-List<String> produceTagsForToday(User user) {
+List<String> produceTagsForToday(UserModel user) {
   /*A function that executes each of algorithms A-F to produce a list
   containing all tags relevant for the user today.
 
@@ -43,7 +43,7 @@ double tempDiff(double temperature1, double temperature2) {
 }
 
 // A) Body temperature taken in the morning
-List<String> bodyTemperature(User user) {
+List<String> bodyTemperature(UserModel user) {
   final List<String> out = [];
 
   //temperature FALL by 0.3 celsius or more
@@ -83,7 +83,7 @@ List<String> bodyTemperature(User user) {
 
 // B) Mucus (same  as discharge)
 // only one discharge option can be chosen at a time
-List<String> mucus(User user) {
+List<String> mucus(UserModel user) {
   final List<String> out = [];
   final d0 = user.dailyDataInput[0].discharge;
   final d1 = user.dailyDataInput[1].discharge;
@@ -134,7 +134,7 @@ List<String> mucus(User user) {
 // C) Energy level
 // not clear: tag energy "increase energy" ?in PAGE determined by COLOR?
 // very unsure what kind of tags should be produced...
-List<String> energyLevel(User user) {
+List<String> energyLevel(UserModel user) {
   List<String> out = [];
 
   //if energy level is high or moderate, do nothing
@@ -170,7 +170,7 @@ List<String> energyLevel(User user) {
 }
 
 // D) Hours of sleep tonight
-List<String> hoursOfSleep(User user) {
+List<String> hoursOfSleep(UserModel user) {
   List<String> out = [];
   if (user.algorithmData["lastFiveDays"][0].hoursOfSleep == 0) {
     print('DISPLAY database > insight tags: "sleep disruption", "insomnia"');

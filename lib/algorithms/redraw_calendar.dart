@@ -1,11 +1,11 @@
 import 'package:by_cycle/algorithms/generate_date_time_ranges.dart';
-import 'package:by_cycle/models/user.dart';
+import 'package:by_cycle/models/user_model.dart';
 import 'package:by_cycle/models/daily_data_input.dart';
 import 'package:logger/logger.dart';
 
 var logger = Logger();
 
-void redrawCalendar(User user, List<String> tags) {
+void redrawCalendar(UserModel user, List<String> tags) {
 /* a function that adjusts the phases in the user's calendar if there is a 
 String tag in the list of tags that matches a phase.
 

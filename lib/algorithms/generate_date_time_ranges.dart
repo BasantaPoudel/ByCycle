@@ -1,12 +1,12 @@
 import 'package:by_cycle/examples/users/new_ovulating_user.dart';
 import 'package:by_cycle/models/custom_date_time_range.dart';
-import 'package:by_cycle/models/user.dart';
+import 'package:by_cycle/models/user_model.dart';
 import 'package:by_cycle/models/daily_data_input.dart';
 import 'package:logger/logger.dart';
 
 var logger = Logger();
 
-List<CustomDateTimeRange> generateDateTimeRanges(User user) {
+List<CustomDateTimeRange> generateDateTimeRanges(UserModel user) {
   /*a function for creating a list of ranges of specific phases based on
   user's dailyDataInputs. 
 
