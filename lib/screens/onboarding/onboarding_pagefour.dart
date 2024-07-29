@@ -109,7 +109,8 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFour> {
                       decoration: TextDecoration.underline,
                       color: Colors.green)),
               onPressed: () {
-                widget.formData.timeToFallAsleep = int.parse(controller.text);
+                //Default time is considered to be 15 minutes
+                widget.formData.timeToFallAsleep = 15;
                 Navigator.push(
                   context,
                   MaterialPageRoute(

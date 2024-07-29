@@ -97,7 +97,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFive> {
                 ),
               ],
             )),
-            const SizedBox(height: 50),
+            const SizedBox(height: 20),
             Visibility(
               visible: alertButtonVisibility,
               child: Column(
@@ -112,7 +112,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFive> {
                         // fontWeight: FontWeight.w500,
                         color: Colors.black,
                       ),
-                      // textAlign: TextAlign.center,
+                      textAlign: TextAlign.justify,
                     ),
                   ),
                   const SizedBox(height: 20),

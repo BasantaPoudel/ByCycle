@@ -143,7 +143,6 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                     //TODO - Change the hours and minutes to a single field
                     dailyDataInput.hoursOfSleep =
                         int.parse(_hoursController.text);
-
                     try {
                       await UserRepository().sendDailyData(dailyDataInput);
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
