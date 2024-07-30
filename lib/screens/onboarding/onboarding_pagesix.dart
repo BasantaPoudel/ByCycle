@@ -1,10 +1,7 @@
-import 'package:by_cycle/main.dart';
 import 'package:by_cycle/models/onboarding_questions.dart';
-import 'package:by_cycle/repository/user_repository.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pageseven.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingPageSix extends StatefulWidget {
   final OnBoardingQuestions formData;
@@ -67,7 +64,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
                         ? '08:00 AM'
                         : logInDataController.text),
                     Container(
-                      color: Color(0xFFD2C8B8),
+                      color: const Color(0xFFD2C8B8),
                       // color: Colors.red,
                       child: TextButton(
                         onPressed: () => _selectTime(context),
@@ -79,7 +76,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
                     ),
                   ]),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Container(
               width: 282,
               // margin: const EdgeInsets.all(15),
@@ -97,7 +94,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
                         ? '08:00 AM'
                         : insightsController.text),
                     Container(
-                      color: Color(0xFFD2C8B8),
+                      color: const Color(0xFFD2C8B8),
                       child: TextButton(
                         onPressed: () => _selectTimeReminder(context),
                         child: Text(

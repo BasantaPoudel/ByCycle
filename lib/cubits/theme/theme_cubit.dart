@@ -159,7 +159,7 @@ class ThemeCubit extends Cubit<ThemeMode> {
           ),
 
       cardTheme: CardTheme(
-        color: Color(0xFFDED4C5), // Set the card color
+        color: const Color(0xFFDED4C5), // Set the card color
         elevation: 2, // Set the card elevation
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8), // Set the card border radius

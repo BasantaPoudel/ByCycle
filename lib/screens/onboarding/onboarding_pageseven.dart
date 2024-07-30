@@ -1,9 +1,7 @@
 import 'package:by_cycle/main.dart';
 import 'package:by_cycle/models/onboarding_questions.dart';
 import 'package:by_cycle/repository/user_repository.dart';
-import 'package:by_cycle/screens/onboarding/onboarding_pagesix.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

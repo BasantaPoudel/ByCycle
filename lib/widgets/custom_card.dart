@@ -1,4 +1,3 @@
-import 'package:by_cycle/widgets/daily_input_info.dart';
 import 'package:flutter/material.dart';
 
 class CustomCard extends StatelessWidget {
@@ -117,38 +116,4 @@ class CustomCard extends StatelessWidget {
               ]),
         ));
   }
-
-  showAlertDialog(BuildContext context) {
-    showDialog(
-        context: context,
-        barrierDismissible: false, // User must tap button to dismiss dialog
-        builder: (BuildContext context) {
-          return DailyInputInfo();
-        });
-  }
 }
-
-
-//     return Card.filled(
-//         shape: RoundedRectangleBorder(
-//           borderRadius: BorderRadius.circular(borderRadius ?? 8),
-//         ),
-//         color: color,
-//         child: SizedBox(
-//           width: MediaQuery.of(context).size.width * 0.5,
-//           height: MediaQuery.of(context).size.height * 0.2,
-//           child: const Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   Text('Card Title', style: TextStyle(fontSize: 20)),
-//                   Icon(Icons.info_outline, color: Colors.black, size: 20),
-//                 ],
-//               ),
-//             ],
-//           ),
-//         ));
-//   }
-// }

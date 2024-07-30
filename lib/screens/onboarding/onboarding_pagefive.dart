@@ -1,7 +1,6 @@
 import 'package:by_cycle/models/onboarding_questions.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pagesix.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class OnboardingPageFive extends StatefulWidget {
@@ -65,7 +64,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFive> {
                       },
                       child: const Text('Yes')),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 24,
                 ),
                 SizedBox(
@@ -104,7 +103,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFive> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(left: 80, right: 80),
+                    margin: const EdgeInsets.only(left: 80, right: 80),
                     child: Text(
                       'Since your cycle is not regular, we recommend you not to rely only on predictions. It’s very important to input your temperature and cervical mucus everyday!',
                       style: GoogleFonts.poppins(

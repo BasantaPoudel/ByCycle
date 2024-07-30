@@ -76,17 +76,17 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
     const Color.fromRGBO(254, 247, 237, 1),
   ];
   final List<Color> _symptomsOptionsColor = [
-    Color(0xFFDED4C5),
-    Color(0xFFDED4C5),
-    Color(0xFFDED4C5),
-    Color(0xFFDED4C5),
-    Color(0xFFDED4C5),
-    Color(0xFFDED4C5),
-    Color(0xFFDED4C5),
-    Color(0xFFDED4C5),
-    Color(0xFFDED4C5),
-    Color(0xFFDED4C5),
-    Color(0xFFDED4C5)
+    const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5)
   ];
 
   final TextEditingController _hoursController = TextEditingController();
@@ -521,17 +521,17 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
 
           setState(() {
             _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] ==
-                    Color(0xFFDED4C5)
+                    const Color(0xFFDED4C5)
                 ? _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] =
                     const Color.fromRGBO(82, 82, 76, 1)
                 : _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] =
-                    Color(0xFFDED4C5);
+                    const Color(0xFFDED4C5);
           });
         },
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Color(0xFFFEF7ED)),
+              color: const Color(0xFFFEF7ED)),
           padding: const EdgeInsets.all(3.0),
           // margin: EdgeInsets.all(8.0),
           child: Row(

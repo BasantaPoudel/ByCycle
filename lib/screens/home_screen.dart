@@ -288,13 +288,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<String> calculatePhaseOfTheDay() async {
     phaseOfTheDay = await userRepo.getTodaysPhase();
     if (phaseOfTheDay == "follicular") {
-      phaseColor = Color(0xFF8E79BB);
+      phaseColor = const Color(0xFF8E79BB);
     } else if (phaseOfTheDay == "ovulation") {
-      phaseColor = Color(0xFF85A79D);
+      phaseColor = const Color(0xFF85A79D);
     } else if (phaseOfTheDay == "luteal") {
-      phaseColor = Color(0xFFD6A879);
+      phaseColor = const Color(0xFFD6A879);
     } else if (phaseOfTheDay == "menstruation") {
-      phaseColor = Color(0xFFD48078);
+      phaseColor = const Color(0xFFD48078);
     }
 
     //TODO - Remove Hardcoded fetch of user

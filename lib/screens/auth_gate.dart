@@ -1,5 +1,4 @@
 import 'package:by_cycle/main.dart';
-import 'package:by_cycle/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
