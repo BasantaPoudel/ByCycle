@@ -37,34 +37,13 @@ class UserRepository {
         // Update the document
         await userDoc.reference.set(user.toMap());
 
-        print("User updated successfully!");
+        logger.d("User updated successfully!");
       } else {
-        print("No user found with the given email.");
+        logger.d("No user found with the given email.");
       }
-      // } catch (e) {
-      //   print("Failed to update user: $e");
-      // }
-
-      // try {
-
-      // await FirebaseFirestore.instance
-      //     .collection('onboarding')
-      //     .add(formData.toMap());
     } catch (e) {
       logger.d('Error adding data to Firestore: $e');
     }
-
-    //   if (documentId != null) {
-    //     await FirebaseFirestore.instance
-    //         .collection('users')
-    //         .doc(documentId)
-    //         .set(data.toMap());
-    //   } else {
-    //     await FirebaseFirestore.instance.collection('users').add(data.toMap());
-    //   }
-    // } catch (e) {
-    //   logger.d('Error adding data to Firestore: $e');
-    // }
   }
 
   //Takes a User object as a mandatory argument and
@@ -128,25 +107,11 @@ class UserRepository {
       }
     } catch (e) {
       logger.d("Error getting user by email: $e");
-
-      return null;
     }
     return null;
   }
 
-  Future<void> sendDailyData(DailyDataInput dailyDataInput) async {
-    //Add the daily data input to the user's daily_data_input list
-    try {
-      await FirebaseFirestore.instance
-          .collection("users")
-          .add(dailyDataInput.toMap());
-      logger.d("Daily data sent");
-    } catch (e) {
-      logger.d("Error: $e");
-    }
-  }
-
-//Random method to try out on new user
+//This query is important for now as it is used to get the new user's data which has only two fields
   Future<UserModel?> getNewUser(String email) async {
     try {
       QuerySnapshot qs = await FirebaseFirestore.instance
@@ -159,7 +124,6 @@ class UserRepository {
         final user = UserModel(
           email: data['email'],
           name: data['name'],
-          // name: doc.get(name).toString(),
           lastPeriod: DateTime.now(),
           dailyDataInput: [],
           phaseRanges: [],
@@ -189,7 +153,6 @@ class UserRepository {
       }
     } catch (e) {
       logger.d("Error getting user by email: $e");
-
       return null;
     }
     return null;
@@ -198,26 +161,46 @@ class UserRepository {
   Future<void> saveOnboardingData(OnBoardingQuestions formData) async {
     String email = loggedInUser!.email!;
     UserModel user = await getNewUser(email) as UserModel;
-    updateUserOnboardingData(user, formData);
-
-    //TODO - This is a temporary solution to get the user's data
+    updateUserOnboardingDataInUserModel(user, formData);
     onboardCalendar(user);
-
-    // Steps of execution from algorithm.dart
-    updateUsersAlgorithmData(user);
-    List<String> tags = produceTagsForToday(user);
-    redrawCalendar(user, tags);
-    List<String> insightIds = chooseInsightIdsBasedOnListOfTags(user, tags);
-    List<Map<String, dynamic>> insights =
-        retrieveInsightsByTheirIds(insightIds);
-
-    logger.d(insights);
-
-    // await sendDailyData(user.dailyDataInput.last);
+    runAlgorithmAfterUserSubmitsData(user);
     await updateUserInFirebase(user);
   }
 
-  updateUserOnboardingData(UserModel user, OnBoardingQuestions formData) {
+//TODO - Might be completely irrelevant at this point but I'm leaving it here for now as an example
+  Future<String> getTodaysPhase() async {
+    UserModel user =
+        await getUserByEmailFromFirestore(loggedInUser!.email!) as UserModel;
+    try {
+      var dailyDataInput = user.dailyDataInput;
+      int index = findDailyDataInputIndexByDate(dailyDataInput, DateTime.now());
+      var phase = dailyDataInput[index].phase;
+      logger.d(phase);
+      return phase;
+    } catch (e) {
+      logger.d("Error getting user data");
+      return "Error - No data found";
+    }
+  }
+
+  Future<void> saveDailyDataInputData(DailyDataInput formData) async {
+    UserModel user =
+        await getUserByEmailFromFirestore(loggedInUser!.email!) as UserModel;
+    logger.d(
+        "User's today' dailyDataInput after updating with info from DDI widget");
+    updateDailyDataInUserModel(user, formData);
+    runAlgorithmAfterUserSubmitsData(user);
+    await updateUserInFirebase(user);
+  }
+
+  Future<List<CustomDateTimeRange>> getPhaseRanges() async {
+    UserModel user =
+        await getUserByEmailFromFirestore(loggedInUser!.email!) as UserModel;
+    return user.phaseRanges;
+  }
+
+  updateUserOnboardingDataInUserModel(
+      UserModel user, OnBoardingQuestions formData) {
     user.completeCycleLength = formData.completeCycleLength;
     user.cycleHeavy = formData.cycleHeavy;
     user.cycleRegular = formData.cycleRegular;
@@ -229,38 +212,29 @@ class UserRepository {
     user.would_like_reminders_about_data_log_in = formData.wouldLikeReminders;
   }
 
-//TODO - Might be completely irrelevant at this point but I'm leaving it here for now as an example
-  Future<String> getTodaysPhase() async {
-    UserModel user =
-        await getUserByEmailFromFirestore(loggedInUser!.email!) as UserModel;
-    try {
-      // DocumentSnapshot snapshot = await FirebaseFirestore.instance
-      //     .collection("users")
-      //     //TODO - Change this to the user's id
-      //     // new_pb_longer_cycle
-      //     // in menstruation
+  updateDailyDataInUserModel(UserModel user, DailyDataInput formData) {
+    final indexOfToday =
+        findDailyDataInputIndexByDate(user.dailyDataInput, DateTime.now());
+    logger.d(user.dailyDataInput[indexOfToday]);
+    user.dailyDataInput[indexOfToday].temperature = formData.temperature;
+    user.dailyDataInput[indexOfToday].discharge = formData.discharge;
+    user.dailyDataInput[indexOfToday].hoursOfSleep = formData.hoursOfSleep;
+    user.dailyDataInput[indexOfToday].energyLevel = formData.energyLevel;
+    user.dailyDataInput[indexOfToday].blood = formData.blood;
+    logger.d(
+        "User's today' dailyDataInput after updating with info from DDI widget");
+    logger.d(user.dailyDataInput[indexOfToday]);
+  }
 
-      //     // new_pcos_pa
-      //     // in luteal
-
-      //     // new_pa_lucia
-      //     // in follicular
-
-      //     // new_ovulating user
-      //     // in ovulation
-      //     .doc("new_pa_lucia")
-      //     .get();
-
-      // var data = snapshot.data() as Map<String, dynamic>;
-      var dailyDataInput = user.dailyDataInput;
-      int index = findDailyDataInputIndexByDate(dailyDataInput, DateTime.now());
-      var phase = dailyDataInput[index].phase;
-      logger.d(phase);
-      return phase;
-    } catch (e) {
-      logger.d("Error getting user data");
-      return "Error - No data found";
-    }
+  //Run the algorithm before updating the user's data in firebase
+  runAlgorithmAfterUserSubmitsData(UserModel user) {
+    updateUsersAlgorithmData(user);
+    List<String> tags = produceTagsForToday(user);
+    redrawCalendar(user, tags);
+    List<String> insightIds = chooseInsightIdsBasedOnListOfTags(user, tags);
+    List<Map<String, dynamic>> insights =
+        retrieveInsightsByTheirIds(insightIds);
+    logger.d(insights);
   }
 
   int findDailyDataInputIndexByDate(
@@ -274,57 +248,5 @@ class UserRepository {
       }
     }
     return -1; // Return -1 if no matching date is found
-  }
-
-  // // a handy function for identifying the index of a dailyDataInput on a specific day.
-  // int findDailyDataInputIndexByDate(
-  //     List<DailyDataInput> dailyDataInputs, DateTime targetDate) {
-  //   for (int i = 0; i < dailyDataInputs.length; i++) {
-  //     dynamic input = dailyDataInputs[i];
-  //     DateTime inputDate = input['date'].toDate();
-  //     if (inputDate.year == targetDate.year &&
-  //         inputDate.month == targetDate.month &&
-  //         inputDate.day == targetDate.day) {
-  //       return i;
-  //     }
-  //   }
-  //   return -1; // Return -1 if no matching date is found
-  // }
-
-  Future<void> saveDailyDataInputData(DailyDataInput formData) async {
-    String email = loggedInUser!.email!;
-
-    UserModel user = await getUserByEmailFromFirestore(email) as UserModel;
-    logger.d(
-        "User's today' dailyDataInput after updating with info from DDI widget");
-    final indexOfToday =
-        findDailyDataInputIndexByDate(user.dailyDataInput, DateTime.now());
-    logger.d(user.dailyDataInput[indexOfToday]);
-    user.dailyDataInput[indexOfToday].temperature = formData.temperature;
-    user.dailyDataInput[indexOfToday].discharge = formData.discharge;
-    user.dailyDataInput[indexOfToday].hoursOfSleep = formData.hoursOfSleep;
-    user.dailyDataInput[indexOfToday].energyLevel = formData.energyLevel;
-    user.dailyDataInput[indexOfToday].blood = formData.blood;
-    logger.d(
-        "User's today' dailyDataInput after updating with info from DDI widget");
-    logger.d(user.dailyDataInput[indexOfToday]);
-
-    // Steps of execution from algorithm.dart
-    updateUsersAlgorithmData(user);
-    List<String> tags = produceTagsForToday(user);
-    redrawCalendar(user, tags);
-    List<String> insightIds = chooseInsightIdsBasedOnListOfTags(user, tags);
-    List<Map<String, dynamic>> insights =
-        retrieveInsightsByTheirIds(insightIds);
-
-    logger.d(insights);
-
-    updateUserInFirebase(user);
-  }
-
-  Future<List<CustomDateTimeRange>> getPhaseRanges() async {
-    UserModel user =
-        await getUserByEmailFromFirestore(loggedInUser!.email!) as UserModel;
-    return user.phaseRanges;
   }
 }
