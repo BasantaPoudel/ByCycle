@@ -172,7 +172,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                               builder: (context) =>
                                                   const OnboardingPageOne()));
                                     },
-                                    child: Text("Edit Onboarding Answers")),
+                                    child:
+                                        const Text("Edit Onboarding Answers")),
+                                const Divider(),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const OnboardingPageOne()));
+                                    },
+                                    child: const Text("Provide Feedback")),
                                 const Divider(),
                                 Padding(
                                   padding: const EdgeInsets.all(2),
@@ -282,7 +293,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ));
           } else {
-            return const CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           }
         }); // This trailing comma makes auto-formatting nicer for build methods.
   }

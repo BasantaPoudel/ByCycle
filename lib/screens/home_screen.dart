@@ -139,73 +139,105 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Column(
                           children: [
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                  foregroundColor:
-                                      Theme.of(context).brightness ==
-                                              Brightness.light
-                                          ? Colors.black
-                                          : Colors.white,
-                                  textStyle: const TextStyle(
-                                      fontSize: 22,
-                                      decoration: TextDecoration.underline,
-                                      color: Colors.green)),
-                              onPressed: () async {
-                                final TimeOfDay? setBedTime =
-                                    await showTimePicker(
-                                        context: context,
-                                        initialTime: bedTime,
-                                        initialEntryMode:
-                                            TimePickerEntryMode.dial);
-                                setState(() {
-                                  if (setBedTime != null) bedTime = setBedTime;
-                                });
-                                calculateWakeUpTime(
-                                    bedTime, recommendedSleepTime);
-                              },
-                              child: bedTime.minute > 9
-                                  ? Text("${bedTime.hour}:${bedTime.minute}")
-                                  : Text("${bedTime.hour}:0${bedTime.minute}"),
+                            SizedBox(
+                              width: 98,
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  final TimeOfDay? setBedTime =
+                                      await showTimePicker(
+                                          context: context,
+                                          initialTime: bedTime,
+                                          initialEntryMode:
+                                              TimePickerEntryMode.dial);
+                                  setState(() {
+                                    if (setBedTime != null)
+                                      bedTime = setBedTime;
+                                  });
+                                  calculateWakeUpTime(
+                                      bedTime, recommendedSleepTime);
+                                },
+                                child: bedTime.minute > 9
+                                    ? Text("${bedTime.hour}:${bedTime.minute}",
+                                        style: const TextStyle(
+                                            fontSize: 22, color: Colors.black))
+                                    : Text("${bedTime.hour}:0${bedTime.minute}",
+                                        style: const TextStyle(
+                                            fontSize: 22, color: Colors.black)),
+                              ),
                             ),
                             const Text('Bedtime'),
                           ],
                         ),
                         Column(
                           children: [
-                            TextButton(
-                                style: TextButton.styleFrom(
-                                    foregroundColor:
-                                        Theme.of(context).brightness ==
-                                                Brightness.light
-                                            ? Colors.black
-                                            : Colors.white,
-                                    textStyle: const TextStyle(
-                                        fontSize: 22,
-                                        decoration: TextDecoration.underline,
-                                        color: Colors.black)),
-                                onPressed: () async {
-                                  final TimeOfDay? setWakeupTime =
-                                      await showTimePicker(
-                                          context: context,
-                                          initialTime: wakeupTime,
-                                          initialEntryMode:
-                                              TimePickerEntryMode.dial);
+                            SizedBox(
+                              width: 98,
+                              child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.transparent),
+                                    shadowColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.transparent),
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0),
+                                        side: BorderSide(
+                                          color: Theme.of(context).brightness ==
+                                                  Brightness.light
+                                              ? Colors.black
+                                              : Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  onPressed: () async {
+                                    final TimeOfDay? setWakeupTime =
+                                        await showTimePicker(
+                                            context: context,
+                                            initialTime: wakeupTime,
+                                            initialEntryMode:
+                                                TimePickerEntryMode.dial);
 
-                                  // if (wakeupTime != null) {
-                                  setState(() {
-                                    if (setWakeupTime != null) {
-                                      wakeupTime = setWakeupTime;
-                                    }
-                                  });
-                                  calculateBedTime(
-                                      wakeupTime, recommendedSleepTime);
-                                },
-                                // },
-                                child: wakeupTime.minute > 9
-                                    ? Text(
-                                        "${wakeupTime.hour}:${wakeupTime.minute}")
-                                    : Text(
-                                        "${wakeupTime.hour}:0${wakeupTime.minute}")),
+                                    // if (wakeupTime != null) {
+                                    setState(() {
+                                      if (setWakeupTime != null) {
+                                        wakeupTime = setWakeupTime;
+                                      }
+                                    });
+                                    calculateBedTime(
+                                        wakeupTime, recommendedSleepTime);
+                                  },
+                                  // },
+                                  child: wakeupTime.minute > 9
+                                      ? Text(
+                                          "${wakeupTime.hour}:${wakeupTime.minute}",
+                                          style: TextStyle(
+                                            fontSize: 22,
+                                            color:
+                                                Theme.of(context).brightness ==
+                                                        Brightness.light
+                                                    ? Colors.black87
+                                                    : Colors.white,
+                                          ),
+                                        )
+                                      : Text(
+                                          "${wakeupTime.hour}:0${wakeupTime.minute}",
+                                          style: const TextStyle(
+                                              fontSize: 22,
+                                              color: Colors.black))),
+                            ),
                             const Text('WakeUp'),
                           ],
                         ),
