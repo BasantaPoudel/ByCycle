@@ -191,7 +191,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 body: _children[_selectedIndex],
                 bottomNavigationBar: Container(
-                  height: 70,
+                  //TODO - fix height property so that it doesn't produce 8.0 pixels overflow on-screen error
+                  // height: 70,
                   decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(25),
