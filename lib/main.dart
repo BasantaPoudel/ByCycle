@@ -12,6 +12,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -129,30 +130,42 @@ class _MyHomePageState extends State<MyHomePage> {
           if (snapshot.hasData) {
             return Scaffold(
                 appBar: AppBar(
-                  leading: Builder(
-                    builder: (context) => IconButton(
-                      color: isLightTheme ? Colors.black : Colors.white,
-                      icon: const Icon(Icons.more_vert_outlined),
-                      // Change this to your custom icon
-                      // onPressed: () => Scaffold.of(context).openDrawer(),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Profile()),
-                        );
-                      },
-                    ),
-                  ),
+                  // leading: Builder(
+                  //   builder: (context) => IconButton(
+                  //     color: isLightTheme ? Colors.black : Colors.white,
+                  //     icon: const Icon(Icons.assistant_outlined),
+                  //     // Change this to your custom icon
+                  //     // onPressed: () => Scaffold.of(context).openDrawer(),
+                  //     onPressed: () {
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(builder: (context) => Profile()),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
                   title: Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text(
-                          'YESTERDAY',
-                          style: Theme.of(context).textTheme.bodySmall,
+                        IconButton(
+                          color: isLightTheme ? Colors.black : Colors.white,
+                          icon: const Icon(Icons.assistant_outlined),
+                          // Change this to your custom icon
+                          // onPressed: () => Scaffold.of(context).openDrawer(),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Profile()),
+                            );
+                          },
                         ),
                         TextButton(
-                          child: const Text('TODAY'),
+                          child: Text(
+                            'TODAY',
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
                           onPressed: () {
                             // Navigate to the search screen
                             null;
@@ -160,8 +173,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           // style: Theme.of(context).buttonTheme.layoutBehavior,
                         ),
                         Text(
-                          'TOMORROW',
-                          style: Theme.of(context).textTheme.bodySmall,
+                          DateFormat('dd.mm.yyyy').format(DateTime.now()),
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                         IconButton(
                           color: Colors.black,
@@ -181,14 +194,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 ),
-                drawer: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: Drawer(
-                      // Add a ListView to the drawer. This ensures the user can scroll
-                      // through the options in the drawer if there isn't enough vertical
-                      // space to fit everything.
-                      child: Profile()),
-                ),
+                // drawer: SizedBox(
+                //   width: MediaQuery.of(context).size.width * 0.8,
+                //   child: Drawer(
+                //       // Add a ListView to the drawer. This ensures the user can scroll
+                //       // through the options in the drawer if there isn't enough vertical
+                //       // space to fit everything.
+                //       child: Profile()),
+                // ),
                 body: _children[_selectedIndex],
                 bottomNavigationBar: Container(
                   height: 70,

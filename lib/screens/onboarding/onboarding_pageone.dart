@@ -50,10 +50,11 @@ class _OnboardingScreenHomeState extends State<OnboardingPageOne> {
                     const SizedBox(height: 10),
                     SizedBox(
                       width: 282,
-                      // height: 46,
+                      height: 46,
                       child: TextField(
                         controller: controller,
                         decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.only(left: 15, right: 20),
                           filled: true,
                           fillColor: Color(0xFFDED4C5),
                           border: OutlineInputBorder(
@@ -69,8 +70,11 @@ class _OnboardingScreenHomeState extends State<OnboardingPageOne> {
                     const SizedBox(height: 20),
                     SizedBox(
                       width: 224,
+                      height: 44,
                       child: ElevatedButton(
                           style: ButtonStyle(
+                              padding: MaterialStateProperty.all<EdgeInsets>(
+                                  EdgeInsets.zero),
                               shape: MaterialStateProperty.all<
                                   RoundedRectangleBorder>(
                                 RoundedRectangleBorder(

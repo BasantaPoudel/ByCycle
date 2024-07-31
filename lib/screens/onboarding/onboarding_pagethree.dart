@@ -44,6 +44,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageThree> {
                 controller: controller,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.only(left: 15, right: 20),
                   filled: true,
                   fillColor: Color(0xFFDED4C5),
                   border: OutlineInputBorder(
@@ -62,8 +63,11 @@ class _OnboardingScreenHomeState extends State<OnboardingPageThree> {
             const SizedBox(height: 20),
             SizedBox(
               width: 224,
+              height: 44,
               child: ElevatedButton(
                 style: ButtonStyle(
+                    padding:
+                        MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),

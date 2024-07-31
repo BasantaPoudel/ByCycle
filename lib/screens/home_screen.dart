@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           if (snapshot.hasData) {
             return Center(
-              child: SingleChildScrollView(
+              child: Expanded(
                 child: Column(children: [
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     SizedBox(
@@ -53,8 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       // height: 44,
                       child: ElevatedButton(
                           style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all<Color>(phaseColor),
+                              backgroundColor: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? MaterialStateProperty.all<Color>(
+                                      const Color(0xFF31312F))
+                                  : MaterialStateProperty.all<Color>(
+                                      const Color(0xFFD6A879)),
                               shape: MaterialStateProperty.all<
                                   RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
@@ -69,8 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         const DailyDataInputScreen()));
                           },
                           child: Text(
-                            "What is your temperature?",
-                            style: Theme.of(context).textTheme.bodyLarge,
+                            "Log in your daily data",
+                            // style: Theme.of(context).textTheme.bodyLarge,
                           )),
                     ),
                     const SizedBox(
@@ -79,7 +83,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor:
-                                MaterialStateProperty.all<Color>(phaseColor),
+                                Theme.of(context).brightness == Brightness.light
+                                    ? MaterialStateProperty.all<Color>(
+                                        const Color(0xFF31312F))
+                                    : MaterialStateProperty.all<Color>(
+                                        const Color(0xFFD6A879)),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
                               RoundedRectangleBorder(
@@ -89,13 +97,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         onPressed: () {
                           null;
                         },
-                        child: Icon(
-                          Icons.add_circle_outline,
-                          color:
-                              Theme.of(context).brightness == Brightness.light
-                                  ? Colors.black87
-                                  : Colors.white,
-                        )),
+                        child: Icon(Icons.add_circle_outline,
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.white
+                                    : Colors.black87)),
                   ]),
                   const SizedBox(
                     height: 40,
@@ -118,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: 180,
                       child: CircularProgressIndicator(
                         strokeWidth: 15,
-                        value: 0.4,
+                        value: recommendedSleepTime / 1440,
                         backgroundColor: const Color.fromRGBO(222, 212, 197, 1),
                         valueColor: Theme.of(context).brightness ==
                                 Brightness.light
@@ -141,12 +147,27 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             SizedBox(
                               width: 98,
+                              height: 37,
                               child: ElevatedButton(
                                 style: ButtonStyle(
+                                  padding:
+                                      MaterialStateProperty.all<EdgeInsets>(
+                                          EdgeInsets.zero),
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.transparent),
+                                  shadowColor: MaterialStateProperty.all<Color>(
+                                      Colors.transparent),
                                   shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(30.0),
+                                      side: BorderSide(
+                                        color: Theme.of(context).brightness ==
+                                                Brightness.light
+                                            ? Colors.black
+                                            : Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -165,12 +186,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                       bedTime, recommendedSleepTime);
                                 },
                                 child: bedTime.minute > 9
-                                    ? Text("${bedTime.hour}:${bedTime.minute}",
-                                        style: const TextStyle(
-                                            fontSize: 22, color: Colors.black))
-                                    : Text("${bedTime.hour}:0${bedTime.minute}",
-                                        style: const TextStyle(
-                                            fontSize: 22, color: Colors.black)),
+                                    ? Text(
+                                        "${bedTime.hour}:${bedTime.minute}",
+                                        style: TextStyle(
+                                          fontSize: 22,
+                                          color: Theme.of(context).brightness ==
+                                                  Brightness.light
+                                              ? Colors.black87
+                                              : Colors.white,
+                                        ),
+                                      )
+                                    : Text(
+                                        "${bedTime.hour}:0${bedTime.minute}",
+                                        style: TextStyle(
+                                          fontSize: 22,
+                                          color: Theme.of(context).brightness ==
+                                                  Brightness.light
+                                              ? Colors.black87
+                                              : Colors.white,
+                                        ),
+                                      ),
                               ),
                             ),
                             const Text('Bedtime'),
@@ -182,6 +217,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: 98,
                               child: ElevatedButton(
                                   style: ButtonStyle(
+                                    padding:
+                                        MaterialStateProperty.all<EdgeInsets>(
+                                            EdgeInsets.zero),
                                     backgroundColor:
                                         MaterialStateProperty.all<Color>(
                                             Colors.transparent),
@@ -234,9 +272,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )
                                       : Text(
                                           "${wakeupTime.hour}:0${wakeupTime.minute}",
-                                          style: const TextStyle(
-                                              fontSize: 22,
-                                              color: Colors.black))),
+                                          style: TextStyle(
+                                            fontSize: 22,
+                                            color:
+                                                Theme.of(context).brightness ==
+                                                        Brightness.light
+                                                    ? Colors.black87
+                                                    : Colors.white,
+                                          ),
+                                        )),
                             ),
                             const Text('WakeUp'),
                           ],
@@ -247,10 +291,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(
                     width: 110,
-                    // height: 40,
+                    height: 28,
                     child: Theme.of(context).platform == TargetPlatform.android
                         ? ElevatedButton(
                             style: ButtonStyle(
+                              padding: MaterialStateProperty.all<EdgeInsets>(
+                                  EdgeInsets.zero),
+                              backgroundColor: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? MaterialStateProperty.all<Color>(
+                                      const Color(0xFF31312F))
+                                  : MaterialStateProperty.all<Color>(
+                                      const Color(0xFFD6A879)),
                               shape: MaterialStateProperty.all<
                                   RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
@@ -260,7 +312,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             onPressed: openAlarmApp,
                             child: Text(
-                                style: Theme.of(context).textTheme.bodySmall,
+                                // style: Theme.of(context).textTheme.bodySmall,
+                                style: TextStyle(
+                                  fontSize: 10,
+                                ),
                                 'SET ALARM'),
                           )
                         : null,
