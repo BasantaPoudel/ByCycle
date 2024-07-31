@@ -1,4 +1,6 @@
 import 'package:by_cycle/main.dart';
+import 'package:by_cycle/screens/settings.dart';
+import 'package:by_cycle/screens/user_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +16,16 @@ class AuthGate extends StatelessWidget {
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return SignInScreen(
+            showPasswordVisibilityToggle: true,
             providers: [
               EmailAuthProvider(),
+            ],
+            actions: [
+              AuthStateChangeAction<UserCreated>((context, state) async {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => Profile(),
+                ));
+              }),
             ],
             headerBuilder: (context, constraints, shrinkOffset) {
               return Padding(
@@ -31,8 +41,8 @@ class AuthGate extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: action == AuthAction.signIn
-                    ? const Text('Welcome to FlutterFire, please sign in!')
-                    : const Text('Welcome to Flutterfire, please sign up!'),
+                    ? const Text('Welcome to ByCycle, please sign in!')
+                    : const Text('Welcome to ByCycle, please sign up!'),
               );
             },
             footerBuilder: (context, action) {
@@ -56,8 +66,12 @@ class AuthGate extends StatelessWidget {
               );
             },
           );
+          // } else if (snapshot.data?.displayName != null &&
+          //     snapshot.data?.emailVerified == true) {
+        } else if (snapshot.data?.displayName != null) {
+          return const MyApp();
         }
-        return const MyApp();
+        return Profile();
       },
     );
   }

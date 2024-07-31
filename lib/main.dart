@@ -7,9 +7,8 @@ import 'package:by_cycle/screens/auth_gate.dart';
 import 'package:by_cycle/screens/home_screen.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:by_cycle/screens/calendar.dart';
-import 'package:by_cycle/screens/profile.dart';
+import 'package:by_cycle/screens/user_profile.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,32 +18,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final bool onboardingComplete = prefs.getBool('onboardingComplete') ?? false;
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(BlocProvider(
-      create: (BuildContext context) => ThemeCubit(),
-      child:
-          // onboardingComplete
-          //     ?
-          // Create the ThemeCubit
-          //TODO - Fix the way to access themeData if this is not correct
-          MaterialApp(
-        home: const AuthGate(),
-        theme: ThemeCubit().getLightThemeData(),
-        darkTheme: ThemeCubit().getDarkThemeData(),
-        themeMode: ThemeCubit().state,
-      )
-      // : MaterialApp(
-      //     home: const OnboardingPageOne(),
-      //     theme: ThemeCubit().getLightThemeData(),
-      //     darkTheme: ThemeCubit().getDarkThemeData(),
-      //     themeMode: ThemeCubit().state,
-      //   ))
-      ));
+  runApp(RestartWidget(
+    child: BlocProvider(
+        create: (BuildContext context) => ThemeCubit(),
+        child: MaterialApp(
+          home: const AuthGate(),
+          theme: ThemeCubit().getLightThemeData(),
+          darkTheme: ThemeCubit().getDarkThemeData(),
+          themeMode: ThemeCubit().state,
+        )),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -152,51 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute<ProfileScreen>(
-                            builder: (context) => ProfileScreen(
-                              appBar: AppBar(
-                                title: const Text('Your Profile'),
-                              ),
-                              actions: [
-                                SignedOutAction((context) {
-                                  Navigator.of(context).pop();
-                                })
-                              ],
-                              children: [
-                                const Divider(),
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const OnboardingPageOne()));
-                                    },
-                                    child:
-                                        const Text("Edit Onboarding Answers")),
-                                const Divider(),
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const OnboardingPageOne()));
-                                    },
-                                    child: const Text("Provide Feedback")),
-                                const Divider(),
-                                Padding(
-                                  padding: const EdgeInsets.all(2),
-                                  child: AspectRatio(
-                                    aspectRatio: 3,
-                                    child: SvgPicture.asset(
-                                      'assets/icons/drawer_icon.svg',
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          MaterialPageRoute(builder: (context) => Profile()),
                         );
                       },
                     ),
@@ -241,7 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 drawer: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
-                  child: const Drawer(
+                  child: Drawer(
                       // Add a ListView to the drawer. This ensures the user can scroll
                       // through the options in the drawer if there isn't enough vertical
                       // space to fit everything.
@@ -296,5 +238,36 @@ class _MyHomePageState extends State<MyHomePage> {
             return Center(child: CircularProgressIndicator());
           }
         }); // This trailing comma makes auto-formatting nicer for build methods.
+  }
+}
+
+class RestartWidget extends StatefulWidget {
+  final Widget child;
+
+  const RestartWidget({Key? key, required this.child}) : super(key: key);
+
+  static void restartApp(BuildContext context) {
+    context.findAncestorStateOfType<_RestartWidgetState>()?.restartApp();
+  }
+
+  @override
+  _RestartWidgetState createState() => _RestartWidgetState();
+}
+
+class _RestartWidgetState extends State<RestartWidget> {
+  Key key = UniqueKey();
+
+  void restartApp() {
+    setState(() {
+      key = UniqueKey();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return KeyedSubtree(
+      key: key,
+      child: widget.child,
+    );
   }
 }

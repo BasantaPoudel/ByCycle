@@ -2,14 +2,14 @@ import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({super.key});
+class Settings extends StatefulWidget {
+  const Settings({super.key});
 
   @override
-  _ProfileState createState() => _ProfileState();
+  _SettingsState createState() => _SettingsState();
 }
 
-class _ProfileState extends State<Profile> {
+class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,7 +26,7 @@ class _ProfileState extends State<Profile> {
               MaterialPageRoute<ProfileScreen>(
                 builder: (context) => ProfileScreen(
                   appBar: AppBar(
-                    title: const Text('User Profile'),
+                    title: const Text('User Settings'),
                   ),
                   actions: [
                     SignedOutAction((context) {
