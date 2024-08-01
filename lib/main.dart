@@ -146,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   // ),
                   title: Container(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         IconButton(
                           color: isLightTheme ? Colors.black : Colors.white,
@@ -161,20 +161,24 @@ class _MyHomePageState extends State<MyHomePage> {
                             );
                           },
                         ),
-                        TextButton(
-                          child: Text(
-                            'TODAY',
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                          onPressed: () {
-                            // Navigate to the search screen
-                            null;
-                          },
-                          // style: Theme.of(context).buttonTheme.layoutBehavior,
-                        ),
-                        Text(
-                          DateFormat('dd.mm.yyyy').format(DateTime.now()),
-                          style: Theme.of(context).textTheme.bodyLarge,
+                        Row(
+                          children: [
+                            TextButton(
+                              child: Text(
+                                'TODAY',
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                              onPressed: () {
+                                // Navigate to the search screen
+                                null;
+                              },
+                              // style: Theme.of(context).buttonTheme.layoutBehavior,
+                            ),
+                            Text(
+                              DateFormat('dd.mm.yyyy').format(DateTime.now()),
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                          ],
                         ),
                         IconButton(
                           color: Colors.black,
@@ -227,10 +231,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       type: BottomNavigationBarType.fixed,
                       items: [
                         BottomNavigationBarItem(
-                          icon: SvgPicture.asset(
-                            'assets/icons/stats.svg',
+                          icon: Icon(
+                            Icons.info_outline,
+                            color: Colors.black,
                           ),
-                          label: 'Stats',
+                          label: 'Info',
                         ),
                         BottomNavigationBarItem(
                           icon: SvgPicture.asset(

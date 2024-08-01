@@ -53,36 +53,32 @@ class ThemeCubit extends Cubit<ThemeMode> {
           borderRadius: BorderRadius.circular(8), // Set the card border radius
         ),
       ),
-      textTheme: const TextTheme(
-        displayLarge: TextStyle(
+      textTheme: TextTheme(
+        displayLarge: GoogleFonts.poppins(
           fontSize: 72.0,
           color: Colors.white,
           fontWeight: FontWeight.bold,
         ),
-        displayMedium: TextStyle(
+        displayMedium: GoogleFonts.poppins(
           fontSize: 36.0,
           color: Colors.white,
           // fontStyle: FontStyle.italic,
         ),
-        displaySmall: TextStyle(
+        displaySmall: GoogleFonts.poppins(
+          fontSize: 20.0,
+          color: Colors.white,
+        ),
+        bodyLarge: GoogleFonts.poppins(
           fontSize: 14.0,
           color: Colors.white,
-          fontFamily: 'Hind',
         ),
-        bodyLarge: TextStyle(
-          fontSize: 14.0,
-          color: Colors.white,
-          fontFamily: 'Hind',
-        ),
-        bodyMedium: TextStyle(
+        bodyMedium: GoogleFonts.poppins(
           fontSize: 12.0,
           color: Colors.white,
-          fontFamily: 'Hind',
         ),
-        bodySmall: TextStyle(
+        bodySmall: GoogleFonts.poppins(
           fontSize: 10.0,
           color: Colors.white,
-          fontFamily: 'Hind',
         ),
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(

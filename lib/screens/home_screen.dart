@@ -83,7 +83,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                   child: Text(
                                     "Log in your daily data",
-                                    // style: Theme.of(context).textTheme.bodyLarge,
                                   )),
                             ),
                             const SizedBox(
@@ -134,17 +133,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 180,
                           width: 180,
                           child: CircularProgressIndicator(
-                            strokeWidth: 15,
-                            value: recommendedSleepTime / 1440,
-                            backgroundColor:
-                                const Color.fromRGBO(222, 212, 197, 1),
-                            valueColor:
-                                Theme.of(context).brightness == Brightness.light
-                                    ? const AlwaysStoppedAnimation<Color>(
-                                        Colors.black)
-                                    : const AlwaysStoppedAnimation<Color>(
-                                        Color(0xFFD6A879)),
-                          ),
+                              strokeWidth: 15,
+                              value: recommendedSleepTime / 1440,
+                              backgroundColor:
+                                  const Color.fromRGBO(222, 212, 197, 1),
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(phaseColor)),
                         ),
                         Text(
                             '${recommendedSleepTime ~/ 60}h ${recommendedSleepTime % 60}m',
