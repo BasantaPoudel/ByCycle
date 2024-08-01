@@ -60,18 +60,23 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(logInDataController.text == ''
-                        ? '08:00 AM'
-                        : logInDataController.text),
                     Container(
                       color: const Color(0xFFD2C8B8),
                       // color: Colors.red,
                       child: TextButton(
                         onPressed: () => _selectTime(context),
                         child: Text(
-                          'Log In Data',
+                          logInDataController.text == ''
+                              ? '08:00 AM'
+                              : logInDataController.text,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
+                      ),
+                    ),
+                    Container(
+                      child: Text(
+                        'Log In Data',
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                   ]),
@@ -90,20 +95,28 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(insightsController.text == ''
-                        ? '08:00 AM'
-                        : insightsController.text),
                     Container(
                       color: const Color(0xFFD2C8B8),
                       child: TextButton(
                         onPressed: () => _selectTimeReminder(context),
                         child: Text(
-                          'Insights',
+                          insightsController.text == ''
+                              ? '08:00 AM'
+                              : insightsController.text,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
                     ),
+                    Container(
+                      child: Text(
+                        'Self-care list',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
                   ]),
+            ),
+            SizedBox(
+              height: 10,
             ),
             TextButton(
               onPressed: () {

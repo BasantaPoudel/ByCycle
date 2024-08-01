@@ -19,8 +19,15 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return ProfileScreen(
       appBar: AppBar(
-        title: const Text('Your Profile'),
-      ),
+          iconTheme: Theme.of(context).brightness == Brightness.light
+              ? const IconThemeData(color: Colors.black)
+              : const IconThemeData(color: Colors.white),
+          title: Container(
+            child: Column(children: [
+              Text('Your Profile'),
+              Text(userRepo.loggedInUser!.email!),
+            ]),
+          )),
       actions: [
         SignedOutAction((context) {
           RestartWidget.restartApp(context);
