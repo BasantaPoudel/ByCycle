@@ -62,7 +62,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSeven> {
                         onPressed: () async {
                           UserRepository().saveOnboardingData(widget.formData);
 
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) => const MyApp(),

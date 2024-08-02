@@ -65,8 +65,10 @@ class _ProfileState extends State<Profile> {
         const Divider(),
         TextButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => FeedbackWidget()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const FeedbackWidget()),
+              );
             },
             child: const Text("Provide Feedback")),
         const Divider(),
