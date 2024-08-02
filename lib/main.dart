@@ -5,6 +5,7 @@ import 'package:by_cycle/models/custom_date_time_range.dart';
 import 'package:by_cycle/repository/user_repository.dart';
 import 'package:by_cycle/screens/auth_gate.dart';
 import 'package:by_cycle/screens/home_screen.dart';
+import 'package:by_cycle/screens/info_page.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:by_cycle/screens/calendar.dart';
 import 'package:by_cycle/screens/user_profile.dart';
@@ -91,7 +92,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   var logger = Logger();
   late List<CustomDateTimeRange> phaseRanges;
@@ -104,16 +105,19 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   final List<Widget> _children = [
-    const HomeScreen(),
-    const HomeScreen(),
+    //const HomeScreen(),
+    //const HomeScreen(),
   ];
 
   Future<String> getPhaseRanges() async {
     var phaseRangesFromUser = await userRepo.getPhaseRanges();
+    final currentUser = await userRepo.getCurrentUserFromFirestore();
     setState(() {
       phaseRanges = phaseRangesFromUser;
       if (_children.length == 3) _children.remove(2);
       // _children.remove(3);
+      _children.add(InfoPage(currentUser: currentUser!));
+      _children.add(HomeScreen());
       _children.add(Calendar(initialDateTimeRanges: phaseRanges));
     });
     return 'Success';
