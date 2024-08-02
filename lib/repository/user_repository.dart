@@ -111,6 +111,25 @@ class UserRepository {
     return null;
   }
 
+  Future<UserModel?> getCurrentUserFromFirestore() async {
+    try {
+      QuerySnapshot qs = await FirebaseFirestore.instance
+          .collection("users")
+          .where("email", isEqualTo: loggedInUser!.email!)
+          .get();
+
+      for (var doc in qs.docs) {
+        var data = doc.data() as Map<String, dynamic>;
+        final user = UserModel.fromMap(data);
+
+        return user;
+      }
+    } catch (e) {
+      logger.d("Error getting user by email: $e");
+    }
+    return null;
+  }
+
 //This query is important for now as it is used to get the new user's data which has only two fields
   Future<UserModel?> getNewUser(String email) async {
     try {
