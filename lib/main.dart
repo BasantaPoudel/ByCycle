@@ -7,6 +7,7 @@ import 'package:by_cycle/screens/auth_gate.dart';
 import 'package:by_cycle/screens/home_screen.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:by_cycle/screens/calendar.dart';
+import 'package:by_cycle/screens/settings.dart';
 import 'package:by_cycle/screens/user_profile.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ void main() async {
     child: BlocProvider(
         create: (BuildContext context) => ThemeCubit(),
         child: MaterialApp(
-          home: const AuthGate(),
+          home: AuthGate(),
           theme: ThemeCubit().getLightThemeData(),
           darkTheme: ThemeCubit().getDarkThemeData(),
           themeMode: ThemeCubit().state,
@@ -157,7 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Profile()),
+                                  builder: (context) => const Settings()),
                             );
                           },
                         ),

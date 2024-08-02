@@ -14,6 +14,12 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   UserRepository userRepo = UserRepository();
+  // final bool _showMessageToNewUser = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +28,13 @@ class _ProfileState extends State<Profile> {
           iconTheme: Theme.of(context).brightness == Brightness.light
               ? const IconThemeData(color: Colors.black)
               : const IconThemeData(color: Colors.white),
-          title: Container(
-            child: Column(children: [
-              Text('Your Profile'),
-              Text(userRepo.loggedInUser!.email!),
-            ]),
-          )),
+          title: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              // crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text('Your Profile'),
+                Text(userRepo.loggedInUser!.email!),
+              ])),
       actions: [
         SignedOutAction((context) {
           RestartWidget.restartApp(context);
@@ -52,7 +59,6 @@ class _ProfileState extends State<Profile> {
         })
       ],
       children: [
-        const Divider(),
         //TODO - Unhide Edit Onboarding Answers when we have edit functionality planned
         // TextButton(
         //     onPressed: () {
@@ -63,22 +69,14 @@ class _ProfileState extends State<Profile> {
         //     },
         //     child: const Text("Edit Onboarding Answers")),
         const Divider(),
-        TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const FeedbackWidget()),
-              );
-            },
-            child: const Text("Provide Feedback")),
-        const Divider(),
+
         Padding(
           padding: const EdgeInsets.all(2),
           child: AspectRatio(
             aspectRatio: 3,
-            child: SvgPicture.asset(
-              'assets/icons/drawer_icon.svg',
-            ),
+            child: Theme.of(context).brightness == Brightness.light
+                ? SvgPicture.asset('assets/icons/drawer_icon.svg')
+                : SvgPicture.asset('assets/icons/drawer_dark.svg'),
           ),
         ),
       ],
