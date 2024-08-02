@@ -20,8 +20,11 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            // title: Text("FEEDBACK FORM"),
-            ),
+          iconTheme: Theme.of(context).brightness == Brightness.light
+              ? const IconThemeData(color: Colors.black)
+              : const IconThemeData(color: Colors.white),
+          // title: Text("FEEDBACK FORM"),
+        ),
         body: Padding(
           padding: const EdgeInsets.all(40.0),
           child: SingleChildScrollView(
@@ -107,15 +110,32 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   const Color.fromRGBO(1, 1, 1, 1))),
                           onPressed: () {
-                            // Add your submit button logic here
-                            userRepo.saveFeedback(_feedbackController.text,
-                                _emailController.text);
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              content: Text("Feedback Submitted Successfully"),
-                              duration: Duration(seconds: 2),
-                            ));
-                            Navigator.pop(context);
+                            if (_feedbackController.text == "" ||
+                                _feedbackController.text.length <= 100) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text(
+                                    "Feedback must be at least 100 characters long"),
+                                duration: Duration(seconds: 2),
+                              ));
+                            } else if (_emailController.text == "") {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text("Please input your email"),
+                                duration: Duration(seconds: 2),
+                              ));
+                            } else {
+                              // Add your submit button logic here
+                              userRepo.saveFeedback(_feedbackController.text,
+                                  _emailController.text);
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content:
+                                    Text("Feedback Submitted Successfully"),
+                                duration: Duration(seconds: 2),
+                              ));
+                              Navigator.pop(context);
+                            }
                           },
                           child: Text('Submit'),
                         ),
