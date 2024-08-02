@@ -1,4 +1,8 @@
+import 'package:by_cycle/cubits/theme/theme_cubit.dart';
+import 'package:by_cycle/repository/user_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class FeedbackWidget extends StatefulWidget {
   const FeedbackWidget({super.key});
@@ -10,12 +14,118 @@ class FeedbackWidget extends StatefulWidget {
 class _FeedbackWidgetState extends State<FeedbackWidget> {
   final TextEditingController _feedbackController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  UserRepository userRepo = UserRepository();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // Add your widget code here
-      child: Text('Feedback Screen Under Construction'),
-    );
+    return Scaffold(
+        appBar: AppBar(
+            // title: Text("FEEDBACK FORM"),
+            ),
+        body: Padding(
+          padding: const EdgeInsets.all(40.0),
+          child: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SvgPicture.asset('assets/icons/drawer_icon.svg', height: 100),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text("FEEDBACK FORM"),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  Container(
+                    width: 300, // Set the desired width
+                    height: 250, // Set the desired height
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                          15.0), // Set the desired border radius
+                      border: Border.all(
+                        color: Colors.grey, // Set the desired border color
+                      ),
+                    ),
+                    child: TextField(
+                      controller: _feedbackController,
+                      // minLines: 5,
+                      maxLines: null, // Allow multiple lines
+                      decoration: InputDecoration(
+                        labelText: 'Feedback',
+                        border: InputBorder
+                            .none, // Remove the default TextField border
+                        contentPadding:
+                            EdgeInsets.all(16.0), // Adjust padding as needed
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Column(
+                    children: [
+                      Container(
+                        width: 300, // Set the desired width
+                        height: 60, // Set the desired height
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                              15.0), // Set the desired border radius
+                          border: Border.all(
+                            color: Colors.grey, // Set the desired border color
+                          ),
+                        ),
+                        child: TextField(
+                          controller: _emailController,
+                          maxLines: null, // Allow multiple lines
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                            border: InputBorder
+                                .none, // Remove the default TextField border
+                            contentPadding: EdgeInsets.all(
+                                10.0), // Adjust padding as needed
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      SizedBox(
+                        width: 108,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              padding: MaterialStateProperty.all<EdgeInsets>(
+                                  EdgeInsets.zero),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                              ),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  const Color.fromRGBO(1, 1, 1, 1))),
+                          onPressed: () {
+                            // Add your submit button logic here
+                            userRepo.saveFeedback(_feedbackController.text,
+                                _emailController.text);
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("Feedback Submitted Successfully"),
+                              duration: Duration(seconds: 2),
+                            ));
+                            Navigator.pop(context);
+                          },
+                          child: Text('Submit'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 }

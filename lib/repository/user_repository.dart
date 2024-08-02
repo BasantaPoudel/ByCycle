@@ -195,7 +195,7 @@ class UserRepository {
 
   Future<List<CustomDateTimeRange>> getPhaseRanges() async {
     //TODO - This is a temporary solution as fetching the new user's data can only occur after pushing the data to firebase but as they are not pushed to firebase yet, we need to wait for a few seconds before fetching the data
-    await Future.delayed(Duration(seconds: 10));
+    await Future.delayed(Duration(seconds: 5));
     UserModel user =
         await getUserByEmailFromFirestore(loggedInUser!.email!) as UserModel;
     return user.phaseRanges;
@@ -230,13 +230,17 @@ class UserRepository {
 
   //Run the algorithm before updating the user's data in firebase
   runAlgorithmAfterUserSubmitsData(UserModel user) {
-    updateUsersAlgorithmData(user);
-    List<String> tags = produceTagsForToday(user);
-    redrawCalendar(user, tags);
-    List<String> insightIds = chooseInsightIdsBasedOnListOfTags(user, tags);
-    List<Map<String, dynamic>> insights =
-        retrieveInsightsByTheirIds(insightIds);
-    logger.d(insights);
+    try {
+      updateUsersAlgorithmData(user);
+      List<String> tags = produceTagsForToday(user);
+      redrawCalendar(user, tags);
+      List<String> insightIds = chooseInsightIdsBasedOnListOfTags(user, tags);
+      List<Map<String, dynamic>> insights =
+          retrieveInsightsByTheirIds(insightIds);
+      logger.d(insights);
+    } catch (e) {
+      logger.d("Error running algorithm after user submits data: $e");
+    }
   }
 
   int findDailyDataInputIndexByDate(
@@ -258,6 +262,17 @@ class UserRepository {
           .collection('users')
           .doc(userModel.email)
           .set({'name': userModel.name, 'email': userModel.email});
+    } catch (e) {
+      logger.d('Error adding data to Firestore: $e');
+    }
+  }
+
+  void saveFeedback(String text, String text2) {
+    try {
+      FirebaseFirestore.instance.collection('feedback').add({
+        'feedback': text,
+        'email': text2,
+      });
     } catch (e) {
       logger.d('Error adding data to Firestore: $e');
     }

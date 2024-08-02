@@ -1,13 +1,12 @@
 import 'package:by_cycle/models/onboarding_questions.dart';
-import 'package:by_cycle/screens/onboarding/onboarding_pagefiveplus.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pagesix.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class OnboardingPageFive extends StatefulWidget {
+class OnboardingPageFivePlus extends StatefulWidget {
   final OnBoardingQuestions formData;
 
-  const OnboardingPageFive({
+  const OnboardingPageFivePlus({
     super.key,
     required this.formData,
   });
@@ -16,7 +15,7 @@ class OnboardingPageFive extends StatefulWidget {
   _OnboardingScreenHomeState createState() => _OnboardingScreenHomeState();
 }
 
-class _OnboardingScreenHomeState extends State<OnboardingPageFive> {
+class _OnboardingScreenHomeState extends State<OnboardingPageFivePlus> {
   int currentIndex = 0;
   DateTime selectedDate = DateTime.now();
   bool alertButtonVisibility = false;
@@ -30,7 +29,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFive> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Is your cycle regular?',
+              'Is your period flow heavy?',
               style: TextStyle(fontSize: 20),
             ),
             const SizedBox(height: 10),
@@ -55,11 +54,11 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFive> {
                           backgroundColor: MaterialStateProperty.all<Color>(
                               const Color.fromRGBO(1, 1, 1, 1))),
                       onPressed: () {
-                        widget.formData.cycleRegular = true;
+                        widget.formData.cycleHeavy = true;
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => OnboardingPageFivePlus(
+                            builder: (context) => OnboardingPageSix(
                               formData: widget.formData,
                             ),
                           ),
@@ -86,67 +85,21 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFive> {
                           backgroundColor: MaterialStateProperty.all<Color>(
                               const Color.fromRGBO(1, 1, 1, 1))),
                       onPressed: () {
-                        // ScaffoldMessenger.of(context).showSnackBar(
-                        //   const SnackBar(
-                        //     content: Text(
-                        //         'Since your cycle is not regular, we recommend you not to rely only on predictions. It’s very important to input your temperature and cervical mucus everyday!'),
-                        //     duration: Duration(seconds: 5),
-                        //   ),
-                        // );
-                        setState(() {
-                          alertButtonVisibility = true;
-                        });
+                        widget.formData.cycleHeavy = false;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OnboardingPageSix(
+                              formData: widget.formData,
+                            ),
+                          ),
+                        );
                       },
                       child: const Text('No')),
                 ),
               ],
             )),
             const SizedBox(height: 20),
-            Visibility(
-              visible: alertButtonVisibility,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 80, right: 80),
-                    child: Text(
-                      'Since your cycle is not regular, we recommend you not to rely only on predictions. It’s very important to input your temperature and cervical mucus everyday!',
-                      style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        // fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                      ),
-                      textAlign: TextAlign.justify,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  SizedBox(
-                    // height: 44,
-                    width: 224,
-                    child: TextButton(
-                        onPressed: () {
-                          widget.formData.cycleRegular = false;
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => OnboardingPageFivePlus(
-                                formData: widget.formData,
-                              ),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'Ok, got it!',
-                          style: GoogleFonts.poppins(
-                            fontSize: 12,
-                            // fontWeight: FontWeight.w500,
-                            color: const Color(0xFF9B907E),
-                          ),
-                        )),
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
       ),
