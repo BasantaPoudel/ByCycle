@@ -37,10 +37,11 @@ class AuthGate extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(20),
                 child: AspectRatio(
-                    aspectRatio: 1,
-                    child: SvgPicture.asset(
-                      'assets/icons/drawer_icon.svg',
-                    )),
+                  aspectRatio: 1,
+                  child: Theme.of(context).brightness == Brightness.light
+                      ? SvgPicture.asset('assets/icons/drawer_icon.svg')
+                      : SvgPicture.asset('assets/icons/drawer_dark.svg'),
+                ),
               );
             },
             subtitleBuilder: (context, action) {

@@ -35,7 +35,12 @@ class _SettingsState extends State<Settings> {
               );
             },
           ),
-          Divider(),
+          const Divider(
+            height: 1,
+            thickness: 1,
+            indent: 15,
+            endIndent: 350,
+          ),
           ListTile(
             title: const Text('Feedback form'),
             // selected: _selectedIndex == 1,

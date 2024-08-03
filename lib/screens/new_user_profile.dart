@@ -33,7 +33,7 @@ class _NewUserProfileState extends State<NewUserProfile> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               // crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text('Your NewUserProfile'),
+                Text('New-User-Profile'),
                 // Text(userRepo.loggedInUser!.email!),
               ])),
       actions: [

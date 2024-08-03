@@ -140,9 +140,12 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                   onPressed: () async {
                     logger.d("Submit button pressed");
                     dailyDataInput.temperature = _currentSliderValue;
-                    //TODO - Change the hours and minutes to a single field
+                    //TODO
+                    //Hours of sleep is stored in minutes
+
                     dailyDataInput.hoursOfSleep =
-                        int.parse(_hoursController.text);
+                        int.parse(_hoursController.text) * 60 +
+                            int.parse(_minsController.text);
                     try {
                       await UserRepository()
                           .saveDailyDataInputData(dailyDataInput);
