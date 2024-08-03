@@ -149,14 +149,13 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                                   _emailController.text);
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
-                                content:
-                                    Text("Feedback Submitted Successfully"),
+                                content: Text("Thank you for your feedback"),
                                 duration: Duration(seconds: 2),
                               ));
                               Navigator.pop(context);
                             }
                           },
-                          child: Text('Submit'),
+                          child: const Text('Submit'),
                         ),
                       ),
                     ],

@@ -155,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         IconButton(
                           color: isLightTheme ? Colors.black : Colors.white,
-                          icon: const Icon(Icons.assistant_outlined),
+                          icon: const Icon(Icons.more_vert_outlined),
                           // Change this to your custom icon
                           // onPressed: () => Scaffold.of(context).openDrawer(),
                           onPressed: () {
@@ -236,9 +236,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       type: BottomNavigationBarType.fixed,
                       items: [
                         BottomNavigationBarItem(
-                          icon: Icon(
-                            Icons.info_outline,
-                            color: Colors.black,
+                          icon: SvgPicture.asset(
+                            'assets/icons/info.svg',
                           ),
                           label: 'Info',
                         ),
