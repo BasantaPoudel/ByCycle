@@ -100,14 +100,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    // getPhaseRanges();
-    // initializeDateFormatting();
   }
 
-  final List<Widget> _children = [
-    //const HomeScreen(),
-    //const HomeScreen(),
-  ];
+  final List<Widget> _children = [];
 
   Future<String> getPhaseRanges() async {
     var phaseRangesFromUser = await userRepo.getPhaseRanges();
