@@ -105,7 +105,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     )),
                                 onPressed: () {
-                                  null;
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const DailyDataInputScreen()));
                                 },
                                 child: Icon(Icons.add_circle_outline,
                                     color: Theme.of(context).brightness ==

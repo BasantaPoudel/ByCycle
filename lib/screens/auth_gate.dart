@@ -1,13 +1,19 @@
 import 'package:by_cycle/main.dart';
+import 'package:by_cycle/models/user_model.dart';
+import 'package:by_cycle/repository/user_repository.dart';
+import 'package:by_cycle/screens/feedback.dart';
+import 'package:by_cycle/screens/new_user_profile.dart';
 import 'package:by_cycle/screens/settings.dart';
 import 'package:by_cycle/screens/user_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AuthGate extends StatelessWidget {
-  const AuthGate({super.key});
+  AuthGate({super.key});
+  final UserRepository userRepo = UserRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +29,7 @@ class AuthGate extends StatelessWidget {
             actions: [
               AuthStateChangeAction<UserCreated>((context, state) async {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => Profile(),
+                  builder: (context) => NewUserProfile(),
                 ));
               }),
             ],
@@ -31,10 +37,11 @@ class AuthGate extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(20),
                 child: AspectRatio(
-                    aspectRatio: 1,
-                    child: SvgPicture.asset(
-                      'assets/icons/drawer_icon.svg',
-                    )),
+                  aspectRatio: 1,
+                  child: Theme.of(context).brightness == Brightness.light
+                      ? SvgPicture.asset('assets/icons/drawer_icon.svg')
+                      : SvgPicture.asset('assets/icons/drawer_dark.svg'),
+                ),
               );
             },
             subtitleBuilder: (context, action) {
@@ -71,7 +78,7 @@ class AuthGate extends StatelessWidget {
         } else if (snapshot.data?.displayName != null) {
           return const MyApp();
         }
-        return Profile();
+        return NewUserProfile();
       },
     );
   }

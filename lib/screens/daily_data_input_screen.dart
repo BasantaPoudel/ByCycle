@@ -3,7 +3,9 @@ import 'package:by_cycle/models/daily_data_input.dart';
 import 'package:by_cycle/repository/user_repository.dart';
 import 'package:by_cycle/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum Discharge {
   NO_DISCHARGE,
@@ -28,7 +30,7 @@ enum Blood {
 enum EnergyLevel { LOW, MEDIUM, HIGH }
 
 enum Symptoms {
-  NO,
+  // NO,
   ANXIETY,
   MOOD_SWINGS,
   CRAMPS,
@@ -76,7 +78,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
     const Color.fromRGBO(254, 247, 237, 1),
   ];
   final List<Color> _symptomsOptionsColor = [
-    const Color(0xFFDED4C5),
+    // const Color(0xFFDED4C5),
     const Color(0xFFDED4C5),
     const Color(0xFFDED4C5),
     const Color(0xFFDED4C5),
@@ -125,38 +127,59 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
               _buildEnergyLevelCard(),
               _buildBloodCard(),
               _buildSymtomsCard(),
-              ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color(0xFFDED4C5)),
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    padding: MaterialStateProperty.all<EdgeInsets>(
-                        const EdgeInsets.only(left: 25, right: 25)),
-                    textStyle: MaterialStateProperty.all<TextStyle>(
-                        const TextStyle(fontSize: 20, color: Colors.black)),
-                    elevation: MaterialStateProperty.all<double>(5.0),
-                  ),
-                  onPressed: () async {
-                    logger.d("Submit button pressed");
-                    dailyDataInput.temperature = _currentSliderValue;
-                    //TODO - Change the hours and minutes to a single field
-                    dailyDataInput.hoursOfSleep =
-                        int.parse(_hoursController.text);
-                    try {
-                      await UserRepository()
-                          .saveDailyDataInputData(dailyDataInput);
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text("Data Submitted Successfully"),
-                        duration: Duration(seconds: 2),
-                      ));
-                      Navigator.pop(context);
-                    } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text("Data Submission Failed")));
-                    }
-                  },
-                  child: const Text('Submit')),
+              SizedBox(
+                width: 224,
+                height: 44,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                        padding: MaterialStateProperty.all<EdgeInsets>(
+                            EdgeInsets.zero),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                        ),
+                        backgroundColor:
+                            // _hoursController.text == "" ||
+                            //         _minsController.text == ""
+                            //     ? MaterialStateProperty.all<Color>(
+                            //         const Color(0xFFDED4C5))
+                            // :
+                            MaterialStateProperty.all<Color>(
+                                const Color.fromRGBO(1, 1, 1, 1))),
+                    onPressed: () async {
+                      logger.d("Submit button pressed");
+                      dailyDataInput.temperature = _currentSliderValue;
+                      //TODO
+                      //Hours of sleep is stored in minutes
+                      if (_hoursController.text != "" &&
+                          _minsController.text != "") {
+                        dailyDataInput.hoursOfSleep =
+                            int.parse(_hoursController.text) * 60 +
+                                int.parse(_minsController.text);
+                        try {
+                          await UserRepository()
+                              .saveDailyDataInputData(dailyDataInput);
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: Text("Data Submitted Successfully"),
+                            duration: Duration(seconds: 2),
+                          ));
+                          Navigator.pop(context);
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text("Data Submission Failed")));
+                        }
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Please enter amount of sleep")));
+                      }
+                    },
+                    child: const Text('Submit')),
+              ),
             ],
           ),
         ),

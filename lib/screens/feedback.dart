@@ -34,7 +34,13 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                   SizedBox(
                     height: 20,
                   ),
-                  SvgPicture.asset('assets/icons/drawer_icon.svg', height: 100),
+                  Theme.of(context).brightness == Brightness.light
+                      ? SvgPicture.asset(
+                          'assets/icons/drawer_icon.svg',
+                          height: 100,
+                        )
+                      : SvgPicture.asset('assets/icons/drawer_dark.svg',
+                          height: 100),
                   SizedBox(
                     height: 20,
                   ),
@@ -54,19 +60,32 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                     ),
                     child: TextField(
                       controller: _feedbackController,
-                      // minLines: 5,
                       maxLines: null, // Allow multiple lines
+                      // min: maxLength, // Set the maximum length for the text
                       decoration: InputDecoration(
                         labelText: 'Feedback',
-                        border: InputBorder
-                            .none, // Remove the default TextField border
-                        contentPadding:
-                            EdgeInsets.all(16.0), // Adjust padding as needed
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.all(16.0),
                       ),
                     ),
                   ),
+
+                  //TODO: Display the updated current count
+                  // Container(
+                  //   alignment: Alignment.centerRight,
+                  //   padding: EdgeInsets.only(right: 20),
+                  //   height: 30,
+                  //   child: Text(
+                  //     '${_feedbackController.text.length}', // Display the current count
+                  //     style: TextStyle(
+                  //       fontSize: 12,
+                  //       color: Colors.grey,
+                  //     ),
+                  //     textAlign: TextAlign.right,
+                  //   ),
+                  // ),
                   SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
                   Column(
                     children: [
@@ -130,14 +149,13 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                                   _emailController.text);
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
-                                content:
-                                    Text("Feedback Submitted Successfully"),
+                                content: Text("Thank you for your feedback"),
                                 duration: Duration(seconds: 2),
                               ));
                               Navigator.pop(context);
                             }
                           },
-                          child: Text('Submit'),
+                          child: const Text('Submit'),
                         ),
                       ),
                     ],

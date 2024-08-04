@@ -8,6 +8,7 @@ import 'package:by_cycle/screens/home_screen.dart';
 import 'package:by_cycle/screens/info_page.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:by_cycle/screens/calendar.dart';
+import 'package:by_cycle/screens/settings.dart';
 import 'package:by_cycle/screens/user_profile.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ void main() async {
     child: BlocProvider(
         create: (BuildContext context) => ThemeCubit(),
         child: MaterialApp(
-          home: const AuthGate(),
+          home: AuthGate(),
           theme: ThemeCubit().getLightThemeData(),
           darkTheme: ThemeCubit().getDarkThemeData(),
           themeMode: ThemeCubit().state,
@@ -149,14 +150,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         IconButton(
                           color: isLightTheme ? Colors.black : Colors.white,
-                          icon: const Icon(Icons.assistant_outlined),
+                          icon: const Icon(Icons.more_vert_outlined),
                           // Change this to your custom icon
                           // onPressed: () => Scaffold.of(context).openDrawer(),
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Profile()),
+                                  builder: (context) => const Settings()),
                             );
                           },
                         ),
@@ -230,9 +231,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       type: BottomNavigationBarType.fixed,
                       items: [
                         BottomNavigationBarItem(
-                          icon: Icon(
-                            Icons.info_outline,
-                            color: Colors.black,
+                          icon: SvgPicture.asset(
+                            'assets/icons/info.svg',
                           ),
                           label: 'Info',
                         ),

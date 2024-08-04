@@ -122,10 +122,17 @@ class _OnboardingScreenHomeState extends State<OnboardingPageOne> {
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
-    if (picked != null && picked != DateTime.now()) {
+    if (picked != null &&
+        picked.isBefore(DateTime.now()) &&
+        picked.isAfter(DateTime.now().subtract(Duration(days: 90)))) {
       setState(() {
         controller.text = "${picked.toLocal()}".split(' ')[0];
       });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Please input a date within the last 90 days"),
+        duration: Duration(seconds: 2),
+      ));
     }
   }
 }

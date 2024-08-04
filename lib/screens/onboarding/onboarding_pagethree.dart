@@ -39,7 +39,8 @@ class _OnboardingScreenHomeState extends State<OnboardingPageThree> {
             ),
             const SizedBox(height: 10),
             SizedBox(
-              width: 200,
+              width: 282,
+              height: 46,
               child: TextField(
                 controller: controller,
                 keyboardType: TextInputType.number,

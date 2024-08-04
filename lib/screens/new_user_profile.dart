@@ -6,13 +6,14 @@ import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class Profile extends StatefulWidget {
+class NewUserProfile extends StatefulWidget {
   @override
-  _ProfileState createState() => _ProfileState();
+  _NewUserProfileState createState() => _NewUserProfileState();
 }
 
-class _ProfileState extends State<Profile> {
+class _NewUserProfileState extends State<NewUserProfile> {
   UserRepository userRepo = UserRepository();
   // final bool _showMessageToNewUser = false;
   @override
@@ -32,8 +33,8 @@ class _ProfileState extends State<Profile> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               // crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text('Your Profile'),
-                Text(userRepo.loggedInUser!.email!),
+                Text('New-User-Profile'),
+                // Text(userRepo.loggedInUser!.email!),
               ])),
       actions: [
         SignedOutAction((context) {
@@ -59,26 +60,20 @@ class _ProfileState extends State<Profile> {
         })
       ],
       children: [
-        //TODO - Unhide Edit Onboarding Answers when we have edit functionality planned
-        // TextButton(
-        //     onPressed: () {
-        //       Navigator.push(
-        //           context,
-        //           MaterialPageRoute(
-        //               builder: (context) => const OnboardingPageOne()));
-        //     },
-        //     child: const Text("Edit Onboarding Answers")),
-        const Divider(),
-
-        Padding(
-          padding: const EdgeInsets.all(2),
-          child: AspectRatio(
-            aspectRatio: 3,
-            child: Theme.of(context).brightness == Brightness.light
-                ? SvgPicture.asset('assets/icons/drawer_icon.svg')
-                : SvgPicture.asset('assets/icons/drawer_dark.svg'),
-          ),
-        ),
+        Container(
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            padding: const EdgeInsets.all(10),
+            child: Text(
+              "Please input your name to complete the account creation process. Also, please verify your email and if needed sign out and sign in again!",
+              style: GoogleFonts.poppins(
+                fontSize: 14.0,
+                fontWeight: FontWeight.bold,
+                // color: Colors.white,
+              ),
+            )),
       ],
     );
   }
