@@ -124,7 +124,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Text('Recommended sleep time'),
                       ),
                       Center(
-                        child: Text('for today $recommendedSleepCycles cycles'),
+                        child:
+                            Text('for today - $recommendedSleepCycles cycles'),
                       ),
                       const SizedBox(
                         height: 15,
@@ -378,7 +379,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             const EdgeInsets.only(right: 55, left: 55, top: 10),
                         child: const Column(children: [
                           Text(
-                              'Phase description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
+                              'The detailed information about the current phase can be consulted in the info page'),
                           // const SizedBox(height: 30),
                           // Text(
                           //     style: Theme.of(context).textTheme.bodyLarge,

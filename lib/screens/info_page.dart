@@ -3,7 +3,7 @@ import 'package:by_cycle/models/custom_date_time_range.dart';
 import 'package:by_cycle/models/user_model.dart';
 import 'package:by_cycle/screens/info_pages/info_page_follicular.dart';
 import 'package:by_cycle/screens/info_pages/info_page_luteal.dart';
-import 'package:by_cycle/screens/info_pages/info_page_menstruation';
+import 'package:by_cycle/screens/info_pages/info_page_menstruation.dart';
 import 'package:by_cycle/screens/info_pages/info_page_ovulation.dart';
 
 import 'package:flutter/material.dart';
@@ -26,51 +26,42 @@ class InfoPage extends StatelessWidget {
         findProgressPercentage(currentDateTimeRange);
     final phaseColor = _getPhaseColor(currentPhase);
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 46.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              RichText(
-                text: TextSpan(
-                  style: Theme.of(context).textTheme.headlineMedium,
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'You\'re in the ',
-                    ),
-                    TextSpan(
-                      text: '${adjustedPhase(currentPhase)} phase',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 46.0),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            RichText(
+              text: TextSpan(
+                style: Theme.of(context).textTheme.headlineMedium,
+                children: <TextSpan>[
+                  TextSpan(
+                    text: 'You\'re in the ',
+                  ),
+                  TextSpan(
+                    text: '${adjustedPhase(currentPhase)} phase',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
+            ),
 
-              const SizedBox(height: 16.0),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: LinearProgressIndicator(
-                  minHeight: 10,
-                  value: phaseProgressPercentage,
-                  backgroundColor: const Color.fromRGBO(222, 212, 197, 1),
-                  valueColor: AlwaysStoppedAnimation<Color>(phaseColor),
-                ),
+            const SizedBox(height: 16.0),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: LinearProgressIndicator(
+                minHeight: 10,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                value: phaseProgressPercentage,
+                backgroundColor: const Color.fromRGBO(222, 212, 197, 1),
+                valueColor: AlwaysStoppedAnimation<Color>(phaseColor),
               ),
-              const SizedBox(height: 47.0),
-              //const InfoPageLuteal(),
-              _buildInfoPage(currentPhase), // Display the correct info page
-            ],
-          ),
+            ),
+            const SizedBox(height: 47.0),
+            //const InfoPageLuteal(),
+            _buildInfoPage(currentPhase), // Display the correct info page
+          ],
         ),
       ),
     );
