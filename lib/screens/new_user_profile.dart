@@ -3,6 +3,7 @@ import 'package:by_cycle/models/user_model.dart';
 import 'package:by_cycle/repository/user_repository.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NewUserProfile extends StatefulWidget {
@@ -19,6 +20,19 @@ class _NewUserProfileState extends State<NewUserProfile> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showSnackBar();
+    });
+  }
+
+  _showSnackBar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+            'Please input your name to complete the account creation process. Next, verify your email and, sign out and sign in again to access your recently created account!'),
+        duration: Duration(seconds: 8),
+      ),
+    );
   }
 
   @override
@@ -59,20 +73,15 @@ class _NewUserProfileState extends State<NewUserProfile> {
         })
       ],
       children: [
-        Container(
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            padding: const EdgeInsets.all(10),
-            child: Text(
-              "Please input your name to complete the account creation process. Also, please verify your email and if needed sign out and sign in again!",
-              style: GoogleFonts.poppins(
-                fontSize: 14.0,
-                fontWeight: FontWeight.bold,
-                // color: Colors.white,
-              ),
-            )),
+        Padding(
+          padding: const EdgeInsets.all(2),
+          child: AspectRatio(
+            aspectRatio: 3,
+            child: Theme.of(context).brightness == Brightness.light
+                ? SvgPicture.asset('assets/icons/drawer_icon.svg')
+                : SvgPicture.asset('assets/icons/drawer_dark.svg'),
+          ),
+        ),
       ],
     );
   }

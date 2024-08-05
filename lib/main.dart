@@ -252,7 +252,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ));
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return const Scaffold(
+                body: Center(
+                    child: CircularProgressIndicator(
+              backgroundColor: const Color.fromRGBO(222, 212, 197, 1),
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+            )));
           }
         }); // This trailing comma makes auto-formatting nicer for build methods.
   }
