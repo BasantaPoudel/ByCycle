@@ -68,16 +68,16 @@ class _OnboardingScreenHomeState extends State<OnboardingPageThree> {
               child: ElevatedButton(
                 style: ButtonStyle(
                     padding:
-                        MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero),
+                    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                     ),
                     backgroundColor: controller.text == ""
-                        ? MaterialStateProperty.all<Color>(
+                        ? WidgetStateProperty.all<Color>(
                             const Color(0xFFDED4C5))
-                        : MaterialStateProperty.all<Color>(
+                        : WidgetStateProperty.all<Color>(
                             const Color.fromRGBO(1, 1, 1, 1))),
                 onPressed: () {
                   if (controller.text != "") {

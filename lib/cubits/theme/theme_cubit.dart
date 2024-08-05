@@ -23,13 +23,13 @@ class ThemeCubit extends Cubit<ThemeMode> {
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
         backgroundColor:
-            MaterialStateProperty.all<Color>(const Color(0xFFDED4C5)),
-        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            WidgetStateProperty.all<Color>(const Color(0xFFDED4C5)),
+        foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
         padding:
-            MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(16)),
+            WidgetStateProperty.all<EdgeInsets>(const EdgeInsets.all(16)),
         // textStyle:
         //     MaterialStateProperty.all<TextStyle>(TextStyle(fontSize: 20)),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
@@ -98,13 +98,13 @@ class ThemeCubit extends Cubit<ThemeMode> {
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
         backgroundColor:
-            MaterialStateProperty.all<Color>(const Color(0xFFDED4C5)),
-        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            WidgetStateProperty.all<Color>(const Color(0xFFDED4C5)),
+        foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
         padding:
-            MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(16)),
+            WidgetStateProperty.all<EdgeInsets>(const EdgeInsets.all(16)),
         // textStyle:
         //     MaterialStateProperty.all<TextStyle>(TextStyle(fontSize: 20)),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),

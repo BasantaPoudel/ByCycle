@@ -3,9 +3,7 @@ import 'package:by_cycle/models/daily_data_input.dart';
 import 'package:by_cycle/repository/user_repository.dart';
 import 'package:by_cycle/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 enum Discharge {
   NO_DISCHARGE,
@@ -132,10 +130,10 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                 height: 44,
                 child: ElevatedButton(
                     style: ButtonStyle(
-                        padding: MaterialStateProperty.all<EdgeInsets>(
+                        padding: WidgetStateProperty.all<EdgeInsets>(
                             EdgeInsets.zero),
                         shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                            WidgetStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0),
                           ),
@@ -146,7 +144,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                             //     ? MaterialStateProperty.all<Color>(
                             //         const Color(0xFFDED4C5))
                             // :
-                            MaterialStateProperty.all<Color>(
+                            WidgetStateProperty.all<Color>(
                                 const Color.fromRGBO(1, 1, 1, 1))),
                     onPressed: () async {
                       logger.d("Submit button pressed");

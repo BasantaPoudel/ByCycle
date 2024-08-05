@@ -118,7 +118,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
                           ),
                         ]),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   TextButton(
@@ -152,7 +152,7 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
                 width: 224,
                 child: ElevatedButton(
                   style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
@@ -160,9 +160,9 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSix> {
                       backgroundColor: insightsController.text == "" &&
                               logInDataController.text == "" &&
                               widget.formData.wouldLikeReminders
-                          ? MaterialStateProperty.all<Color>(
+                          ? WidgetStateProperty.all<Color>(
                               const Color(0xFFDED4C5))
-                          : MaterialStateProperty.all<Color>(
+                          : WidgetStateProperty.all<Color>(
                               const Color.fromRGBO(1, 1, 1, 1))),
                   onPressed: () async {
                     if (logInDataController.text != "") {

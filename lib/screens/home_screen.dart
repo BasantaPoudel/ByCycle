@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
           if (snapshot.hasData) {
             return Center(
                 child: CustomScrollView(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     slivers: [
                   SliverFillRemaining(
                     hasScrollBody: false,
@@ -63,11 +63,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       backgroundColor: Theme.of(context)
                                                   .brightness ==
                                               Brightness.light
-                                          ? MaterialStateProperty.all<Color>(
+                                          ? WidgetStateProperty.all<Color>(
                                               const Color(0xFF31312F))
-                                          : MaterialStateProperty.all<Color>(
+                                          : WidgetStateProperty.all<Color>(
                                               const Color(0xFFD6A879)),
-                                      shape: MaterialStateProperty.all<
+                                      shape: WidgetStateProperty.all<
                                           RoundedRectangleBorder>(
                                         RoundedRectangleBorder(
                                           borderRadius:
@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             builder: (context) =>
                                                 const DailyDataInputScreen()));
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     "Log in your daily data",
                                   )),
                             ),
@@ -93,11 +93,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     backgroundColor:
                                         Theme.of(context).brightness ==
                                                 Brightness.light
-                                            ? MaterialStateProperty.all<Color>(
+                                            ? WidgetStateProperty.all<Color>(
                                                 const Color(0xFF31312F))
-                                            : MaterialStateProperty.all<Color>(
+                                            : WidgetStateProperty.all<Color>(
                                                 const Color(0xFFD6A879)),
-                                    shape: MaterialStateProperty.all<
+                                    shape: WidgetStateProperty.all<
                                         RoundedRectangleBorder>(
                                       RoundedRectangleBorder(
                                         borderRadius:
@@ -163,15 +163,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: ElevatedButton(
                                     style: ButtonStyle(
                                       padding:
-                                          MaterialStateProperty.all<EdgeInsets>(
+                                          WidgetStateProperty.all<EdgeInsets>(
                                               EdgeInsets.zero),
                                       backgroundColor:
-                                          MaterialStateProperty.all<Color>(
+                                          WidgetStateProperty.all<Color>(
                                               Colors.transparent),
                                       shadowColor:
-                                          MaterialStateProperty.all<Color>(
+                                          WidgetStateProperty.all<Color>(
                                               Colors.transparent),
-                                      shape: MaterialStateProperty.all<
+                                      shape: WidgetStateProperty.all<
                                           RoundedRectangleBorder>(
                                         RoundedRectangleBorder(
                                           borderRadius:
@@ -194,8 +194,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                               initialEntryMode:
                                                   TimePickerEntryMode.dial);
                                       setState(() {
-                                        if (setBedTime != null)
+                                        if (setBedTime != null) {
                                           bedTime = setBedTime;
+                                        }
                                       });
                                       calculateWakeUpTime(
                                           bedTime, recommendedSleepTime);
@@ -234,15 +235,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   width: 98,
                                   child: ElevatedButton(
                                       style: ButtonStyle(
-                                        padding: MaterialStateProperty.all<
+                                        padding: WidgetStateProperty.all<
                                             EdgeInsets>(EdgeInsets.zero),
                                         backgroundColor:
-                                            MaterialStateProperty.all<Color>(
+                                            WidgetStateProperty.all<Color>(
                                                 Colors.transparent),
                                         shadowColor:
-                                            MaterialStateProperty.all<Color>(
+                                            WidgetStateProperty.all<Color>(
                                                 Colors.transparent),
-                                        shape: MaterialStateProperty.all<
+                                        shape: WidgetStateProperty.all<
                                             RoundedRectangleBorder>(
                                           RoundedRectangleBorder(
                                             borderRadius:
@@ -314,16 +315,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             ? ElevatedButton(
                                 style: ButtonStyle(
                                   padding:
-                                      MaterialStateProperty.all<EdgeInsets>(
+                                      WidgetStateProperty.all<EdgeInsets>(
                                           EdgeInsets.zero),
                                   backgroundColor:
                                       Theme.of(context).brightness ==
                                               Brightness.light
-                                          ? MaterialStateProperty.all<Color>(
+                                          ? WidgetStateProperty.all<Color>(
                                               const Color(0xFF31312F))
-                                          : MaterialStateProperty.all<Color>(
+                                          : WidgetStateProperty.all<Color>(
                                               const Color(0xFFD6A879)),
-                                  shape: MaterialStateProperty.all<
+                                  shape: WidgetStateProperty.all<
                                       RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(30.0),
@@ -331,7 +332,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 onPressed: openAlarmApp,
-                                child: Text(
+                                child: const Text(
                                     // style: Theme.of(context).textTheme.bodySmall,
                                     style: TextStyle(
                                       fontSize: 10,

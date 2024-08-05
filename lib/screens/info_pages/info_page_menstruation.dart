@@ -41,7 +41,7 @@ static const List<String> symptoms = [
               //style:  Theme.of(context).textTheme.bodyLarge;
               TextSpan(
                 style: Theme.of(context).textTheme.bodyLarge,
-                children: [
+                children: const [
                   TextSpan(
                     text: 'A menstrual cycle starts with your period ',
                     style: TextStyle(fontWeight: FontWeight.bold),
@@ -85,42 +85,42 @@ static const List<String> symptoms = [
                 children: const [
                   TextSpan(
                     text: '• ',
-                    style: TextStyle(color: const Color.fromRGBO(212, 128, 120, 1)),
+                    style: TextStyle(color: Color.fromRGBO(212, 128, 120, 1)),
                   ),
                   TextSpan(
                     text: 'Menstrual flow that is significantly heavier or lighter than usual (going through one pad or a tampon in one or two hours).\n',
                   ),
                   TextSpan(
                     text: '• ',
-                    style: TextStyle(color: const Color.fromRGBO(212, 128, 120, 1)),
+                    style: TextStyle(color: Color.fromRGBO(212, 128, 120, 1)),
                   ),
                   TextSpan(
                     text: 'Bleeding lasting longer than seven days.\n',
                   ),
                   TextSpan(
                     text: '• ',
-                    style: TextStyle(color: const Color.fromRGBO(212, 128, 120, 1)),
+                    style: TextStyle(color: Color.fromRGBO(212, 128, 120, 1)),
                   ),
                   TextSpan(
                     text: 'Periods accompanied by severe pain, cramping, nausea, or vomiting.\n',
                   ),
                   TextSpan(
                     text: '• ',
-                    style: TextStyle(color: const Color.fromRGBO(212, 128, 120, 1)),
+                    style: TextStyle(color: Color.fromRGBO(212, 128, 120, 1)),
                   ),
                   TextSpan(
                     text: 'Periods occurring less than 21 days or more than 35 days apart.\n',
                   ),
                   TextSpan(
                     text: '• ',
-                    style: TextStyle(color: const Color.fromRGBO(212, 128, 120, 1)),
+                    style: TextStyle(color: Color.fromRGBO(212, 128, 120, 1)),
                   ),
                   TextSpan(
                     text: 'Absence of a period for three months (or 90 days).\n',
                   ),
                   TextSpan(
                     text: '• ',
-                    style: TextStyle(color: const Color.fromRGBO(212, 128, 120, 1)),
+                    style: TextStyle(color: Color.fromRGBO(212, 128, 120, 1)),
                   ),
                   TextSpan(
                     text: 'Sudden red or brown spotting between periods.',

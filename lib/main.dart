@@ -9,7 +9,6 @@ import 'package:by_cycle/screens/info_page.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:by_cycle/screens/calendar.dart';
 import 'package:by_cycle/screens/settings.dart';
-import 'package:by_cycle/screens/user_profile.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -113,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (_children.length == 3) _children.remove(2);
       // _children.remove(3);
       _children.add(InfoPage(currentUser: currentUser!));
-      _children.add(HomeScreen());
+      _children.add(const HomeScreen());
       _children.add(Calendar(initialDateTimeRanges: phaseRanges));
     });
     return 'Success';
@@ -253,7 +252,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ));
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         }); // This trailing comma makes auto-formatting nicer for build methods.
   }
@@ -262,7 +261,7 @@ class _MyHomePageState extends State<MyHomePage> {
 class RestartWidget extends StatefulWidget {
   final Widget child;
 
-  const RestartWidget({Key? key, required this.child}) : super(key: key);
+  const RestartWidget({super.key, required this.child});
 
   static void restartApp(BuildContext context) {
     context.findAncestorStateOfType<_RestartWidgetState>()?.restartApp();

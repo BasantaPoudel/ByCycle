@@ -1,14 +1,13 @@
 import 'package:by_cycle/main.dart';
 import 'package:by_cycle/models/user_model.dart';
 import 'package:by_cycle/repository/user_repository.dart';
-import 'package:by_cycle/screens/feedback.dart';
-import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NewUserProfile extends StatefulWidget {
+  const NewUserProfile({super.key});
+
   @override
   _NewUserProfileState createState() => _NewUserProfileState();
 }
@@ -29,7 +28,7 @@ class _NewUserProfileState extends State<NewUserProfile> {
           iconTheme: Theme.of(context).brightness == Brightness.light
               ? const IconThemeData(color: Colors.black)
               : const IconThemeData(color: Colors.white),
-          title: Column(
+          title: const Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               // crossAxisAlignment: CrossAxisAlignment.end,
               children: [

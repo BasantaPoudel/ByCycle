@@ -214,7 +214,7 @@ class UserRepository {
 
   Future<List<CustomDateTimeRange>> getPhaseRanges() async {
     //TODO - This is a temporary solution as fetching the new user's data can only occur after pushing the data to firebase but as they are not pushed to firebase yet, we need to wait for a few seconds before fetching the data
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 3));
     UserModel user =
         await getUserByEmailFromFirestore(loggedInUser!.email!) as UserModel;
     return user.phaseRanges;

@@ -1,7 +1,5 @@
-import 'package:by_cycle/cubits/theme/theme_cubit.dart';
 import 'package:by_cycle/repository/user_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class FeedbackWidget extends StatefulWidget {
@@ -15,6 +13,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
   final TextEditingController _feedbackController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   UserRepository userRepo = UserRepository();
+  final int currentLength = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +30,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
             child: Center(
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Theme.of(context).brightness == Brightness.light
@@ -41,11 +40,11 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                         )
                       : SvgPicture.asset('assets/icons/drawer_dark.svg',
                           height: 100),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text("FEEDBACK FORM"),
-                  SizedBox(
+                  const Text("FEEDBACK FORM"),
+                  const SizedBox(
                     height: 40,
                   ),
                   Container(
@@ -62,7 +61,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                       controller: _feedbackController,
                       maxLines: null, // Allow multiple lines
                       // min: maxLength, // Set the maximum length for the text
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Feedback',
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.all(16.0),
@@ -71,20 +70,20 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                   ),
 
                   //TODO: Display the updated current count
-                  // Container(
-                  //   alignment: Alignment.centerRight,
-                  //   padding: EdgeInsets.only(right: 20),
-                  //   height: 30,
-                  //   child: Text(
-                  //     '${_feedbackController.text.length}', // Display the current count
-                  //     style: TextStyle(
-                  //       fontSize: 12,
-                  //       color: Colors.grey,
-                  //     ),
-                  //     textAlign: TextAlign.right,
-                  //   ),
-                  // ),
-                  SizedBox(
+                  Container(
+                    alignment: Alignment.centerRight,
+                    padding: EdgeInsets.only(right: 20),
+                    height: 30,
+                    child: Text(
+                      '${_feedbackController.text.length}', // Display the current count
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
+                      ),
+                      textAlign: TextAlign.right,
+                    ),
+                  ),
+                  const SizedBox(
                     height: 20,
                   ),
                   Column(
@@ -102,7 +101,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                         child: TextField(
                           controller: _emailController,
                           maxLines: null, // Allow multiple lines
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Email',
                             border: InputBorder
                                 .none, // Remove the default TextField border
@@ -111,22 +110,22 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 50,
                       ),
                       SizedBox(
                         width: 108,
                         child: ElevatedButton(
                           style: ButtonStyle(
-                              padding: MaterialStateProperty.all<EdgeInsets>(
+                              padding: WidgetStateProperty.all<EdgeInsets>(
                                   EdgeInsets.zero),
-                              shape: MaterialStateProperty.all<
+                              shape: WidgetStateProperty.all<
                                   RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30.0),
                                 ),
                               ),
-                              backgroundColor: MaterialStateProperty.all<Color>(
+                              backgroundColor: WidgetStateProperty.all<Color>(
                                   const Color.fromRGBO(1, 1, 1, 1))),
                           onPressed: () {
                             if (_feedbackController.text == "" ||

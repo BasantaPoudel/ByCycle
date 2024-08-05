@@ -1,6 +1,5 @@
 import 'package:by_cycle/screens/feedback.dart';
 import 'package:by_cycle/screens/user_profile.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -31,7 +30,7 @@ class _SettingsState extends State<Settings> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Profile()),
+                MaterialPageRoute(builder: (context) => const Profile()),
               );
             },
           ),
@@ -51,7 +50,7 @@ class _SettingsState extends State<Settings> {
 
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => FeedbackWidget()),
+                MaterialPageRoute(builder: (context) => const FeedbackWidget()),
               );
               // Navigator.pop(context);
             },

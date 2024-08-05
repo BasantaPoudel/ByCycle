@@ -1,13 +1,13 @@
 import 'package:by_cycle/main.dart';
 import 'package:by_cycle/models/user_model.dart';
 import 'package:by_cycle/repository/user_repository.dart';
-import 'package:by_cycle/screens/feedback.dart';
-import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Profile extends StatefulWidget {
+  const Profile({super.key});
+
   @override
   _ProfileState createState() => _ProfileState();
 }
@@ -32,7 +32,7 @@ class _ProfileState extends State<Profile> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               // crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text('Your Profile'),
+                const Text('Your Profile'),
                 Text(userRepo.loggedInUser!.email!),
               ])),
       actions: [

@@ -3,7 +3,6 @@ import 'package:by_cycle/models/custom_date_time_range.dart';
 import 'package:by_cycle/models/user_model.dart';
 import 'package:by_cycle/screens/info_pages/info_page_follicular.dart';
 import 'package:by_cycle/screens/info_pages/info_page_luteal.dart';
-import 'package:by_cycle/screens/info_pages/info_page_menstruation.dart';
 import 'package:by_cycle/screens/info_pages/info_page_ovulation.dart';
 
 import 'package:flutter/material.dart';
@@ -36,12 +35,12 @@ class InfoPage extends StatelessWidget {
               text: TextSpan(
                 style: Theme.of(context).textTheme.headlineMedium,
                 children: <TextSpan>[
-                  TextSpan(
+                  const TextSpan(
                     text: 'You\'re in the ',
                   ),
                   TextSpan(
                     text: '${adjustedPhase(currentPhase)} phase',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -85,7 +84,6 @@ class InfoPage extends StatelessWidget {
   CustomDateTimeRange findCurrentPhaseDateTimeRange(UserModel user) {
     var currentPhaseDateTimeRange = CustomDateTimeRange(
         start: DateTime.now(), end: DateTime.now(), phase: '');
-    if (user.phaseRanges == null) return currentPhaseDateTimeRange;
     user.phaseRanges.firstWhere((element) {
       var phaseStart =
           DateTime(element.start.year, element.start.month, element.start.day);
