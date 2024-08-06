@@ -400,7 +400,24 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
             logger.d(itemType.toString().split('.').last);
             dailyDataInput.discharge = "";
           } else {
-            logger.d("Only one discharge can be selected");
+            setState(() {
+              //Remove the colour of the previously selected discharge
+              for (int i = 0; i < _dischargeOptionsColor.length; i++) {
+                if (_dischargeOptionsColor[i] ==
+                    const Color.fromRGBO(82, 82, 76, 1)) {
+                  _dischargeOptionsColor[i] =
+                      const Color.fromRGBO(254, 247, 237, 1);
+                }
+              }
+
+              _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
+                  _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
+                      const Color.fromRGBO(82, 82, 76, 1);
+            });
+
+            logger.d(itemType.toString().split('.').last);
+            dailyDataInput.discharge = itemType.toString().split('.').last;
+            // logger.d("Only one discharge can be selected");
           }
         },
         child: Container(
@@ -450,7 +467,29 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
             logger.d(itemType.toString().split('.').last);
             dailyDataInput.blood = "";
           } else {
-            logger.d("Only one blood type can be selected");
+            setState(() {
+              //Remove the colour of the previously selected blood type
+
+              for (int i = 0; i < _bloodOptionsColor.length; i++) {
+                if (_bloodOptionsColor[i] ==
+                    const Color.fromRGBO(82, 82, 76, 1)) {
+                  _bloodOptionsColor[i] =
+                      const Color.fromRGBO(254, 247, 237, 1);
+                }
+              }
+
+              _bloodOptionsColor[Blood.values.indexOf(itemType)] ==
+                      const Color.fromRGBO(254, 247, 237, 1)
+                  ? _bloodOptionsColor[Blood.values.indexOf(itemType)] =
+                      const Color.fromRGBO(82, 82, 76, 1)
+                  : _bloodOptionsColor[Blood.values.indexOf(itemType)] =
+                      const Color.fromRGBO(254, 247, 237, 1);
+            });
+
+            dailyDataInput.blood = itemType.toString().split('.').last;
+            logger.d(itemType.toString().split('.').last);
+
+            // logger.d("Only one blood type can be selected");
           }
         },
         child: Container(
@@ -500,7 +539,25 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
             logger.d(itemType.toString().split('.').last);
             dailyDataInput.energyLevel = "";
           } else {
-            logger.d("Only one energy level can be selected");
+            setState(() {
+              //Remove the colour of the previously selected energy level
+
+              for (int i = 0; i < _energyOptionsColor.length; i++) {
+                if (_energyOptionsColor[i] ==
+                    const Color.fromRGBO(82, 82, 76, 1)) {
+                  _energyOptionsColor[i] =
+                      const Color.fromRGBO(254, 247, 237, 1);
+                }
+              }
+
+              _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
+                  _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
+                      const Color.fromRGBO(82, 82, 76, 1);
+            });
+            dailyDataInput.energyLevel = itemType.toString().split('.').last;
+            logger.d(itemType.toString().split('.').last);
+
+            // logger.d("Only one energy level can be selected");
           }
         },
         child: Container(

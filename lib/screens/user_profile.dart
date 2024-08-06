@@ -59,17 +59,7 @@ class _ProfileState extends State<Profile> {
         })
       ],
       children: [
-        //TODO - Unhide Edit Onboarding Answers when we have edit functionality planned
-        // TextButton(
-        //     onPressed: () {
-        //       Navigator.push(
-        //           context,
-        //           MaterialPageRoute(
-        //               builder: (context) => const OnboardingPageOne()));
-        //     },
-        //     child: const Text("Edit Onboarding Answers")),
         const Divider(),
-
         Padding(
           padding: const EdgeInsets.all(2),
           child: AspectRatio(
