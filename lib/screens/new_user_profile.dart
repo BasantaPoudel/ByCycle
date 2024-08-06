@@ -29,7 +29,7 @@ class _NewUserProfileState extends State<NewUserProfile> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text(
-            'Please input your name to complete the account creation process. Next, verify your email and, sign out and sign in again to access your recently created account!'),
+            'After updating personal details, Please Sign Out and Sign In again again to access your recently created account!'),
         duration: Duration(seconds: 8),
       ),
     );
@@ -57,10 +57,10 @@ class _NewUserProfileState extends State<NewUserProfile> {
         DisplayNameChangedAction((context, oldName, newName) async {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              backgroundColor: Colors.green,
+              // backgroundColor: Colors.green,
               content: Text(
                   'Display name changed to $newName, Please Sign Out and Sign In again once you verify your email!'),
-              duration: const Duration(seconds: 5),
+              duration: const Duration(seconds: 8),
             ),
           );
 
