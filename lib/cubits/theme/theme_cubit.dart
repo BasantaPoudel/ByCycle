@@ -25,8 +25,7 @@ class ThemeCubit extends Cubit<ThemeMode> {
         backgroundColor:
             WidgetStateProperty.all<Color>(const Color(0xFFDED4C5)),
         foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-        padding:
-            WidgetStateProperty.all<EdgeInsets>(const EdgeInsets.all(16)),
+        padding: WidgetStateProperty.all<EdgeInsets>(const EdgeInsets.all(16)),
         // textStyle:
         //     MaterialStateProperty.all<TextStyle>(TextStyle(fontSize: 20)),
         shape: WidgetStateProperty.all<RoundedRectangleBorder>(
@@ -82,13 +81,18 @@ class ThemeCubit extends Cubit<ThemeMode> {
         ),
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Color(0xFFD6A879),
+          backgroundColor: Color(0xFFDED4C5),
           selectedItemColor: Colors.black,
           selectedIconTheme: IconThemeData(
               fill: BorderSide.strokeAlignCenter) // Set the selected item color
           ),
-      scaffoldBackgroundColor:
-          Colors.black, // Set the background color to a dark shade
+      scaffoldBackgroundColor: Color(0xFF31312F),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Color(0xFF31312F), // Set the app bar color
+        iconTheme: IconThemeData(
+          color: Colors.white, // Set the icon color
+        ),
+      ), // Set the background color to a dark shade
     );
   }
 
@@ -100,8 +104,7 @@ class ThemeCubit extends Cubit<ThemeMode> {
         backgroundColor:
             WidgetStateProperty.all<Color>(const Color(0xFFDED4C5)),
         foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-        padding:
-            WidgetStateProperty.all<EdgeInsets>(const EdgeInsets.all(16)),
+        padding: WidgetStateProperty.all<EdgeInsets>(const EdgeInsets.all(16)),
         // textStyle:
         //     MaterialStateProperty.all<TextStyle>(TextStyle(fontSize: 20)),
         shape: WidgetStateProperty.all<RoundedRectangleBorder>(
@@ -151,7 +154,10 @@ class ThemeCubit extends Cubit<ThemeMode> {
           backgroundColor: Color(0xFFDED4C5),
           selectedItemColor: Colors.black,
           selectedIconTheme: IconThemeData(
-              fill: BorderSide.strokeAlignCenter) // Set the selected item color
+              // size: 30,
+              // weight: 2.0,
+              fill:
+                  BorderSide.strokeAlignOutside) // Set the selected item color
           ),
 
       cardTheme: CardTheme(
@@ -166,7 +172,7 @@ class ThemeCubit extends Cubit<ThemeMode> {
       appBarTheme: const AppBarTheme(
         backgroundColor: Color(0xFFFEF7ED), // Set the app bar color
         iconTheme: IconThemeData(
-          color: Colors.white, // Set the icon color
+          color: Colors.black, // Set the icon color
         ),
       ),
     );

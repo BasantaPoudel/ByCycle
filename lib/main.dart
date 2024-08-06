@@ -137,24 +137,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         icon: const Icon(Icons.more_vert_outlined),
                         // Change this to your custom icon
                         onPressed: () => Scaffold.of(context).openDrawer(),
-                        // onPressed: () {
-                        //   Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(builder: (context) => Profile()),
-                        //   );
-                        // },
-                      ),
-                    ),
-                  ),
-                  title: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        // IconButton(
-                        //   color: isLightTheme ? Colors.black : Colors.white,
-                        //   icon: const Icon(Icons.more_vert_outlined),
-                        //   // Change this to your custom icon
-                        //   // onPressed: () => Scaffold.of(context).openDrawer(),
                         //   onPressed: () {
                         //     Navigator.push(
                         //       context,
@@ -162,8 +144,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         //           builder: (context) => const Settings()),
                         //     );
                         //   },
-                        // ),
-
+                      ),
+                    ),
+                  ),
+                  title: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
                         Row(
                           children: [
                             TextButton(
@@ -178,28 +165,33 @@ class _MyHomePageState extends State<MyHomePage> {
                               // style: Theme.of(context).buttonTheme.layoutBehavior,
                             ),
                             Text(
-                              DateFormat('dd.mm.yyyy').format(DateTime.now()),
+                              DateFormat('dd.MM.yyyy').format(DateTime.now()),
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
                           ],
                         ),
-                        IconButton(
-                          color: Colors.black,
-                          icon: isLightTheme
-                              ? SvgPicture.asset(
-                                  'assets/icons/dark_mode.svg',
-                                )
-                              : SvgPicture.asset(
-                                  'assets/icons/light_mode.svg',
-                                ),
-                          onPressed: () {
-                            themeCubit.toggleTheme();
-                            // Navigate to the search screen
-                          },
-                        ),
                       ],
                     ),
                   ),
+                  actions: [
+                    Transform.translate(
+                      offset: const Offset(-30, 0),
+                      child: IconButton(
+                        color: Colors.black,
+                        icon: isLightTheme
+                            ? SvgPicture.asset(
+                                'assets/icons/dark_mode.svg',
+                              )
+                            : SvgPicture.asset(
+                                'assets/icons/light_mode.svg',
+                              ),
+                        onPressed: () {
+                          themeCubit.toggleTheme();
+                          // Navigate to the search screen
+                        },
+                      ),
+                    ),
+                  ],
                 ),
                 drawer: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
@@ -225,6 +217,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       topRight: Radius.circular(25),
                     ),
                     child: BottomNavigationBar(
+                      showSelectedLabels:
+                          false, // Hide labels for selected items
+                      showUnselectedLabels:
+                          false, // Hide labels for unselected items
                       onTap: (int index) {
                         setState(() {
                           _selectedIndex = index;
@@ -237,19 +233,27 @@ class _MyHomePageState extends State<MyHomePage> {
                           icon: SvgPicture.asset(
                             'assets/icons/info.svg',
                           ),
-                          label: 'Info',
+                          label: '',
+                          activeIcon: SvgPicture.asset('assets/icons/info.svg',
+                              color: Colors.black),
+                          // Highlighted icon for the selected item
                         ),
                         BottomNavigationBarItem(
                           icon: SvgPicture.asset(
                             'assets/icons/home.svg',
                           ),
-                          label: 'Home',
+                          activeIcon: SvgPicture.asset('assets/icons/home.svg',
+                              color: Colors.black),
+                          label: '',
                         ),
                         BottomNavigationBarItem(
                           icon: SvgPicture.asset(
                             'assets/icons/calendar.svg',
                           ),
-                          label: 'Calendar',
+                          activeIcon: SvgPicture.asset(
+                              'assets/icons/calendar.svg',
+                              color: Colors.black),
+                          label: '',
                         ),
                       ],
                     ),
