@@ -70,7 +70,7 @@ class _CalendarState extends State<Calendar> {
         BoxDecoration(color: Color.fromRGBO(237, 195, 191, 1)),
   );
   Map<String, CalendarStyle> styles = {
-    "menstruation": CalendarStyle(
+    "menstruation": const CalendarStyle(
       rangeHighlightColor: Color.fromRGBO(237, 195, 191, 1),
       rangeStartDecoration: BoxDecoration(
         color: Color.fromRGBO(237, 195, 191, 1),
@@ -93,7 +93,7 @@ class _CalendarState extends State<Calendar> {
         color: Colors.black,
       ), // Set text color to black
     ),
-    "follicular": CalendarStyle(
+    "follicular": const CalendarStyle(
       rangeHighlightColor: Color.fromRGBO(213, 206, 229, 1),
       rangeStartDecoration: BoxDecoration(
         color: Color.fromRGBO(213, 206, 229, 1),
@@ -116,7 +116,7 @@ class _CalendarState extends State<Calendar> {
         color: Colors.black,
       ), // Set text color to black
     ),
-    "ovulation": CalendarStyle(
+    "ovulation": const CalendarStyle(
       rangeHighlightColor: Color.fromRGBO(204, 218, 214, 1),
       rangeStartDecoration: BoxDecoration(
         color: Color.fromRGBO(204, 218, 214, 1),
@@ -139,7 +139,7 @@ class _CalendarState extends State<Calendar> {
         color: Colors.black,
       ), // Set text color to black
     ),
-    "luteal": CalendarStyle(
+    "luteal": const CalendarStyle(
       rangeHighlightColor: Color.fromRGBO(241, 222, 204, 1),
       rangeStartDecoration: BoxDecoration(
         color: Color.fromRGBO(241, 222, 204, 1),
@@ -209,6 +209,10 @@ class _CalendarState extends State<Calendar> {
           firstDay: DateTime(2020, 1, 1),
           lastDay: DateTime(2025, 1, 1),
           focusedDay: _focusedDay,
+          availableCalendarFormats: const {CalendarFormat.month: 'Month'},
+          headerStyle: const HeaderStyle(
+            titleCentered: true,
+          ),
           // calendarFormat: _calendarFormat,
           selectedDayPredicate: (day) {
             // Use `selectedDayPredicate` to determine which day is currently selected.

@@ -111,13 +111,17 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
         title: const Text('Daily Data Input'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Text(
-                'To get the most out of your syncing experience, it\'s important to log your symptoms!',
-                style: Theme.of(context).textTheme.bodySmall,
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                child: Text(
+                  'To get the most out of your syncing experience, it\'s important to log your symptoms!',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  textAlign: TextAlign.justify,
+                ),
               ),
               _buildTemperatureCard(),
               _buildDischargeCard(),
@@ -132,8 +136,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                     style: ButtonStyle(
                         padding: WidgetStateProperty.all<EdgeInsets>(
                             EdgeInsets.zero),
-                        shape:
-                            WidgetStateProperty.all<RoundedRectangleBorder>(
+                        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0),
                           ),
@@ -177,6 +180,9 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                       }
                     },
                     child: const Text('Submit')),
+              ),
+              const SizedBox(
+                height: 16,
               ),
             ],
           ),
@@ -399,10 +405,10 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
         },
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(50),
             color: _dischargeOptionsColor[Discharge.values.indexOf(itemType)],
           ),
-          padding: const EdgeInsets.all(3.0),
+          padding: const EdgeInsets.all(5.0),
           // margin: EdgeInsets.all(8.0),
           child: Text(
             itemType.toString().split('.').last,
@@ -449,10 +455,10 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
         },
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(50),
             color: _bloodOptionsColor[Blood.values.indexOf(itemType)],
           ),
-          padding: const EdgeInsets.all(3.0),
+          padding: const EdgeInsets.all(5.0),
           // margin: EdgeInsets.all(8.0),
           child: Text(
             itemType.toString().split('.').last,
@@ -499,13 +505,13 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
         },
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(50),
             color: _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] ==
                     const Color.fromRGBO(254, 247, 237, 1)
                 ? _energyOptionsColor[EnergyLevel.values.indexOf(itemType)]
                 : const Color.fromRGBO(82, 82, 76, 1),
           ),
-          padding: const EdgeInsets.all(3.0),
+          padding: const EdgeInsets.all(5.0),
           // margin: EdgeInsets.all(8.0),
           child: Text(
             itemType.toString().split('.').last,
@@ -551,22 +557,26 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
         },
         child: Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(50),
               color: const Color(0xFFFEF7ED)),
-          padding: const EdgeInsets.all(3.0),
+          padding: const EdgeInsets.all(5.0),
           // margin: EdgeInsets.all(8.0),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               // itemType.toString().split('.').last == "NO"
               //     ?
-              Icon(Icons.circle_outlined,
+              Icon(Icons.circle,
+                  size: 20,
                   color:
                       _symptomsOptionsColor[Symptoms.values.indexOf(itemType)]),
+
+              SizedBox(width: 3),
               Text(
                 itemType.toString().split('.').last,
                 style: lightThemeData.textTheme.bodySmall,
               ),
+              SizedBox(width: 3),
             ],
           ),
         ),

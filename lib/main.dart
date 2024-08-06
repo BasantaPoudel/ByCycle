@@ -129,37 +129,41 @@ class _MyHomePageState extends State<MyHomePage> {
           if (snapshot.hasData) {
             return Scaffold(
                 appBar: AppBar(
-                  // leading: Builder(
-                  //   builder: (context) => IconButton(
-                  //     color: isLightTheme ? Colors.black : Colors.white,
-                  //     icon: const Icon(Icons.assistant_outlined),
-                  //     // Change this to your custom icon
-                  //     // onPressed: () => Scaffold.of(context).openDrawer(),
-                  //     onPressed: () {
-                  //       Navigator.push(
-                  //         context,
-                  //         MaterialPageRoute(builder: (context) => Profile()),
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
+                  leading: Transform.translate(
+                    offset: const Offset(25, 0),
+                    child: Builder(
+                      builder: (context) => IconButton(
+                        color: isLightTheme ? Colors.black : Colors.white,
+                        icon: const Icon(Icons.more_vert_outlined),
+                        // Change this to your custom icon
+                        onPressed: () => Scaffold.of(context).openDrawer(),
+                        // onPressed: () {
+                        //   Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(builder: (context) => Profile()),
+                        //   );
+                        // },
+                      ),
+                    ),
+                  ),
                   title: Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        IconButton(
-                          color: isLightTheme ? Colors.black : Colors.white,
-                          icon: const Icon(Icons.more_vert_outlined),
-                          // Change this to your custom icon
-                          // onPressed: () => Scaffold.of(context).openDrawer(),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Settings()),
-                            );
-                          },
-                        ),
+                        // IconButton(
+                        //   color: isLightTheme ? Colors.black : Colors.white,
+                        //   icon: const Icon(Icons.more_vert_outlined),
+                        //   // Change this to your custom icon
+                        //   // onPressed: () => Scaffold.of(context).openDrawer(),
+                        //   onPressed: () {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //           builder: (context) => const Settings()),
+                        //     );
+                        //   },
+                        // ),
+
                         Row(
                           children: [
                             TextButton(
@@ -197,14 +201,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 ),
-                // drawer: SizedBox(
-                //   width: MediaQuery.of(context).size.width * 0.8,
-                //   child: Drawer(
-                //       // Add a ListView to the drawer. This ensures the user can scroll
-                //       // through the options in the drawer if there isn't enough vertical
-                //       // space to fit everything.
-                //       child: Profile()),
-                // ),
+                drawer: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Drawer(
+                      // Add a ListView to the drawer. This ensures the user can scroll
+                      // through the options in the drawer if there isn't enough vertical
+                      // space to fit everything.
+                      child: Settings()),
+                ),
                 body: _children[_selectedIndex],
                 bottomNavigationBar: Container(
                   //TODO - fix height property so that it doesn't produce 8.0 pixels overflow on-screen error

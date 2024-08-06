@@ -60,13 +60,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               // height: 44,
                               child: ElevatedButton(
                                   style: ButtonStyle(
-                                      backgroundColor: Theme.of(context)
-                                                  .brightness ==
-                                              Brightness.light
-                                          ? WidgetStateProperty.all<Color>(
-                                              const Color(0xFF31312F))
-                                          : WidgetStateProperty.all<Color>(
-                                              const Color(0xFFD6A879)),
+                                      backgroundColor:
+                                          Theme.of(context).brightness ==
+                                                  Brightness.light
+                                              ? WidgetStateProperty.all<Color>(
+                                                  const Color(0xFF31312F))
+                                              : WidgetStateProperty.all<Color>(
+                                                  const Color(0xFFD6A879)),
                                       shape: WidgetStateProperty.all<
                                           RoundedRectangleBorder>(
                                         RoundedRectangleBorder(
@@ -235,8 +235,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   width: 98,
                                   child: ElevatedButton(
                                       style: ButtonStyle(
-                                        padding: WidgetStateProperty.all<
-                                            EdgeInsets>(EdgeInsets.zero),
+                                        padding:
+                                            WidgetStateProperty.all<EdgeInsets>(
+                                                EdgeInsets.zero),
                                         backgroundColor:
                                             WidgetStateProperty.all<Color>(
                                                 Colors.transparent),
@@ -314,9 +315,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 TargetPlatform.android
                             ? ElevatedButton(
                                 style: ButtonStyle(
-                                  padding:
-                                      WidgetStateProperty.all<EdgeInsets>(
-                                          EdgeInsets.zero),
+                                  padding: WidgetStateProperty.all<EdgeInsets>(
+                                      EdgeInsets.zero),
                                   backgroundColor:
                                       Theme.of(context).brightness ==
                                               Brightness.light
@@ -391,7 +391,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ]));
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return const Scaffold(
+                body: Center(
+                    child: CircularProgressIndicator(
+              backgroundColor: const Color.fromRGBO(222, 212, 197, 1),
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+            )));
           }
         });
   }

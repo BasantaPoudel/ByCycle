@@ -1,4 +1,5 @@
 import 'package:by_cycle/models/onboarding_questions.dart';
+import 'package:by_cycle/screens/onboarding/onboarding_pageseven.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pagesix.dart';
 import 'package:flutter/material.dart';
 
@@ -85,10 +86,11 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFivePlus> {
                               const Color.fromRGBO(1, 1, 1, 1))),
                       onPressed: () {
                         widget.formData.cycleHeavy = false;
+                        //TODO - Unhide PageSix in Future
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => OnboardingPageSix(
+                            builder: (context) => OnboardingPageSeven(
                               formData: widget.formData,
                             ),
                           ),

@@ -13,7 +13,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
   final TextEditingController _feedbackController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   UserRepository userRepo = UserRepository();
-  final int currentLength = 0;
+  int currentLength = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +66,10 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.all(16.0),
                       ),
+                      onChanged: (value) => setState(() {
+                        // Update the current length
+                        currentLength = _feedbackController.text.length;
+                      }),
                     ),
                   ),
 
@@ -75,7 +79,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                     padding: EdgeInsets.only(right: 20),
                     height: 30,
                     child: Text(
-                      '${_feedbackController.text.length}', // Display the current count
+                      '${currentLength}', // Display the current count
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey,
@@ -129,11 +133,11 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                                   const Color.fromRGBO(1, 1, 1, 1))),
                           onPressed: () {
                             if (_feedbackController.text == "" ||
-                                _feedbackController.text.length <= 100) {
+                                _feedbackController.text.length <= 60) {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
                                 content: Text(
-                                    "Feedback must be at least 100 characters long"),
+                                    "Feedback must be at least 60 characters long"),
                                 duration: Duration(seconds: 2),
                               ));
                             } else if (_emailController.text == "") {
