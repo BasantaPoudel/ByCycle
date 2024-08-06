@@ -70,7 +70,7 @@ class _CalendarState extends State<Calendar> {
         BoxDecoration(color: Color.fromRGBO(237, 195, 191, 1)),
   );
   Map<String, CalendarStyle> styles = {
-    "menstruation": const CalendarStyle(
+    "menstruation": CalendarStyle(
       rangeHighlightColor: Color.fromRGBO(237, 195, 191, 1),
       rangeStartDecoration: BoxDecoration(
         color: Color.fromRGBO(237, 195, 191, 1),
@@ -80,10 +80,20 @@ class _CalendarState extends State<Calendar> {
         color: Color.fromRGBO(237, 195, 191, 1),
         shape: BoxShape.rectangle,
       ),
-      withinRangeDecoration:
-          BoxDecoration(color: Color.fromRGBO(237, 195, 191, 1)),
+      withinRangeDecoration: BoxDecoration(
+        color: Color.fromRGBO(237, 195, 191, 1),
+      ),
+      rangeStartTextStyle: TextStyle(
+        color: Colors.black,
+      ), // Set text color to black
+      rangeEndTextStyle: TextStyle(
+        color: Colors.black,
+      ), // Set text color to black
+      withinRangeTextStyle: TextStyle(
+        color: Colors.black,
+      ), // Set text color to black
     ),
-    "follicular": const CalendarStyle(
+    "follicular": CalendarStyle(
       rangeHighlightColor: Color.fromRGBO(213, 206, 229, 1),
       rangeStartDecoration: BoxDecoration(
         color: Color.fromRGBO(213, 206, 229, 1),
@@ -93,10 +103,20 @@ class _CalendarState extends State<Calendar> {
         color: Color.fromRGBO(213, 206, 229, 1),
         shape: BoxShape.rectangle,
       ),
-      withinRangeDecoration:
-          BoxDecoration(color: Color.fromRGBO(213, 206, 229, 1)),
+      withinRangeDecoration: BoxDecoration(
+        color: Color.fromRGBO(213, 206, 229, 1),
+      ),
+      rangeStartTextStyle: TextStyle(
+        color: Colors.black,
+      ), // Set text color to black
+      rangeEndTextStyle: TextStyle(
+        color: Colors.black,
+      ), // Set text color to black
+      withinRangeTextStyle: TextStyle(
+        color: Colors.black,
+      ), // Set text color to black
     ),
-    "ovulation": const CalendarStyle(
+    "ovulation": CalendarStyle(
       rangeHighlightColor: Color.fromRGBO(204, 218, 214, 1),
       rangeStartDecoration: BoxDecoration(
         color: Color.fromRGBO(204, 218, 214, 1),
@@ -106,10 +126,20 @@ class _CalendarState extends State<Calendar> {
         color: Color.fromRGBO(204, 218, 214, 1),
         shape: BoxShape.rectangle,
       ),
-      withinRangeDecoration:
-          BoxDecoration(color: Color.fromRGBO(204, 218, 214, 1)),
+      withinRangeDecoration: BoxDecoration(
+        color: Color.fromRGBO(204, 218, 214, 1),
+      ),
+      rangeStartTextStyle: TextStyle(
+        color: Colors.black,
+      ), // Set text color to black
+      rangeEndTextStyle: TextStyle(
+        color: Colors.black,
+      ), // Set text color to black
+      withinRangeTextStyle: TextStyle(
+        color: Colors.black,
+      ), // Set text color to black
     ),
-    "luteal": const CalendarStyle(
+    "luteal": CalendarStyle(
       rangeHighlightColor: Color.fromRGBO(241, 222, 204, 1),
       rangeStartDecoration: BoxDecoration(
         color: Color.fromRGBO(241, 222, 204, 1),
@@ -119,10 +149,21 @@ class _CalendarState extends State<Calendar> {
         color: Color.fromRGBO(241, 222, 204, 1),
         shape: BoxShape.rectangle,
       ),
-      withinRangeDecoration:
-          BoxDecoration(color: Color.fromRGBO(241, 222, 204, 1)),
+      withinRangeDecoration: BoxDecoration(
+        color: Color.fromRGBO(241, 222, 204, 1),
+      ),
+      rangeStartTextStyle: TextStyle(
+        color: Colors.black,
+      ), // Set text color to black
+      rangeEndTextStyle: TextStyle(
+        color: Colors.black,
+      ), // Set text color to black
+      withinRangeTextStyle: TextStyle(
+        color: Colors.black,
+      ), // Set text color to black
     ),
   };
+
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
 
