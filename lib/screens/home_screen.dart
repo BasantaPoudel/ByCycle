@@ -192,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               context: context,
                                               initialTime: bedTime,
                                               initialEntryMode:
-                                                  TimePickerEntryMode.dial);
+                                                  TimePickerEntryMode.input);
                                       setState(() {
                                         if (setBedTime != null) {
                                           bedTime = setBedTime;
@@ -233,6 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 SizedBox(
                                   width: 98,
+                                  height: 37,
                                   child: ElevatedButton(
                                       style: ButtonStyle(
                                         padding:
@@ -265,7 +266,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 context: context,
                                                 initialTime: wakeupTime,
                                                 initialEntryMode:
-                                                    TimePickerEntryMode.dial);
+                                                    TimePickerEntryMode.input);
 
                                         // if (wakeupTime != null) {
                                         setState(() {

@@ -147,6 +147,30 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
+                  actions: [
+                    Builder(
+                        builder: (context) => Transform.translate(
+                              offset: const Offset(-30, 0),
+                              child: IconButton(
+                                  color: Colors.black,
+                                  icon: isLightTheme
+                                      ? SvgPicture.asset(
+                                          'assets/icons/dark_mode.svg',
+                                        )
+                                      : SvgPicture.asset(
+                                          'assets/icons/light_mode.svg',
+                                        ),
+                                  onPressed: () {
+                                    themeCubit.toggleTheme();
+                                    // Navigate to the search screen
+                                  }
+                                  // style: Theme.of(context).buttonTheme.layoutBehavior,
+                                  ),
+                            ))
+                    // IconButton(
+
+                    ,
+                  ],
                   title: Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -173,25 +197,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                   ),
-                  actions: [
-                    Transform.translate(
-                      offset: const Offset(-30, 0),
-                      child: IconButton(
-                        color: Colors.black,
-                        icon: isLightTheme
-                            ? SvgPicture.asset(
-                                'assets/icons/dark_mode.svg',
-                              )
-                            : SvgPicture.asset(
-                                'assets/icons/light_mode.svg',
-                              ),
-                        onPressed: () {
-                          themeCubit.toggleTheme();
-                          // Navigate to the search screen
-                        },
-                      ),
-                    ),
-                  ],
                 ),
                 drawer: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
@@ -201,7 +206,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       // space to fit everything.
                       child: Settings()),
                 ),
-                body: _children[_selectedIndex],
+                body: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: _children[_selectedIndex],
+                ),
                 bottomNavigationBar: Container(
                   //TODO - fix height property so that it doesn't produce 8.0 pixels overflow on-screen error
                   // height: 70,

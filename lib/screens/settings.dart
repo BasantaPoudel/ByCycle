@@ -25,7 +25,8 @@ class _SettingsState extends State<Settings> {
             height: 10,
           ),
           ListTile(
-            title: const Text('MyAccount'),
+            title: Text('MyAccount',
+                style: Theme.of(context).textTheme.displaySmall),
             // selected: _selectedIndex == 0,
             onTap: () {
               Navigator.push(
@@ -34,14 +35,18 @@ class _SettingsState extends State<Settings> {
               );
             },
           ),
-          const Divider(
-            height: 1,
-            thickness: 1,
-            indent: 15,
-            endIndent: 350,
+          const Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: const Divider(
+              height: 1,
+              thickness: 1,
+              // indent: 15,
+              // endIndent: 50,
+            ),
           ),
           ListTile(
-            title: const Text('Feedback form'),
+            title: Text('Feedback form',
+                style: Theme.of(context).textTheme.displaySmall),
             // selected: _selectedIndex == 1,
             onTap: () {
               // Update the state of the app
