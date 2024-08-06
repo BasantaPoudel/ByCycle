@@ -1,3 +1,4 @@
+import 'package:by_cycle/screens/info_pages/common.dart';
 import 'package:flutter/material.dart';
 
 class InfoPageLuteal extends StatelessWidget {
@@ -18,7 +19,7 @@ class InfoPageLuteal extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildSectionTitle(context, 'What is luteal phase?'),
+            buildSectionTitle(context, 'What is luteal phase?'),
             const SizedBox(height: 14.0),
             Text.rich(
               TextSpan(
@@ -45,7 +46,7 @@ class InfoPageLuteal extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 47.0),
-            _buildSectionTitle(context, 'Anatomy'),
+            buildSectionTitle(context, 'Anatomy'),
             const SizedBox(height: 14.0),
             Text.rich(
               TextSpan(
@@ -71,7 +72,7 @@ class InfoPageLuteal extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 47.0),
-            _buildSectionTitle(context, 'Temperature'),
+            buildSectionTitle(context, 'Temperature'),
             const SizedBox(height: 14.0),
             Text.rich(
               TextSpan(
@@ -96,7 +97,7 @@ class InfoPageLuteal extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 47.0),
-            _buildSectionTitle(context, 'Mucus'),
+            buildSectionTitle(context, 'Mucus'),
             const SizedBox(height: 14.0),
             Text.rich(
               TextSpan(
@@ -123,7 +124,7 @@ class InfoPageLuteal extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 47.0),
-            _buildSectionTitle(context, 'Symptoms'),
+            buildSectionTitle(context, 'Symptoms'),
             const SizedBox(height: 14.0),
             Text.rich(
               TextSpan(
@@ -154,16 +155,6 @@ class InfoPageLuteal extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildSectionTitle(BuildContext context, String title) {
-    return Text(
-      title,
-      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            color: const Color.fromRGBO(49, 49, 47, 1),
-            fontWeight: FontWeight.bold,
-          ),
     );
   }
 

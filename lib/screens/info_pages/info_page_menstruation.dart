@@ -1,31 +1,30 @@
+import 'package:by_cycle/screens/info_pages/common.dart';
 import 'package:flutter/material.dart';
 
 class InfoPageMenstruation extends StatelessWidget {
   const InfoPageMenstruation({super.key});
-  
-static const List<String> bleeding = [
-  "light",
-  "medium",
-  "heavy",
-  "brown spotting",
-  "red spotting",
-  "super heavy",
-];
 
-static const List<String> symptoms = [
-  "anxiety",
-  "mood swings",
-  "cramps",
-  "bloating",
-  "nausea",
-  "back pain",
-  "diarrhea",
-  "breast pain",
-  "abdominal pain",
-  "skin breakouts",
-];
+  static const List<String> bleeding = [
+    "light",
+    "medium",
+    "heavy",
+    "brown spotting",
+    "red spotting",
+    "super heavy",
+  ];
 
-
+  static const List<String> symptoms = [
+    "anxiety",
+    "mood swings",
+    "cramps",
+    "bloating",
+    "nausea",
+    "back pain",
+    "diarrhea",
+    "breast pain",
+    "abdominal pain",
+    "skin breakouts",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +34,7 @@ static const List<String> symptoms = [
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildSectionTitle(context, 'What is menstrual phase?'),
+            buildSectionTitle(context, 'What is menstrual phase?'),
             const SizedBox(height: 14.0),
             Text.rich(
               //style:  Theme.of(context).textTheme.bodyLarge;
@@ -54,30 +53,33 @@ static const List<String> symptoms = [
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   TextSpan(
-                    text: 'It may be preceded by PMS and it’s typically when bleeding occurs.',
+                    text:
+                        'It may be preceded by PMS and it’s typically when bleeding occurs.',
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 47.0),
-            _buildSectionTitle(context, 'Anatomy'),
+            buildSectionTitle(context, 'Anatomy'),
             const SizedBox(height: 14.0),
             Text.rich(
               TextSpan(
                 style: Theme.of(context).textTheme.bodyLarge,
                 children: const [
                   TextSpan(
-                    text: 'A healthy period typically lasts between 2 to 7 days, ',
+                    text:
+                        'A healthy period typically lasts between 2 to 7 days, ',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   TextSpan(
-                    text: 'with a blood loss of about 20 to 80 milliliters (about 1 to 6 tablespoons).',
+                    text:
+                        'with a blood loss of about 20 to 80 milliliters (about 1 to 6 tablespoons).',
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 47.0),
-            _buildSectionTitle(context, 'Abnormalities'),
+            buildSectionTitle(context, 'Abnormalities'),
             const SizedBox(height: 14.0),
             Text.rich(
               TextSpan(
@@ -88,7 +90,8 @@ static const List<String> symptoms = [
                     style: TextStyle(color: Color.fromRGBO(212, 128, 120, 1)),
                   ),
                   TextSpan(
-                    text: 'Menstrual flow that is significantly heavier or lighter than usual (going through one pad or a tampon in one or two hours).\n',
+                    text:
+                        'Menstrual flow that is significantly heavier or lighter than usual (going through one pad or a tampon in one or two hours).\n',
                   ),
                   TextSpan(
                     text: '• ',
@@ -102,21 +105,24 @@ static const List<String> symptoms = [
                     style: TextStyle(color: Color.fromRGBO(212, 128, 120, 1)),
                   ),
                   TextSpan(
-                    text: 'Periods accompanied by severe pain, cramping, nausea, or vomiting.\n',
+                    text:
+                        'Periods accompanied by severe pain, cramping, nausea, or vomiting.\n',
                   ),
                   TextSpan(
                     text: '• ',
                     style: TextStyle(color: Color.fromRGBO(212, 128, 120, 1)),
                   ),
                   TextSpan(
-                    text: 'Periods occurring less than 21 days or more than 35 days apart.\n',
+                    text:
+                        'Periods occurring less than 21 days or more than 35 days apart.\n',
                   ),
                   TextSpan(
                     text: '• ',
                     style: TextStyle(color: Color.fromRGBO(212, 128, 120, 1)),
                   ),
                   TextSpan(
-                    text: 'Absence of a period for three months (or 90 days).\n',
+                    text:
+                        'Absence of a period for three months (or 90 days).\n',
                   ),
                   TextSpan(
                     text: '• ',
@@ -129,7 +135,7 @@ static const List<String> symptoms = [
               ),
             ),
             const SizedBox(height: 47.0),
-            _buildSectionTitle(context, 'Temperature'),
+            buildSectionTitle(context, 'Temperature'),
             const SizedBox(height: 14.0),
             Text.rich(
               TextSpan(
@@ -139,14 +145,15 @@ static const List<String> symptoms = [
                     text: 'You can observe a small ',
                   ),
                   TextSpan(
-                    text: 'fall of basal body temperature - approximately 0.22 degree Celsius.',
+                    text:
+                        'fall of basal body temperature - approximately 0.22 degree Celsius.',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 47.0),
-            _buildSectionTitle(context, 'Bleeding'),
+            buildSectionTitle(context, 'Bleeding'),
             const SizedBox(height: 14.0),
             SizedBox(
               child: Wrap(
@@ -156,7 +163,7 @@ static const List<String> symptoms = [
               ),
             ),
             const SizedBox(height: 47.0),
-            _buildSectionTitle(context, 'Symptoms'),
+            buildSectionTitle(context, 'Symptoms'),
             const SizedBox(height: 14.0),
             SizedBox(
               child: Wrap(
@@ -179,16 +186,6 @@ static const List<String> symptoms = [
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildSectionTitle(BuildContext context, String title) {
-    return Text(
-      title,
-      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            color: const Color.fromRGBO(49, 49, 47, 1),
-            fontWeight: FontWeight.bold,
-          ),
     );
   }
 
