@@ -20,19 +20,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(RestartWidget(
-    child: BlocProvider(
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(
+    RestartWidget(
+      child: BlocProvider(
         create: (BuildContext context) => ThemeCubit(),
         child: MaterialApp(
           home: AuthGate(),
           theme: ThemeCubit().getLightThemeData(),
           darkTheme: ThemeCubit().getDarkThemeData(),
           themeMode: ThemeCubit().state,
-        )),
-  ));
+        ),
+      ),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -74,9 +75,7 @@ class _MyAppState extends State<MyApp> {
                 theme: themeCubit.getLightThemeData(),
                 darkTheme: themeCubit.getDarkThemeData(),
                 themeMode: themeCubit.state, // Set the theme mode
-                home: const MyHomePage(
-                  title: 'ByCycle Home Page',
-                ),
+                home: const MyHomePage(title: 'ByCycle Home Page'),
               )
             : const OnboardingPageOne();
       },
@@ -124,158 +123,157 @@ class _MyHomePageState extends State<MyHomePage> {
     final isLightTheme = Theme.of(context).brightness == Brightness.light;
     // );
     return FutureBuilder(
-        future: getPhaseRanges(),
-        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-          if (snapshot.hasData) {
-            return Scaffold(
-                appBar: AppBar(
-                  leading: Transform.translate(
-                    offset: const Offset(25, 0),
-                    child: Builder(
-                      builder: (context) => IconButton(
-                        color: isLightTheme ? Colors.black : Colors.white,
-                        icon: const Icon(Icons.more_vert_outlined),
-                        // Change this to your custom icon
-                        onPressed: () => Scaffold.of(context).openDrawer(),
-                        //   onPressed: () {
-                        //     Navigator.push(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //           builder: (context) => const Settings()),
-                        //     );
-                        //   },
-                      ),
-                    ),
-                  ),
-                  actions: [
-                    Builder(
-                        builder: (context) => Transform.translate(
-                              offset: const Offset(-30, 0),
-                              child: IconButton(
-                                  color: Colors.black,
-                                  icon: isLightTheme
-                                      ? SvgPicture.asset(
-                                          'assets/icons/dark_mode.svg',
-                                        )
-                                      : SvgPicture.asset(
-                                          'assets/icons/light_mode.svg',
-                                        ),
-                                  onPressed: () {
-                                    themeCubit.toggleTheme();
-                                    // Navigate to the search screen
-                                  }
-                                  // style: Theme.of(context).buttonTheme.layoutBehavior,
-                                  ),
-                            ))
-                    // IconButton(
-
-                    ,
-                  ],
-                  title: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Row(
-                          children: [
-                            TextButton(
-                              child: Text(
-                                'TODAY',
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                              onPressed: () {
-                                // Navigate to the search screen
-                                null;
-                              },
-                              // style: Theme.of(context).buttonTheme.layoutBehavior,
-                            ),
-                            Text(
-                              DateFormat('dd.MM.yyyy').format(DateTime.now()),
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+      future: getPhaseRanges(),
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        if (snapshot.hasData) {
+          return Scaffold(
+            appBar: AppBar(
+              leading: Transform.translate(
+                offset: const Offset(25, 0),
+                child: Builder(
+                  builder: (context) => IconButton(
+                    color: isLightTheme ? Colors.black : Colors.white,
+                    icon: const Icon(Icons.more_vert_outlined),
+                    // Change this to your custom icon
+                    onPressed: () => Scaffold.of(context).openDrawer(),
+                    //   onPressed: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //           builder: (context) => const Settings()),
+                    //     );
+                    //   },
                   ),
                 ),
-                drawer: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: Drawer(
-                      // Add a ListView to the drawer. This ensures the user can scroll
-                      // through the options in the drawer if there isn't enough vertical
-                      // space to fit everything.
-                      child: Settings()),
-                ),
-                body: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: _children[_selectedIndex],
-                ),
-                bottomNavigationBar: Container(
-                  //TODO - fix height property so that it doesn't produce 8.0 pixels overflow on-screen error
-                  // height: 70,
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25),
-                      ),
-                      color: Colors.red),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(25),
-                    ),
-                    child: BottomNavigationBar(
-                      showSelectedLabels:
-                          false, // Hide labels for selected items
-                      showUnselectedLabels:
-                          false, // Hide labels for unselected items
-                      onTap: (int index) {
-                        setState(() {
-                          _selectedIndex = index;
-                        });
+              ),
+              actions: [
+                Builder(
+                  builder: (context) => Transform.translate(
+                    offset: const Offset(-30, 0),
+                    child: IconButton(
+                      color: Colors.black,
+                      icon: isLightTheme
+                          ? SvgPicture.asset('assets/icons/dark_mode.svg')
+                          : SvgPicture.asset('assets/icons/light_mode.svg'),
+                      onPressed: () {
+                        themeCubit.toggleTheme();
+                        // Navigate to the search screen
                       },
-                      currentIndex: _selectedIndex,
-                      type: BottomNavigationBarType.fixed,
-                      items: [
-                        BottomNavigationBarItem(
-                          icon: SvgPicture.asset(
-                            'assets/icons/info.svg',
+                      // style: Theme.of(context).buttonTheme.layoutBehavior,
+                    ),
+                  ),
+                ),
+                // IconButton(
+              ],
+              title: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Row(
+                      children: [
+                        TextButton(
+                          child: Text(
+                            'TODAY',
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
-                          label: '',
-                          activeIcon: SvgPicture.asset('assets/icons/info.svg',
-                              color: Colors.black),
-                          // Highlighted icon for the selected item
+                          onPressed: () {
+                            // Navigate to the search screen
+                            null;
+                          },
+                          // style: Theme.of(context).buttonTheme.layoutBehavior,
                         ),
-                        BottomNavigationBarItem(
-                          icon: SvgPicture.asset(
-                            'assets/icons/home.svg',
-                          ),
-                          activeIcon: SvgPicture.asset('assets/icons/home.svg',
-                              color: Colors.black),
-                          label: '',
-                        ),
-                        BottomNavigationBarItem(
-                          icon: SvgPicture.asset(
-                            'assets/icons/calendar.svg',
-                          ),
-                          activeIcon: SvgPicture.asset(
-                              'assets/icons/calendar.svg',
-                              color: Colors.black),
-                          label: '',
+                        Text(
+                          DateFormat('dd.MM.yyyy').format(DateTime.now()),
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ],
                     ),
-                  ),
-                ));
-          } else {
-            return const Scaffold(
-                body: Center(
-                    child: CircularProgressIndicator(
-              backgroundColor: const Color.fromRGBO(222, 212, 197, 1),
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-            )));
-          }
-        }); // This trailing comma makes auto-formatting nicer for build methods.
+                  ],
+                ),
+              ),
+            ),
+            drawer: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: Drawer(
+                // Add a ListView to the drawer. This ensures the user can scroll
+                // through the options in the drawer if there isn't enough vertical
+                // space to fit everything.
+                child: Settings(),
+              ),
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: _children[_selectedIndex],
+            ),
+            bottomNavigationBar: Container(
+              //TODO - fix height property so that it doesn't produce 8.0 pixels overflow on-screen error
+              // height: 70,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  topRight: Radius.circular(25),
+                ),
+                color: Colors.red,
+              ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  topRight: Radius.circular(25),
+                ),
+                child: BottomNavigationBar(
+                  showSelectedLabels: false, // Hide labels for selected items
+                  showUnselectedLabels:
+                      false, // Hide labels for unselected items
+                  onTap: (int index) {
+                    setState(() {
+                      _selectedIndex = index;
+                    });
+                  },
+                  currentIndex: _selectedIndex,
+                  type: BottomNavigationBarType.fixed,
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: SvgPicture.asset('assets/icons/info.svg'),
+                      label: '',
+                      activeIcon: SvgPicture.asset(
+                        'assets/icons/info.svg',
+                        color: Colors.black,
+                      ),
+                      // Highlighted icon for the selected item
+                    ),
+                    BottomNavigationBarItem(
+                      icon: SvgPicture.asset('assets/icons/home.svg'),
+                      activeIcon: SvgPicture.asset(
+                        'assets/icons/home.svg',
+                        color: Colors.black,
+                      ),
+                      label: '',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: SvgPicture.asset('assets/icons/calendar.svg'),
+                      activeIcon: SvgPicture.asset(
+                        'assets/icons/calendar.svg',
+                        color: Colors.black,
+                      ),
+                      label: '',
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        } else {
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(
+                backgroundColor: const Color.fromRGBO(222, 212, 197, 1),
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+              ),
+            ),
+          );
+        }
+      },
+    ); // This trailing comma makes auto-formatting nicer for build methods.
   }
 }
 
@@ -303,9 +301,6 @@ class _RestartWidgetState extends State<RestartWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return KeyedSubtree(
-      key: key,
-      child: widget.child,
-    );
+    return KeyedSubtree(key: key, child: widget.child);
   }
 }

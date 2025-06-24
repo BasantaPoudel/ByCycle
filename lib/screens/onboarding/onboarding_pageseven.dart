@@ -51,8 +51,8 @@ class _OnboardingScreenHomeState extends State<OnboardingPageSeven> {
                         style: ButtonStyle(
                             padding: WidgetStateProperty.all<EdgeInsets>(
                                 EdgeInsets.zero),
-                            shape: WidgetStateProperty.all<
-                                RoundedRectangleBorder>(
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30.0),
                               ),

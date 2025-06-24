@@ -70,8 +70,8 @@ class _OnboardingScreenHomeState extends State<OnboardingPageFour> {
                 height: 44,
                 child: ElevatedButton(
                   style: ButtonStyle(
-                      padding: WidgetStateProperty.all<EdgeInsets>(
-                          EdgeInsets.zero),
+                      padding:
+                          WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero),
                       shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),

@@ -45,7 +45,7 @@ class ThemeCubit extends Cubit<ThemeMode> {
         color: Colors.white, // Set the default color for icons
       ),
 
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: Colors.grey[800], // Set the card color to a dark shade
         elevation: 2, // Set the card elevation
         shape: RoundedRectangleBorder(
@@ -160,7 +160,7 @@ class ThemeCubit extends Cubit<ThemeMode> {
                   BorderSide.strokeAlignOutside) // Set the selected item color
           ),
 
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: const Color(0xFFDED4C5), // Set the card color
         elevation: 2, // Set the card elevation
         shape: RoundedRectangleBorder(
