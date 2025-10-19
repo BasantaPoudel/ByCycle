@@ -3,6 +3,7 @@ import 'package:by_cycle/models/onboarding_questions.dart';
 import 'package:by_cycle/screens/onboarding/onboarding_pagetwo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class OnboardingPageOne extends StatefulWidget {
   const OnboardingPageOne({super.key});
@@ -29,39 +30,85 @@ class _OnboardingScreenHomeState extends State<OnboardingPageOne> {
         builder: (context, state) {
           return Scaffold(
             body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'What is the Date of your last period?',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    width: 200,
-                    child: TextField(
-                      controller: controller,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'YYYY-MM-DD',
-                      ),
-                      onTap: () => _selectDate(context),
+              child: Container(
+                width: 280,
+                margin: const EdgeInsets.all(40),
+                decoration: const BoxDecoration(
+                    // color: Colors.red,
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      formData.lastPeriod = DateTime.parse(controller.text);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                OnboardingPageTwo(formData: formData),
-                          ));
-                    },
-                    child: const Text('Next'),
-                  ),
-                ],
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'What is the date of your last period?',
+                      style: GoogleFonts.poppins(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: 282,
+                      height: 46,
+                      child: TextField(
+                        controller: controller,
+                        decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.only(left: 15, right: 20),
+                          filled: true,
+                          fillColor: Color(0xFFDED4C5),
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30.0)),
+                            // borderSide: BorderSide.none,
+                          ),
+                          hintText: 'YYYY-MM-DD',
+                        ),
+                        onTap: () => _selectDate(context),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      width: 224,
+                      height: 44,
+                      child: ElevatedButton(
+                          style: ButtonStyle(
+                              padding: WidgetStateProperty.all<EdgeInsets>(
+                                  EdgeInsets.zero),
+                              shape: WidgetStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                              ),
+                              backgroundColor: controller.text == ""
+                                  ? WidgetStateProperty.all<Color>(
+                                      const Color(0xFFDED4C5))
+                                  : WidgetStateProperty.all<Color>(
+                                      const Color.fromRGBO(1, 1, 1, 1))),
+                          onPressed: () {
+                            if (controller.text != "") {
+                              formData.lastPeriod =
+                                  DateTime.parse(controller.text);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        OnboardingPageTwo(formData: formData),
+                                  ));
+                            } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content:
+                                    Text("Please input the data to continue"),
+                                duration: Duration(seconds: 2),
+                              ));
+                            }
+                          },
+                          child: const Text('Next')),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -75,10 +122,17 @@ class _OnboardingScreenHomeState extends State<OnboardingPageOne> {
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
-    if (picked != null && picked != DateTime.now()) {
+    if (picked != null &&
+        picked.isBefore(DateTime.now()) &&
+        picked.isAfter(DateTime.now().subtract(const Duration(days: 90)))) {
       setState(() {
         controller.text = "${picked.toLocal()}".split(' ')[0];
       });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Please input a date within the last 90 days"),
+        duration: Duration(seconds: 2),
+      ));
     }
   }
 }

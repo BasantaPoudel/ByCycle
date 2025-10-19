@@ -1,8 +1,11 @@
-import 'package:by_cycle/algorithms/generateDateTimeRanges.dart';
-import 'package:by_cycle/models/user.dart';
+import 'package:by_cycle/algorithms/generate_date_time_ranges.dart';
+import 'package:by_cycle/models/user_model.dart';
 import 'package:by_cycle/models/daily_data_input.dart';
+import 'package:logger/logger.dart';
 
-void redrawCalendar(User user, List<String> tags) {
+var logger = Logger();
+
+void redrawCalendar(UserModel user, List<String> tags) {
 /* a function that adjusts the phases in the user's calendar if there is a 
 String tag in the list of tags that matches a phase.
 
@@ -42,7 +45,7 @@ Parameters:
   bool noneOfTagsPresent = tagsToCheck.every((tag) => !tags.contains(tag));
 
   if (noneOfTagsPresent) {
-    print(
+    logger.d(
         "None of the adjusting phase tags are in the list, aborting redrawCalendar.");
     return;
   }
@@ -95,5 +98,7 @@ Parameters:
     }
   }
   user.phaseRanges = generateDateTimeRanges(user);
-  user.dailyDataInput.forEach((data) => print(data));
+  for (var data in user.dailyDataInput) {
+    logger.d(data);
+  }
 }

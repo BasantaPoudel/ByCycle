@@ -1,42 +1,48 @@
-import 'package:by_cycle/algorithms/generateDateTimeRanges.dart';
+import 'package:by_cycle/algorithms/generate_date_time_ranges.dart';
 import 'package:by_cycle/examples/users/new_user.dart';
-import 'package:by_cycle/models/user.dart';
+import 'package:by_cycle/models/user_model.dart';
 import 'package:by_cycle/models/daily_data_input.dart';
+import 'package:logger/logger.dart';
 
-onboardCalendar(User user) {
-/* a function that can be executed immediately after the user logs in for the first time.
-The function assumes there is no daily_data_inputs yet and that the user instance has all
-onboarding information like the length of the period.
+var logger = Logger();
 
-Parameters:
-  - an unonboarded instance of a user
+void onboardCalendar(UserModel user) {
+  /* A function that can be executed immediately after the user logs in for the first time.
+  The function assumes there is no daily_data_inputs yet and that the user instance has all
+  onboarding information like the length of the period.
 
-Returns: 
-  - Nothing
+  Parameters:
+    - an unonboarded instance of a user
 
-Side-effects:
-  - Modifies the user instance so that 90 dailyDataInputs are created beginning with
-  the date of last period. For instance, if the users last period was 2024-05-24, there will be
-  one dailyDataInput per day from 2024-05-24 until 2024-08-22
-*/
+  Returns: 
+    - Nothing
+
+  Side-effects:
+    - Modifies the user instance so that 100 DailyDataInputs are created beginning 10 days before
+      the date of the last period. For instance, if the user's last period was 2024-05-24, there will be
+      one DailyDataInput per day from 2024-05-14 until 2024-08-22
+  */
+
   if (user.dailyDataInput.isNotEmpty) {
-    print("user's dailyDataInput is not empty, aborting to avoid overwrites");
+    logger
+        .d("User's dailyDataInput is not empty, aborting to avoid overwrites");
     return;
   }
 
-  print("dailyDataInput is empty");
-  print("last period date: ${user.lastPeriod}");
-  print("complete cycle length ${user.completeCycleLength}");
-  print("menstruation phase length ${user.menstruationPhaseLength}");
+  logger.d("dailyDataInput is empty");
+  logger.d("Last period date: ${user.lastPeriod}");
+  logger.d("Complete cycle length: ${user.completeCycleLength}");
+  logger.d("Menstruation phase length: ${user.menstruationPhaseLength}");
+
   user.follicularPhaseLength =
       user.completeCycleLength - user.menstruationPhaseLength - 14;
   user.ovulationPhaseLength = 4;
   user.lutealPhaseLength = 10;
-  print("follicular phase length ${user.follicularPhaseLength}");
-  print("ovulation phase length ${user.ovulationPhaseLength}");
-  print("luteal phase length ${user.lutealPhaseLength}");
-  print("Time now: ${DateTime.now()}");
-  //user.daily_data_input.add(DailyDataInput(date: ))
+
+  logger.d("Follicular phase length: ${user.follicularPhaseLength}");
+  logger.d("Ovulation phase length: ${user.ovulationPhaseLength}");
+  logger.d("Luteal phase length: ${user.lutealPhaseLength}");
+  logger.d("Time now: ${DateTime.now()}");
 
   // Function to determine phase based on day
   String determinePhase(DateTime date) {
@@ -58,9 +64,8 @@ Side-effects:
     }
   }
 
-  // Create three DailyDataInput instances for today and next 90 days
-  //it would be easy to create the DailyDataInput instances also for the past.
-  for (int i = 0; i <= 90; i++) {
+  // Create 100 DailyDataInput instances starting 10 days before last period
+  for (int i = -10; i < 90; i++) {
     DateTime nextDay = user.lastPeriod.add(Duration(days: i));
     String phase = determinePhase(nextDay);
     user.dailyDataInput.add(DailyDataInput(date: nextDay, phase: phase));
@@ -68,14 +73,17 @@ Side-effects:
 
   user.phaseRanges = generateDateTimeRanges(user);
 
-  user.dailyDataInput.forEach((data) => print(
-      'DailyDataInput(date: DateTime(${data.date.year.toString()},${data.date.month.toString()},${data.date.day.toString()}), phase: "${data.phase}"),'));
-  user.phaseRanges.forEach((data) => print(
-      'CustomDateTimeRange(start: DateTime(${data.start.year.toString()},${data.start.month.toString()},${data.start.day.toString()}), end: DateTime(${data.end.year.toString()},${data.end.month.toString()},${data.end.day.toString()}), phase: "${data.phase}"),'));
-  //print(user.phaseRanges);
+  for (var data in user.dailyDataInput) {
+    logger.d(
+        'DailyDataInput(date: DateTime(${data.date.year.toString()},${data.date.month.toString()},${data.date.day.toString()}), phase: "${data.phase}"),');
+  }
+
+  for (var data in user.phaseRanges) {
+    logger.d(
+        'CustomDateTimeRange(start: DateTime(${data.start.year.toString()},${data.start.month.toString()},${data.start.day.toString()}), end: DateTime(${data.end.year.toString()},${data.end.month.toString()},${data.end.day.toString()}), phase: "${data.phase}"),');
+  }
 }
 
 void main() {
   onboardCalendar(new_user);
-  //print(generateDateTimeRanges(new_user));
 }

@@ -1,9 +1,9 @@
 import 'package:by_cycle/cubits/theme/theme_cubit.dart';
-import 'package:by_cycle/models/user.dart';
 import 'package:by_cycle/models/daily_data_input.dart';
 import 'package:by_cycle/repository/user_repository.dart';
 import 'package:by_cycle/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 enum Discharge {
   NO_DISCHARGE,
@@ -28,7 +28,7 @@ enum Blood {
 enum EnergyLevel { LOW, MEDIUM, HIGH }
 
 enum Symptoms {
-  NO,
+  // NO,
   ANXIETY,
   MOOD_SWINGS,
   CRAMPS,
@@ -49,6 +49,7 @@ class DailyDataInputScreen extends StatefulWidget {
 }
 
 class _DailyDataInputState extends State<DailyDataInputScreen> {
+  var logger = Logger();
   double _currentSliderValue = 35;
   final List<Color> _energyOptionsColor = [
     const Color.fromRGBO(254, 247, 237, 1),
@@ -75,17 +76,17 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
     const Color.fromRGBO(254, 247, 237, 1),
   ];
   final List<Color> _symptomsOptionsColor = [
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
-    const Color.fromRGBO(254, 247, 237, 1),
+    // const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5),
+    const Color(0xFFDED4C5)
   ];
 
   final TextEditingController _hoursController = TextEditingController();
@@ -104,51 +105,85 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: Theme.of(context).brightness == Brightness.light
+            ? const IconThemeData(color: Colors.black)
+            : const IconThemeData(color: Colors.white),
         title: const Text('Daily Data Input'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                child: Text(
+                  'To get the most out of your syncing experience, it\'s important to log your symptoms!',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  textAlign: TextAlign.justify,
+                ),
+              ),
               _buildTemperatureCard(),
               _buildDischargeCard(),
               _buildSleepCard(),
               _buildEnergyLevelCard(),
               _buildBloodCard(),
               _buildSymtomsCard(),
-              ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color(0xFFDED4C5)),
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    padding: MaterialStateProperty.all<EdgeInsets>(
-                        const EdgeInsets.only(left: 25, right: 25)),
-                    textStyle: MaterialStateProperty.all<TextStyle>(
-                        const TextStyle(fontSize: 20, color: Colors.black)),
-                    elevation: MaterialStateProperty.all<double>(5.0),
-                  ),
-                  onPressed: () async {
-                    print("Submit button pressed");
-                    dailyDataInput.temperature = _currentSliderValue;
-                    //TODO - Change the hours and minutes to a single field
-                    dailyDataInput.hoursOfSleep =
-                        int.parse(_hoursController.text);
-
-                    try {
-                      await UserRepository().sendDailyData(dailyDataInput);
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text("Data Submitted Successfully"),
-                        duration: Duration(seconds: 2),
-                      ));
-                      Navigator.pop(context);
-                    } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text("Data Submission Failed")));
-                    }
-                  },
-                  child: const Text('Submit')),
+              SizedBox(
+                width: 224,
+                height: 44,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                        padding: WidgetStateProperty.all<EdgeInsets>(
+                            EdgeInsets.zero),
+                        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                        ),
+                        backgroundColor:
+                            // _hoursController.text == "" ||
+                            //         _minsController.text == ""
+                            //     ? MaterialStateProperty.all<Color>(
+                            //         const Color(0xFFDED4C5))
+                            // :
+                            WidgetStateProperty.all<Color>(
+                                const Color.fromRGBO(1, 1, 1, 1))),
+                    onPressed: () async {
+                      logger.d("Submit button pressed");
+                      dailyDataInput.temperature = _currentSliderValue;
+                      //TODO
+                      //Hours of sleep is stored in minutes
+                      if (_hoursController.text != "" &&
+                          _minsController.text != "") {
+                        dailyDataInput.hoursOfSleep =
+                            int.parse(_hoursController.text) * 60 +
+                                int.parse(_minsController.text);
+                        try {
+                          await UserRepository()
+                              .saveDailyDataInputData(dailyDataInput);
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: Text("Data Submitted Successfully"),
+                            duration: Duration(seconds: 2),
+                          ));
+                          Navigator.pop(context);
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text("Data Submission Failed")));
+                        }
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Please enter amount of sleep")));
+                      }
+                    },
+                    child: const Text('Submit')),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
             ],
           ),
         ),
@@ -161,9 +196,12 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
       title: 'Temperature',
       color: Theme.of(context).cardTheme.color,
       borderRadius: 15.0,
+      info:
+          'Measuring temperature helps to understand the menstrual phase of the cycle by providing insight into hormonal fluctuations and identifying ovulation, which is crucial for fertility tracking and health monitoring.',
+      infoSource: '– Journal of Obstetric, Gynecologic, and Neonatal Nursing',
       padding: const EdgeInsets.all(16.0),
       onPressed: () {
-        print('Temperature card tapped');
+        logger.d('Temperature card tapped');
       },
       child: Column(
         children: [
@@ -179,7 +217,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
               setState(() {
                 _currentSliderValue = value;
               });
-              print("object");
+              logger.d("object");
             },
           ),
           const Row(
@@ -197,12 +235,16 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
   _buildDischargeCard() {
     return CustomCard(
       title: 'Discharge',
+      info:
+          'Cervical mucus is another important indicator of where a person is in their menstrual cycle. The consistency and amount of cervical mucus change throughout the cycle due to hormonal fluctuations.',
+      infoSource:
+          '– Hilgers, (2012). The ovulation method - natural family planning. Omaha, NE: Pope Paul VI Institute Press.',
       color: Theme.of(context).cardTheme.color,
       onPressed: () {
         // setState(() {
         //   _dischargeOptionsColor = Color.fromARGB(255, 34, 33, 32);
         // });
-        print('Discharge info tapped');
+        logger.d('Discharge info tapped');
       },
       borderRadius: 15.0,
       padding: const EdgeInsets.all(16.0),
@@ -220,10 +262,14 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
 
   _buildEnergyLevelCard() {
     return CustomCard(
+      info:
+          'Tracking energy levels alongside menstrual cycle phases and sleep patterns helps to identify correlations and better understand how hormonal changes affect their energy levels and sleep quality throughout the cycle.',
+      infoSource:
+          '– Baker, (1999). Circadian rhythms, sleep, and the menstrual cycle. ',
       title: 'EnergyLevel',
       color: Theme.of(context).cardTheme.color,
       onPressed: () {
-        print('Energy info tapped');
+        logger.d('Energy info tapped');
       },
       borderRadius: 15.0,
       padding: const EdgeInsets.all(16.0),
@@ -241,10 +287,13 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
 
   _buildBloodCard() {
     return CustomCard(
+      info:
+          'Blood is important indicator of where a person is in their menstrual cycle..',
+      infoSource: '– Journal of Obstetric, Gynecologic, and Neonatal Nursing',
       title: 'Blood',
       color: Theme.of(context).cardTheme.color,
       onPressed: () {
-        print('Blood info tapped');
+        logger.d('Blood info tapped');
       },
       borderRadius: 15.0,
       padding: const EdgeInsets.all(16.0),
@@ -262,10 +311,13 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
 
   _buildSymtomsCard() {
     return CustomCard(
+      info:
+          'Most women experience mild symptoms in the few days leading up to menstruation and in the first day or two of menstruating when the flow of blood is heavier.',
+      infoSource: '– Society of Obstetricians and Gynaecologists of Canada',
       title: 'Symptoms',
       color: Theme.of(context).cardTheme.color,
       onPressed: () {
-        print('Symptoms info tapped');
+        logger.d('Symptoms info tapped');
       },
       borderRadius: 15.0,
       padding: const EdgeInsets.all(16.0),
@@ -283,10 +335,14 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
 
   _buildSleepCard() {
     return CustomCard(
+      info:
+          ' Consistently logging sleep  can indicate potential sleep problems or lifestyle factors that need adjustment.',
+      infoSource:
+          '– Buysse, D. J. (2014). Sleep health: Can we define it? Does it matter? Sleep. ',
       title: 'Hours Of Sleep',
       color: Theme.of(context).cardTheme.color,
       onPressed: () {
-        print('Hours info tapped');
+        logger.d('Hours info tapped');
       },
       borderRadius: 15.0,
       padding: const EdgeInsets.all(16.0),
@@ -329,7 +385,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                   : _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
                       const Color.fromRGBO(254, 247, 237, 1);
             });
-            print(itemType.toString().split('.').last);
+            logger.d(itemType.toString().split('.').last);
             dailyDataInput.discharge = itemType.toString().split('.').last;
           } else if (dailyDataInput.discharge ==
               itemType.toString().split('.').last) {
@@ -341,18 +397,35 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                   : _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
                       const Color.fromRGBO(254, 247, 237, 1);
             });
-            print(itemType.toString().split('.').last);
+            logger.d(itemType.toString().split('.').last);
             dailyDataInput.discharge = "";
           } else {
-            print("Only one discharge can be selected");
+            setState(() {
+              //Remove the colour of the previously selected discharge
+              for (int i = 0; i < _dischargeOptionsColor.length; i++) {
+                if (_dischargeOptionsColor[i] ==
+                    const Color.fromRGBO(82, 82, 76, 1)) {
+                  _dischargeOptionsColor[i] =
+                      const Color.fromRGBO(254, 247, 237, 1);
+                }
+              }
+
+              _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
+                  _dischargeOptionsColor[Discharge.values.indexOf(itemType)] =
+                      const Color.fromRGBO(82, 82, 76, 1);
+            });
+
+            logger.d(itemType.toString().split('.').last);
+            dailyDataInput.discharge = itemType.toString().split('.').last;
+            // logger.d("Only one discharge can be selected");
           }
         },
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(50),
             color: _dischargeOptionsColor[Discharge.values.indexOf(itemType)],
           ),
-          padding: const EdgeInsets.all(3.0),
+          padding: const EdgeInsets.all(5.0),
           // margin: EdgeInsets.all(8.0),
           child: Text(
             itemType.toString().split('.').last,
@@ -379,7 +452,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                   : _bloodOptionsColor[Blood.values.indexOf(itemType)] =
                       const Color.fromRGBO(254, 247, 237, 1);
             });
-            print(itemType.toString().split('.').last);
+            logger.d(itemType.toString().split('.').last);
             dailyDataInput.blood = itemType.toString().split('.').last;
           } else if (dailyDataInput.blood ==
               itemType.toString().split('.').last) {
@@ -391,18 +464,40 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                   : _bloodOptionsColor[Blood.values.indexOf(itemType)] =
                       const Color.fromRGBO(254, 247, 237, 1);
             });
-            print(itemType.toString().split('.').last);
+            logger.d(itemType.toString().split('.').last);
             dailyDataInput.blood = "";
           } else {
-            print("Only one blood type can be selected");
+            setState(() {
+              //Remove the colour of the previously selected blood type
+
+              for (int i = 0; i < _bloodOptionsColor.length; i++) {
+                if (_bloodOptionsColor[i] ==
+                    const Color.fromRGBO(82, 82, 76, 1)) {
+                  _bloodOptionsColor[i] =
+                      const Color.fromRGBO(254, 247, 237, 1);
+                }
+              }
+
+              _bloodOptionsColor[Blood.values.indexOf(itemType)] ==
+                      const Color.fromRGBO(254, 247, 237, 1)
+                  ? _bloodOptionsColor[Blood.values.indexOf(itemType)] =
+                      const Color.fromRGBO(82, 82, 76, 1)
+                  : _bloodOptionsColor[Blood.values.indexOf(itemType)] =
+                      const Color.fromRGBO(254, 247, 237, 1);
+            });
+
+            dailyDataInput.blood = itemType.toString().split('.').last;
+            logger.d(itemType.toString().split('.').last);
+
+            // logger.d("Only one blood type can be selected");
           }
         },
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(50),
             color: _bloodOptionsColor[Blood.values.indexOf(itemType)],
           ),
-          padding: const EdgeInsets.all(3.0),
+          padding: const EdgeInsets.all(5.0),
           // margin: EdgeInsets.all(8.0),
           child: Text(
             itemType.toString().split('.').last,
@@ -429,7 +524,7 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                   : _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
                       const Color.fromRGBO(254, 247, 237, 1);
             });
-            print(itemType.toString().split('.').last);
+            logger.d(itemType.toString().split('.').last);
             dailyDataInput.energyLevel = itemType.toString().split('.').last;
           } else if (dailyDataInput.energyLevel ==
               itemType.toString().split('.').last) {
@@ -441,21 +536,39 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                   : _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
                       const Color.fromRGBO(254, 247, 237, 1);
             });
-            print(itemType.toString().split('.').last);
+            logger.d(itemType.toString().split('.').last);
             dailyDataInput.energyLevel = "";
           } else {
-            print("Only one energy level can be selected");
+            setState(() {
+              //Remove the colour of the previously selected energy level
+
+              for (int i = 0; i < _energyOptionsColor.length; i++) {
+                if (_energyOptionsColor[i] ==
+                    const Color.fromRGBO(82, 82, 76, 1)) {
+                  _energyOptionsColor[i] =
+                      const Color.fromRGBO(254, 247, 237, 1);
+                }
+              }
+
+              _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
+                  _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] =
+                      const Color.fromRGBO(82, 82, 76, 1);
+            });
+            dailyDataInput.energyLevel = itemType.toString().split('.').last;
+            logger.d(itemType.toString().split('.').last);
+
+            // logger.d("Only one energy level can be selected");
           }
         },
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(50),
             color: _energyOptionsColor[EnergyLevel.values.indexOf(itemType)] ==
                     const Color.fromRGBO(254, 247, 237, 1)
                 ? _energyOptionsColor[EnergyLevel.values.indexOf(itemType)]
                 : const Color.fromRGBO(82, 82, 76, 1),
           ),
-          padding: const EdgeInsets.all(3.0),
+          padding: const EdgeInsets.all(5.0),
           // margin: EdgeInsets.all(8.0),
           child: Text(
             itemType.toString().split('.').last,
@@ -473,7 +586,17 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
     return Symptoms.values.map((itemType) {
       return GestureDetector(
         onTap: () {
-          print(itemType.toString().split('.').last);
+          logger.d(itemType.toString().split('.').last);
+
+          // if (itemType.toString().split('.').last == "NO") {
+          //   dailyDataInput.symptoms.clear();
+          //   for (int i = 0; i < _symptomsOptionsColor.length; i++) {
+          //     setState(() {
+          //       _symptomsOptionsColor[i] = Color(0xFFDED4C5);
+          //     });
+          //   }
+          // }
+
           dailyDataInput.symptoms.contains(itemType.toString().split('.').last)
               ? dailyDataInput.symptoms
                   .remove(itemType.toString().split('.').last)
@@ -482,25 +605,36 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
 
           setState(() {
             _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] ==
-                    const Color.fromRGBO(254, 247, 237, 1)
+                    const Color(0xFFDED4C5)
                 ? _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] =
                     const Color.fromRGBO(82, 82, 76, 1)
                 : _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] =
-                    const Color.fromRGBO(254, 247, 237, 1);
+                    const Color(0xFFDED4C5);
           });
         },
         child: Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: _symptomsOptionsColor[Symptoms.values.indexOf(itemType)]),
-          padding: const EdgeInsets.all(3.0),
+              borderRadius: BorderRadius.circular(50),
+              color: const Color(0xFFFEF7ED)),
+          padding: const EdgeInsets.all(5.0),
           // margin: EdgeInsets.all(8.0),
-          child: Text(
-            itemType.toString().split('.').last,
-            style: _symptomsOptionsColor[Symptoms.values.indexOf(itemType)] ==
-                    const Color.fromRGBO(254, 247, 237, 1)
-                ? lightThemeData.textTheme.bodySmall
-                : darkThemedata.textTheme.bodySmall,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // itemType.toString().split('.').last == "NO"
+              //     ?
+              Icon(Icons.circle,
+                  size: 20,
+                  color:
+                      _symptomsOptionsColor[Symptoms.values.indexOf(itemType)]),
+
+              const SizedBox(width: 3),
+              Text(
+                itemType.toString().split('.').last,
+                style: lightThemeData.textTheme.bodySmall,
+              ),
+              const SizedBox(width: 3),
+            ],
           ),
         ),
       );

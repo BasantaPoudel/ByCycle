@@ -7,6 +7,8 @@ class CustomCard extends StatelessWidget {
   final double? borderRadius;
   final EdgeInsets? padding;
   final VoidCallback? onPressed;
+  final String info;
+  final String infoSource;
 
   const CustomCard({
     super.key,
@@ -16,6 +18,8 @@ class CustomCard extends StatelessWidget {
     this.padding,
     required this.title,
     this.onPressed,
+    required this.info,
+    required this.infoSource,
   });
 
   @override
@@ -49,7 +53,60 @@ class CustomCard extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      onPressed: onPressed,
+                      onPressed: () {
+                        showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            contentTextStyle:
+                                Theme.of(context).textTheme.bodyMedium,
+
+                            backgroundColor:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.black
+                                    : Colors.white,
+                            // title: const Text('AlertDialog Title'),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(info,
+                                    style: Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(color: Colors.white)
+                                        : Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(color: Colors.black)),
+                                const SizedBox(height: 10.0),
+                                Text(infoSource,
+                                    style: Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(color: Colors.white)
+                                        : Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(color: Colors.black)),
+                              ],
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(context, 'Cancel'),
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, 'OK'),
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                       icon: const Icon(Icons.info_outline),
                     ),
                   ],
@@ -60,28 +117,3 @@ class CustomCard extends StatelessWidget {
         ));
   }
 }
-
-
-//     return Card.filled(
-//         shape: RoundedRectangleBorder(
-//           borderRadius: BorderRadius.circular(borderRadius ?? 8),
-//         ),
-//         color: color,
-//         child: SizedBox(
-//           width: MediaQuery.of(context).size.width * 0.5,
-//           height: MediaQuery.of(context).size.height * 0.2,
-//           child: const Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   Text('Card Title', style: TextStyle(fontSize: 20)),
-//                   Icon(Icons.info_outline, color: Colors.black, size: 20),
-//                 ],
-//               ),
-//             ],
-//           ),
-//         ));
-//   }
-// }

@@ -1,8 +1,10 @@
 import 'package:by_cycle/models/insight_info.dart';
-import 'package:by_cycle/models/user.dart';
-import 'package:by_cycle/models/daily_data_input.dart';
+import 'package:by_cycle/models/user_model.dart';
+import 'package:logger/logger.dart';
 
-List<String> chooseInsightIdsBasedOnListOfTags(User user, List<String> tags) {
+var logger = Logger();
+List<String> chooseInsightIdsBasedOnListOfTags(
+    UserModel user, List<String> tags) {
   /*A function that returns 3 ids of insights that should be shown to the user 
   based on the provided list of tags.
   Tags are produced by produceTags which in turn uses functions A-F in a different file,
@@ -29,7 +31,7 @@ List<String> chooseInsightIdsBasedOnListOfTags(User user, List<String> tags) {
   List<InsightInfo> secondaryList = [];
   for (var tag in tags) {
     if (user.tags.containsKey(tag)) {
-      print(user.tags[tag]);
+      logger.d(user.tags[tag]);
       InsightInfo lowestViewInsight = user.tags[tag]!.reduce((current, next) =>
           current.viewCounter < next.viewCounter ? current : next);
 
@@ -40,7 +42,7 @@ List<String> chooseInsightIdsBasedOnListOfTags(User user, List<String> tags) {
         secondaryList.add(lowestViewInsight);
       }
     } else {
-      print("No matching insight for ${tag} in user.tags or tag is empty");
+      logger.d("No matching insight for $tag in user.tags or tag is empty");
     }
   }
 

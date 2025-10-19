@@ -1,6 +1,8 @@
-import 'package:by_cycle/models/user.dart';
+import 'package:by_cycle/models/user_model.dart';
+import 'package:logger/web.dart';
 
-List<String> produceTagsForToday(User user) {
+var logger = Logger();
+List<String> produceTagsForToday(UserModel user) {
   /*A function that executes each of algorithms A-F to produce a list
   containing all tags relevant for the user today.
 
@@ -41,37 +43,37 @@ double tempDiff(double temperature1, double temperature2) {
 }
 
 // A) Body temperature taken in the morning
-List<String> bodyTemperature(User user) {
+List<String> bodyTemperature(UserModel user) {
   final List<String> out = [];
 
   //temperature FALL by 0.3 celsius or more
   if (tempDiff(user.dailyDataInput[0].temperature,
           user.dailyDataInput[1].temperature) <=
       -0.3) {
-    print("temperature fall greater or equal to 0.3");
+    logger.d("temperature fall greater or equal to 0.3");
     if (user.dailyDataInput[0].phase == "luteal") {
-      print("NOTIFY: Prepare yourself for the upcoming menstruation");
+      logger.d("NOTIFY: Prepare yourself for the upcoming menstruation");
       out.add("NOTIFY: Prepare...");
     }
   }
 
   //temperature RISE by 0.3 celsius or more for 2 data log ins
-  print(user.dailyDataInput[0].temperature);
-  print(tempDiff(
+  logger.d(user.dailyDataInput[0].temperature);
+  logger.d(tempDiff(
       user.dailyDataInput[1].temperature, user.dailyDataInput[2].temperature));
-  print(user.dailyDataInput[1].temperature);
-  print(user.dailyDataInput[2].temperature);
+  logger.d(user.dailyDataInput[1].temperature);
+  logger.d(user.dailyDataInput[2].temperature);
   if (tempDiff(user.dailyDataInput[0].temperature,
               user.dailyDataInput[1].temperature) >=
           0.3 &&
       tempDiff(user.dailyDataInput[1].temperature,
               user.dailyDataInput[2].temperature) >=
           0.3) {
-    print("TAGS: 'temperature', 'identify ovulation'");
+    logger.d("TAGS: 'temperature', 'identify ovulation'");
     out.add('temperature');
     out.add('identify ovulation');
     if (user.dailyDataInput[0].phase == "ovulation") {
-      print("ADJUST: Change from ovulation into luteal phase");
+      logger.d("ADJUST: Change from ovulation into luteal phase");
       out.add('ovulation_to_luteal');
     }
   }
@@ -81,7 +83,7 @@ List<String> bodyTemperature(User user) {
 
 // B) Mucus (same  as discharge)
 // only one discharge option can be chosen at a time
-List<String> mucus(User user) {
+List<String> mucus(UserModel user) {
   final List<String> out = [];
   final d0 = user.dailyDataInput[0].discharge;
   final d1 = user.dailyDataInput[1].discharge;
@@ -97,7 +99,7 @@ List<String> mucus(User user) {
   if (allowedValues.contains(d0) &&
       allowedValues.contains(d1) &&
       allowedValues.contains(d2)) {
-    print("ADJUST cycle, change into Ovulatory phase from follicular phase");
+    logger.d("ADJUST cycle, change into Ovulatory phase from follicular phase");
     out.add('follicular_to_ovulatory');
 
     //data repeated < 3 log ins
@@ -108,20 +110,21 @@ List<String> mucus(User user) {
   }
   //should it check that it's not the ovulatory phase???
   if (d0 == "spotting") {
-    print("Spotting today!");
+    logger.d("Spotting today!");
     user.algorithmData['spottingOccurences'].add(DateTime.now());
-    print("Spotting occurences: ${user.algorithmData['spottingOccurences']}");
+    logger
+        .d("Spotting occurences: ${user.algorithmData['spottingOccurences']}");
     final Duration diff = user.algorithmData['spottingOccurences'][0]
         .difference(user.algorithmData['spottingOccurences'][1]);
-    print("Difference in days: ${diff.inDays.abs()}");
+    logger.d("Difference in days: ${diff.inDays.abs()}");
 
     //Data repeated across =/> 2 menstruation cycles
     if (diff.inDays.abs() > user.completeCycleLength) {
-      print("spotting, data repeated =/> 2 menstural cycle");
-      print("DISPLAY General insights insight number 3");
+      logger.d("spotting, data repeated =/> 2 menstural cycle");
+      logger.d("DISPLAY General insights insight number 3");
       out.add("insight_3");
     } else if (user.dailyDataInput[0].phase == "ovulatory") {
-      print("Display datab > General insights > insight number: 4");
+      logger.d("Display datab > General insights > insight number: 4");
       out.add("insight_4");
     }
   }
@@ -131,7 +134,7 @@ List<String> mucus(User user) {
 // C) Energy level
 // not clear: tag energy "increase energy" ?in PAGE determined by COLOR?
 // very unsure what kind of tags should be produced...
-List<String> energyLevel(User user) {
+List<String> energyLevel(UserModel user) {
   List<String> out = [];
 
   //if energy level is high or moderate, do nothing
@@ -140,23 +143,23 @@ List<String> energyLevel(User user) {
     return out;
   } else {
     if (user.dailyDataInput[0].hoursOfSleep < 8) {
-      print("DISPLAY database > Sleep insights > insight number: 1");
+      logger.d("DISPLAY database > Sleep insights > insight number: 1");
       out.add("insight_1");
     } else {
       switch (user.dailyDataInput[0].phase) {
         case "luteal":
-          print(
+          logger.d(
               'DISPLAY database > cycle:luteal > insight tag"increase energy"');
           out.add("increase energy");
           break;
         case "menstruation":
-          print(
+          logger.d(
               'DISPLAY database > cycle:Menstruation > insight tag: "increase energy"');
           out.add("increase energy");
           break;
         case "follicular":
         case "ovulatory":
-          print(
+          logger.d(
               'DISPLAY database > Cycle:Ovulation / Cycle:Follicular > insight tag 1 choice "Increase Energy" "Sleep Quality", "Alcohol" & "Coffee"');
           out.add("Increase Energy");
           out.add("Increase Energy");
@@ -167,13 +170,25 @@ List<String> energyLevel(User user) {
 }
 
 // D) Hours of sleep tonight
-List<String> hoursOfSleep(User user) {
+List<String> hoursOfSleep(UserModel user) {
   List<String> out = [];
-  //if ()
-  if (user.dailyDataInput[0].hoursOfSleep == 0) {
+  if (user.algorithmData["lastFiveDays"][0].hoursOfSleep == 0) {
     print('DISPLAY database > insight tags: "sleep disruption", "insomnia"');
     out.add("sleep disruption");
     out.add("insomnia");
+  }
+  if (user.algorithmData["lastFiveDays"][0].hoursOfSleep > 450 &&
+      (user.algorithmData["lastFiveDays"][0].energyLevel == "medium" ||
+          user.algorithmData["lastFiveDays"][0].energyLevel == "high")) {
+    final phaseToday = user.algorithmData["lastFiveDays"][0].phase;
+    final sleepTimeAverage =
+        user.algorithmData["averageSleepTime"][phaseToday]["inMinutes"];
+    final sleepTimeToday = user.algorithmData["lastFiveDays"][0].hoursOfSleep;
+    final count = user.algorithmData["averageSleepTime"][phaseToday]["count"];
+
+    user.algorithmData["averageSleepTime"][phaseToday]["inMinutes"] =
+        ((sleepTimeToday + count * sleepTimeAverage) / (count + 1)).toInt();
+    user.algorithmData["averageSleepTime"][phaseToday]["count"]++;
   }
   return out;
 }
