@@ -86,7 +86,7 @@ class ThemeCubit extends Cubit<ThemeMode> {
           selectedIconTheme: IconThemeData(
               fill: BorderSide.strokeAlignCenter) // Set the selected item color
           ),
-      scaffoldBackgroundColor: Color(0xFF31312F),
+      scaffoldBackgroundColor: const Color(0xFF31312F),
       appBarTheme: const AppBarTheme(
         backgroundColor: Color(0xFF31312F), // Set the app bar color
         iconTheme: IconThemeData(

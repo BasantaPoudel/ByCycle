@@ -395,7 +395,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return const Scaffold(
                 body: Center(
                     child: CircularProgressIndicator(
-              backgroundColor: const Color.fromRGBO(222, 212, 197, 1),
+              backgroundColor: Color.fromRGBO(222, 212, 197, 1),
               valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
             )));
           }

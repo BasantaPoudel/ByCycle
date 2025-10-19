@@ -76,11 +76,11 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                   //TODO: Display the updated current count
                   Container(
                     alignment: Alignment.centerRight,
-                    padding: EdgeInsets.only(right: 20),
+                    padding: const EdgeInsets.only(right: 20),
                     height: 30,
                     child: Text(
-                      '${currentLength}', // Display the current count
-                      style: TextStyle(
+                      '$currentLength', // Display the current count
+                      style: const TextStyle(
                         fontSize: 12,
                         color: Colors.grey,
                       ),

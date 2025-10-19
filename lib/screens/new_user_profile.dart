@@ -4,7 +4,6 @@ import 'package:by_cycle/repository/user_repository.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class NewUserProfile extends StatefulWidget {
   const NewUserProfile({super.key});

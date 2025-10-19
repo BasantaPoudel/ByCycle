@@ -1,5 +1,4 @@
 import 'package:by_cycle/screens/feedback.dart';
-import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:by_cycle/screens/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -37,8 +36,8 @@ class _SettingsState extends State<Settings> {
             },
           ),
           const Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: const Divider(
+            padding: EdgeInsets.all(12.0),
+            child: Divider(
               height: 1,
               thickness: 1,
               // indent: 15,

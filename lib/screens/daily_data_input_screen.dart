@@ -628,12 +628,12 @@ class _DailyDataInputState extends State<DailyDataInputScreen> {
                   color:
                       _symptomsOptionsColor[Symptoms.values.indexOf(itemType)]),
 
-              SizedBox(width: 3),
+              const SizedBox(width: 3),
               Text(
                 itemType.toString().split('.').last,
                 style: lightThemeData.textTheme.bodySmall,
               ),
-              SizedBox(width: 3),
+              const SizedBox(width: 3),
             ],
           ),
         ),

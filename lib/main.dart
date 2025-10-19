@@ -10,6 +10,7 @@ import 'package:by_cycle/screens/onboarding/onboarding_pageone.dart';
 import 'package:by_cycle/screens/calendar.dart';
 import 'package:by_cycle/screens/settings.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,7 +21,28 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // Try to use an already-initialized default app (native auto-init on Android/iOS).
+  try {
+    Firebase.app(); // succeeds if default app already exists
+  } on FirebaseException {
+    // No default app yet — initialize it.
+    if (kIsWeb) {
+      // Web never auto-inits; must pass options.
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    } else {
+      // Mobile/desktop: prefer native configs (google-services.json / GoogleService-Info.plist).
+      // If you *don’t* have those files, fall back to options:
+      try {
+        await Firebase.initializeApp(); // uses native files
+      } on FirebaseException {
+        await Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform,
+        );
+      }
+    }
+  }
   runApp(
     RestartWidget(
       child: BlocProvider(
@@ -194,7 +216,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             drawer: SizedBox(
               width: MediaQuery.of(context).size.width * 0.8,
-              child: Drawer(
+              child: const Drawer(
                 // Add a ListView to the drawer. This ensures the user can scroll
                 // through the options in the drawer if there isn't enough vertical
                 // space to fit everything.
@@ -266,7 +288,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return const Scaffold(
             body: Center(
               child: CircularProgressIndicator(
-                backgroundColor: const Color.fromRGBO(222, 212, 197, 1),
+                backgroundColor: Color.fromRGBO(222, 212, 197, 1),
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
               ),
             ),
