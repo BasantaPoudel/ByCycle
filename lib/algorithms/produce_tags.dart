@@ -169,11 +169,23 @@ List<String> energyLevel(User user) {
 // D) Hours of sleep tonight
 List<String> hoursOfSleep(User user) {
   List<String> out = [];
-  //if ()
-  if (user.dailyDataInput[0].hoursOfSleep == 0) {
+  if (user.algorithmData["lastFiveDays"][0].hoursOfSleep == 0) {
     print('DISPLAY database > insight tags: "sleep disruption", "insomnia"');
     out.add("sleep disruption");
     out.add("insomnia");
+  }
+  if (user.algorithmData["lastFiveDays"][0].hoursOfSleep > 450 &&
+      (user.algorithmData["lastFiveDays"][0].energyLevel == "medium" ||
+          user.algorithmData["lastFiveDays"][0].energyLevel == "high")) {
+    final phaseToday = user.algorithmData["lastFiveDays"][0].phase;
+    final sleepTimeAverage =
+        user.algorithmData["averageSleepTime"][phaseToday]["inMinutes"];
+    final sleepTimeToday = user.algorithmData["lastFiveDays"][0].hoursOfSleep;
+    final count = user.algorithmData["averageSleepTime"][phaseToday]["count"];
+
+    user.algorithmData["averageSleepTime"][phaseToday]["inMinutes"] =
+        ((sleepTimeToday + count * sleepTimeAverage) / (count + 1)).toInt();
+    user.algorithmData["averageSleepTime"][phaseToday]["count"]++;
   }
   return out;
 }

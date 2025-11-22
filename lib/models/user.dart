@@ -1,6 +1,7 @@
 import 'package:by_cycle/models/custom_date_time_range.dart';
 import 'package:by_cycle/models/daily_data_input.dart';
 import 'package:by_cycle/models/insight_info.dart';
+import 'package:flutter/material.dart';
 
 class User {
   String name;
@@ -14,6 +15,7 @@ class User {
   int timeToFallAsleep;
   bool cycleRegular;
   bool cycleHeavy;
+  TimeOfDay bedTime;
   bool would_like_reminders_about_data_log_in;
   bool would_like_reminders_about_self_care_checklist;
   List<DailyDataInput> dailyDataInput;
@@ -33,11 +35,31 @@ class User {
     this.timeToFallAsleep = 20,
     this.cycleRegular = false,
     this.cycleHeavy = false,
+    this.bedTime = const TimeOfDay(hour: 22, minute: 0),
     this.would_like_reminders_about_data_log_in = false,
     this.would_like_reminders_about_self_care_checklist = false,
     this.dailyDataInput = const [],
     this.phaseRanges = const [],
-    this.algorithmData = const {},
+    this.algorithmData = const {
+      "averageSleepTime": {
+        "menstruation": {
+          "inMinutes": 0,
+          "count": 0,
+        },
+        "follicular": {
+          "inMinutes": 0,
+          "count": 0,
+        },
+        "ovulation": {
+          "inMinutes": 0,
+          "count": 0,
+        },
+        "luteal": {
+          "inMinutes": 0,
+          "count": 0,
+        },
+      }
+    },
     this.tags = const {},
   });
 
@@ -54,6 +76,7 @@ class User {
       'time_to_fall_asleep': timeToFallAsleep,
       'cycle_regular': cycleRegular,
       'cycle_heavy': cycleHeavy,
+      'bedtime': {'hour': bedTime.hour, 'minute': bedTime.minute},
       'would_like_reminders_about_data_log_in':
           would_like_reminders_about_data_log_in,
       'would_like_reminders_about_self_care_checklist':
@@ -93,6 +116,8 @@ class User {
                 ?.map((input) => CustomDateTimeRange.fromMap(input)) ??
             const [],
       ),
+      bedTime: TimeOfDay(
+          hour: map['bedtime']['hour'], minute: map['bedtime']['minute']),
       algorithmData: Map<String, dynamic>.from(map['algorithm_data'] ?? {}),
       tags: (map['tags'] as Map<String, dynamic>?)?.map(
             (key, value) => MapEntry(
